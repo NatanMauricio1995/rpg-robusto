@@ -1,0 +1,746 @@
+================================================================================
+SISTEMA RPG — ARQUITETURA FUNCIONAL DEFINITIVA v1.0
+================================================================================
+
+Filosofia do Sistema
+
+O sistema é baseado em:
+  - D&D 5e Adaptado
+
+Princípios:
+  - ✓ Automatizar cálculos
+  - ✓ Automatizar progressão
+  - ✓ Automatizar recursos
+  - ✓ Automatizar descanso
+  - ✓ Automatizar subida de nível
+  - ✓ NÃO automatizar narrativa
+  - ✓ NÃO automatizar decisões do mestre
+  - ✓ NÃO automatizar combate completo
+
+================================================================================
+TIPOS DE USUÁRIO
+================================================================================
+
+Mestre
+Pode:
+  - Criar campanhas
+  - Criar mundos
+  - Criar biblioteca RPG
+  - Editar tudo
+  - Controlar sessões
+  - Aprovar personagens
+  - Editar fichas
+
+Jogador
+Pode:
+  - Criar personagens
+  - Editar seus personagens
+  - Visualizar biblioteca
+  - Participar de campanhas
+
+Não pode:
+  - Criar campanhas
+  - Editar biblioteca
+  - Excluir componentes globais
+
+================================================================================
+HIERARQUIA DO MUNDO
+================================================================================
+
+Estrutura obrigatória:
+  Mundo
+  ↓
+  Continente
+  ↓
+  Reino
+  ↓
+  Cidade
+  ↓
+  Ambiente
+  ↓
+  Local
+
+Não pode existir quebra da hierarquia.
+
+================================================================================
+MUNDO
+================================================================================
+
+Possui:
+  - Nome
+  - Imagem
+  - Descrição
+  - História
+  - Origem
+  - Cosmologia
+  - Religiões
+  - Facções
+  - Continentes
+
+================================================================================
+RELIGIÕES
+================================================================================
+
+Possuem:
+  - Nome
+  - Símbolo
+  - Descrição
+  - Dogmas
+
+================================================================================
+FACÇÕES
+================================================================================
+
+Possuem:
+  - Nome
+  - Imagem
+  - Descrição
+  - Objetivos
+  - Aliados
+  - Inimigos
+
+================================================================================
+ORGANIZAÇÕES
+================================================================================
+
+Podem pertencer a:
+  - Facção
+
+ou existir sozinhas.
+
+================================================================================
+ESPAÇO GEOGRÁFICO
+================================================================================
+
+Continente
+  - Nome
+  - Imagem
+  - Descrição
+  - História
+
+Reino
+  - Nome
+  - Imagem
+  - Descrição
+  - Governante
+  - História
+
+Cidade
+  - Nome
+  - Imagem
+  - Descrição
+  - População
+  - História
+
+Ambiente
+  - Nome
+  - Imagem
+  - Descrição
+  - Clima
+  - História
+
+Local
+  - Nome
+  - Imagem
+  - Descrição
+  - Mapa
+  - Galeria
+  - História
+
+================================================================================
+BIBLIOTECA RPG
+================================================================================
+
+Raças
+  Raça
+  └── Sub-Raça
+
+Raça
+  - Nome
+  - Imagem
+  - Descrição
+  - Tamanho
+  - Deslocamento
+  - Expectativa de Vida
+  - Modificadores
+  - Idiomas
+  - Sentidos
+  - Resistências
+  - Fraquezas
+  - Imunidades
+  - Habilidades
+  - Magias
+
+Sub-Raça
+  - Raça
+  - Nome
+  - Descrição
+  - Modificadores
+  - Idiomas
+  - Sentidos
+  - Resistências
+  - Fraquezas
+  - Imunidades
+  - Habilidades
+  - Magias
+
+================================================================================
+CLASSES
+================================================================================
+
+  Classe
+  └── Subclasse
+
+Classe
+  - Nome
+  - Imagem
+  - Descrição
+  - Dado de Vida
+  - Atributo Principal
+  - Perícias Disponíveis
+  - Quantidade de Perícias
+  - Proficiências
+  - Equipamentos Iniciais
+  - Progressão
+
+Subclasse
+  - Classe
+  - Nome
+  - Descrição
+  - Nível de Desbloqueio
+  - Progressão
+  - Habilidades
+  - Magias
+
+================================================================================
+HABILIDADES
+================================================================================
+
+Possuem:
+  - Nome
+  - Imagem
+  - Descrição
+  - Ativa
+  - Passiva
+  - Nível Mínimo
+  - Usos Máximos
+  - Recarga
+  - Custo de Recurso
+  - Condições Aplicadas
+  - Resistências Concedidas
+  - Fraquezas Concedidas
+  - Imunidades Concedidas
+
+================================================================================
+MAGIAS
+================================================================================
+
+Possuem:
+  - Nome
+  - Imagem
+  - Descrição
+  - Escola
+  - Nível
+  - Autodidata
+  - Componentes
+  - Verbal
+  - Somático
+  - Material
+  - Alcance
+  - Área
+  - Duração
+  - Concentração
+  - Ritual
+  - Tipos de Dano
+  - Condições Aplicadas
+
+================================================================================
+ESCOLAS DE MAGIA
+================================================================================
+
+Configuráveis.
+Exemplos:
+  - Evocação
+  - Necromancia
+  - Abjuração
+  - Ilusão
+
+================================================================================
+RECURSOS DO SISTEMA
+================================================================================
+
+Fixos.
+  - HP
+  - Espaços de Magia
+  - Pontos de Feitiçaria
+  - Pontos de Ki
+  - Fúria
+  - Canalizar Divindade
+  - Dados de Superioridade
+  - Inspiração de Bardo
+  - Dados de Vida
+
+================================================================================
+DESCANSOS
+================================================================================
+
+Existem:
+  - Descanso Curto
+  - Descanso Longo
+
+O sistema controla:
+  - Recuperação de HP
+  - Recuperação de Recursos
+  - Recuperação de Espaços de Magia
+  - Recuperação de Habilidades
+
+Raças e Classes podem modificar a recuperação.
+
+Exemplo:
+  Elfo
+  Recupera melhor em descanso curto.
+
+================================================================================
+EQUIPAMENTOS
+================================================================================
+
+Armas
+Possuem:
+  - Nome
+  - Descrição
+  - Categoria
+  - Proficiência
+  - Dano
+  - Tipo de Dano
+  - Alcance
+  - Usa Munição
+  - Número de Mãos
+  - Requisitos
+  - Encantamentos
+  - Habilidades Concedidas
+
+Armaduras
+Possuem:
+  - Nome
+  - Descrição
+  - Categoria
+  - Defesa
+  - Requisitos
+  - Penalidades
+  - Encantamentos
+  - Habilidades Concedidas
+
+Itens
+Possuem:
+  - Nome
+  - Descrição
+  - Categoria
+  - Raridade
+  - Peso
+  - Valor
+  - Empilhável
+  - Efeitos
+  - Atributos
+  - Habilidades
+  - Magias
+
+Receitas
+Possuem:
+  - Nome
+  - Descrição
+  - Ingredientes
+  - Quantidades
+  - Resultado
+
+================================================================================
+NPCs
+================================================================================
+
+NPC é exclusivamente narrativo.
+Não possui ficha de combate.
+
+Possui:
+  - Nome
+  - Imagem
+  - Tipo
+  - Descrição
+  - Personalidade
+  - História
+  - Religião
+  - Facção
+  - Organização
+  - Localização
+  - Loja
+  - Missões
+
+Divindades entram como NPCs.
+
+================================================================================
+INIMIGOS
+================================================================================
+
+Possuem:
+  - Nome
+  - Imagem
+  - Descrição
+  - Classificação
+  - Nível
+  - XP Concedida
+  - Atributos
+  - Perícias
+  - Fraquezas
+  - Resistências
+  - Imunidades
+  - Habilidades
+  - Magias
+  - Equipamentos
+  - Facção
+  - Origem
+  - Loot
+
+Classificações
+  - Comum
+  - Elite
+  - Mini Boss
+  - Boss
+  - Lendário
+
+Loot
+
+Garantido
+  - Item
+  - Quantidade
+
+Opcional
+  - Item
+  - Dado
+  - Resultado Necessário
+
+Exemplo:
+  Poção
+  d100
+  >= 85
+
+================================================================================
+PERSONAGENS
+================================================================================
+
+Personagem Base
+Possui:
+  - Jogador
+  - Nome
+  - Retrato
+  - Aparência
+  - Personalidade
+  - História
+  - Raça
+  - Sub-Raça
+  - Classe
+  - Subclasse
+  - Religião
+  - Facção
+  - Organização
+  - Residência
+  - Status
+
+Status
+  - Vivo
+  - Morto
+  - Desaparecido
+  - Aposentado
+
+História
+Fluxo:
+  Jogador cria
+  ↓
+  Mestre aprova
+  ↓
+  História oficial
+
+================================================================================
+FICHA DE CAMPANHA
+================================================================================
+
+Cada personagem pode participar de várias campanhas.
+Cada campanha possui uma ficha independente.
+
+Possui:
+  - Campanha
+  - Personagem
+  - Nível
+  - XP
+  - HP Atual
+  - HP Máximo
+  - Inventário
+  - Equipamentos
+  - Moedas
+  - Habilidades
+  - Magias
+  - Recursos
+
+================================================================================
+MOEDAS
+================================================================================
+
+Sistema fixo.
+  - Cobre
+  - Prata
+  - Ouro
+  - Platina
+
+Conversão:
+  - 10 Cobre = 1 Prata
+  - 10 Prata = 1 Ouro
+  - 10 Ouro = 1 Platina
+
+================================================================================
+INVENTÁRIO
+================================================================================
+
+Possui:
+  - Peso Atual
+  - Peso Máximo
+
+Calculado automaticamente.
+
+================================================================================
+EQUIPAMENTOS DA FICHA
+================================================================================
+
+  - Arma Principal
+  - Arma Secundária
+  - Armas Reserva
+  - Armadura
+  - Acessórios
+
+================================================================================
+CAMPANHAS
+================================================================================
+
+Possuem:
+  - Nome
+  - Capa
+  - Sinopse
+  - Status
+  - Mundo
+  - Mestre
+  - Participantes
+
+Status
+  - Planejamento
+  - Ativa
+  - Pausada
+  - Finalizada
+
+Limite
+  - Máximo de 5 jogadores
+
+================================================================================
+ESTRUTURA DA CAMPANHA
+================================================================================
+
+Campanha
+  Capítulos
+    Missões
+    Sessões
+      Combates
+
+================================================================================
+CAPÍTULOS
+================================================================================
+
+Possuem:
+  - Nome
+  - Ordem
+  - Imagem
+  - Descrição
+
+================================================================================
+MISSÕES
+================================================================================
+
+Possuem:
+  - Nome
+  - Tipo
+  - Principal
+  - Secundária
+  - Oculta
+  - Descrição
+  - Pré-Requisitos
+  - Dependências
+  - Local
+  - Recompensas
+
+================================================================================
+SESSÕES
+================================================================================
+
+Possuem:
+  - Nome
+  - Imagem
+  - Participantes
+  - Anotações do Mestre
+  - Imagens Exibidas
+
+================================================================================
+COMBATES
+================================================================================
+
+Possuem apenas:
+  - Participantes
+  - Inimigos
+  - HP Atual
+
+================================================================================
+PROGRESSÃO
+================================================================================
+
+XP vem de:
+  - Inimigos derrotados
+
+Ao encerrar combate:
+  - Somar XP
+  - Distribuir XP
+  - Verificar subida de nível
+
+================================================================================
+SUBIDA DE NÍVEL
+================================================================================
+
+Automática.
+Ao subir:
+  - Atualizar habilidades
+  - Atualizar magias
+  - Atualizar recursos
+  - Atualizar espaços de magia
+  - Restaurar HP completamente
+
+================================================================================
+ELEMENTOS FIXOS DO SISTEMA
+================================================================================
+
+Atributos
+  - Força
+  - Destreza
+  - Constituição
+  - Inteligência
+  - Sabedoria
+  - Carisma
+
+Perícias
+  - Acrobacia
+  - Adestrar Animais
+  - Arcanismo
+  - Atletismo
+  - Atuação
+  - Enganação
+  - Furtividade
+  - História
+  - Intimidação
+  - Intuição
+  - Investigação
+  - Medicina
+  - Natureza
+  - Percepção
+  - Persuasão
+  - Prestidigitação
+  - Religião
+  - Sobrevivência
+
+Sentidos
+  - Visão Normal
+  - Visão no Escuro
+  - Percepção às Cegas
+  - Sentido Sísmico
+  - Visão Verdadeira
+
+Tipos de Dano
+  - Cortante
+  - Perfurante
+  - Contundente
+  - Fogo
+  - Gelo
+  - Raio
+  - Trovão
+  - Ácido
+  - Veneno
+  - Psíquico
+  - Necrótico
+  - Radiante
+  - Força
+
+Condições
+  - Agarrado
+  - Amedrontado
+  - Atordoado
+  - Caído
+  - Cego
+  - Enfeitiçado
+  - Envenenado
+  - Exausto
+  - Incapacitado
+  - Inconsciente
+  - Invisível
+  - Paralisado
+  - Petrificado
+  - Restrito
+  - Surdo
+
+Dados
+  - d4
+  - d6
+  - d8
+  - d10
+  - d12
+  - d20
+  - d100
+
+Raridades
+  - Comum
+  - Incomum
+  - Raro
+  - Épico
+  - Lendário
+
+Nível Máximo
+  - 20
+
+================================================================================
+RELACIONAMENTOS PRINCIPAIS
+================================================================================
+
+Mundo
+    1:N Continentes
+
+Continente
+    1:N Reinos
+
+Reino
+    1:N Cidades
+
+Cidade
+    1:N Ambientes
+
+Ambiente
+    1:N Locais
+
+Raça
+    1:N Sub-Raças
+
+Classe
+    1:N Subclasses
+
+Personagem
+    1:N Fichas de Campanha
+
+Campanha
+    1:N Capítulos
+
+Capítulo
+    1:N Missões
+
+Capítulo
+    1:N Sessões
+
+Sessão
+    1:N Combates
