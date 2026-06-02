@@ -254,3 +254,12 @@ A CA deve ser visível tanto no modo compacto quanto no modo detalhado.
 
 RN-068
 O sistema deve recalcular a CA automaticamente ao alterar equipamentos, habilidades, magias ou efeitos que afetem defesa.
+
+RN-069
+O combate deve armazenar a CA atual dos participantes.
+
+RN-070
+O combate deve armazenar os status ativos dos participantes.
+
+RN-071 
+Os status ativos são definidos exclusivamente pelo mestre.
