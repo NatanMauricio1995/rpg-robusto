@@ -1,0 +1,221 @@
+================================================================================
+ARQUITETURA VISUAL DO COMBATE (VERSÃO OFICIAL)
+================================================================================
+
+Objetivo
+O combate não é apenas um controle de HP.
+Ele é um:
+  Painel Tático de Consulta Rápida
+para o mestre.
+
+================================================================================
+CARDS DE COMBATE (MODO COMPACTO)
+================================================================================
+
+CombatParticipantCard
+Modo Compacto
+┌────────────────────────────┐
+│ Salem                      │
+│ HP: 35 / 35                │
+│ CA: 17                     │
+│ Status: 2                  │
+│ [▼]                        │
+└────────────────────────────┘
+
+CombatEnemyCard
+Modo Compacto
+┌────────────────────────────┐
+│ Goblin                     │
+│ HP: 12 / 12                │
+│ CA: 13                     │
+│ Status: 1                  │
+│ [▼]                        │
+└────────────────────────────┘
+
+================================────────────────================================
+PAINEIS DETALHADOS (COMBATACCORDION)
+================================================================================
+
+CombatAccordion
+Ao expandir:
+  Salem
+  - HP: 35 / 35
+  - CA: 17
+  - Status
+  - Ataques
+  - Magias
+  - Habilidades
+  - Recursos
+  - Equipamentos
+  - Resistências
+  - Fraquezas
+  - Imunidades
+
+Seção CA
+A CA deve ser exibida permanentemente.
+  - CA Atual: 17
+
+Opcionalmente:
+  - CA Base: 14
+  - Armadura: +2
+  - Escudo: +1
+  - CA Final: 17
+
+Isso ajuda muito em debug da ficha.
+
+CombatHPControl
+Dentro do card.
+  - HP Atual: 35 / 35
+  Controles: [-1] [-5] [-10]  [+1] [+5] [+10]
+  ou
+  Valor: [ 17 ]
+  Ações: [ Aplicar Dano ] [ Aplicar Cura ]
+
+CombatStatusPanel
+Controlado exclusivamente pelo mestre.
+Status Ativos Exemplo:
+  Salem
+    - ✔ Envenenado
+    - ✔ Amedrontado
+  Goblin
+    - ✔ Caído
+
+Lista Oficial de Status
+  - Agarrado
+  - Amedrontado
+  - Atordoado
+  - Caído
+  - Cego
+  - Enfeitiçado
+  - Envenenado
+  - Exausto
+  - Incapacitado
+  - Inconsciente
+  - Invisível
+  - Paralisado
+  - Petrificado
+  - Restrito
+  - Surdo
+
+Gerenciar Status
+Botão: [ Gerenciar Status ]
+Abre:
+  - ☐ Agarrado
+  - ☐ Amedrontado
+  - ☐ Atordoado
+  - ☐ Caído
+  - ☐ Cego
+  - ☐ Enfeitiçado
+  - ☐ Envenenado
+  - ☐ Exausto
+  - ☐ Incapacitado
+  - ☐ Inconsciente
+  - ☐ Invisível
+  - ☐ Paralisado
+  - ☐ Petrificado
+  - ☐ Restrito
+  - ☐ Surdo
+
+CombatAttackPanel
+Exemplo:
+  Espada Longa
+    - Acerto: +5
+    - Dano: 1d8 + 3
+    - Tipo: Cortante
+  Arco Curto
+    - Acerto: +4
+    - Dano: 1d6 + 2
+    - Tipo: Perfurante
+    - Munição: 20
+
+CombatSpellPanel
+Exemplo:
+  Bola de Fogo
+    - Nível: 3
+    - Dano: 8d6
+    - Alcance: 45m
+    - Área: 6m
+    - CD: 15
+  Mísseis Mágicos
+    - Nível: 1
+    - Dano: 3d4 + 3
+
+CombatSkillPanel
+Exemplo:
+  Surto de Ação
+    - Recarga: Descanso Curto
+    - Usos: 1 / 1
+  Fúria
+    - Usos: 2 / 2
+
+CombatResourcePanel
+  - HP: 35 / 35
+  - CA: 17
+  - Ki: 3 / 3
+  - Fúria: 2 / 2
+  - Magia Nível 1: 4 / 4
+  - Magia Nível 2: 2 / 2
+
+CombatEquipmentPanel
+  - Arma Principal: Espada Longa
+  - Arma Secundária: Adaga
+  - Armadura: Cota de Malha
+  - Escudo: Escudo de Aço
+
+CombatResistancePanel
+  - Fogo
+  - Veneno
+  - Radiante
+
+CombatWeaknessPanel
+  - Contundente
+  - Gelo
+
+CombatImmunityPanel
+  - Veneno
+  - Paralisia
+
+================================================================================
+MODOS DE VISUALIZAÇÃO
+================================================================================
+
+Modo Compacto
+Exibe apenas:
+  - Nome
+  - HP
+  - CA
+  - Quantidade de Status
+
+Modo Detalhado
+Exibe:
+  - Nome
+  - HP
+  - CA
+  - Status
+  - Ataques
+  - Magias
+  - Habilidades
+  - Recursos
+  - Equipamentos
+  - Resistências
+  - Fraquezas
+  - Imunidades
+
+================================================================================
+NOVOS COMPONENTES OFICIAIS
+================================================================================
+
+  - CombatAccordion
+  - CombatParticipantCard
+  - CombatEnemyCard
+  - CombatHPControl
+  - CombatStatusPanel
+  - CombatAttackPanel
+  - CombatSpellPanel
+  - CombatSkillPanel
+  - CombatResourcePanel
+  - CombatEquipmentPanel
+  - CombatResistancePanel
+  - CombatWeaknessPanel
+  - CombatImmunityPanel
+  - CombatArmorClassPanel

@@ -1,0 +1,24 @@
+================================================================================
+FASES DE DESENVOLVIMENTO
+================================================================================
+
+Fase 1
+Core
+
+Fase 2
+Mundo
+
+Fase 3
+Biblioteca RPG
+
+Fase 4
+Personagens
+
+Fase 5
+Campanhas
+
+Fase 6
+Combates
+
+Fase 7
+Relatórios
