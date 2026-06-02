@@ -215,3 +215,42 @@ Combates podem existir sem Sessão.
 
 RN-055
 O sistema opera exclusivamente em Português
+
+RN-056
+Participantes e inimigos devem exibir seus ataques durante o combate.
+
+RN-057
+Participantes e inimigos devem exibir suas habilidades durante o combate.
+
+RN-058
+Participantes e inimigos devem exibir suas magias durante o combate.
+
+RN-059
+O combate deve utilizar visualização expansível (Accordion).
+
+RN-060
+O combate deve possuir modo compacto e modo detalhado.
+
+RN-061
+O mestre pode aplicar dano e cura diretamente no card do participante.
+
+RN-062
+O mestre pode adicionar e remover status de batalha manualmente.
+
+RN-063
+Os status não são removidos automaticamente pelo sistema.
+
+RN-064
+Os status são controlados exclusivamente pelo mestre.
+
+RN-065
+O combate funciona como painel tático de consulta rápida.
+
+RN-066
+Participantes e inimigos devem exibir a Classe de Armadura (CA) durante o combate.
+
+RN-067
+A CA deve ser visível tanto no modo compacto quanto no modo detalhado.
+
+RN-068
+O sistema deve recalcular a CA automaticamente ao alterar equipamentos, habilidades, magias ou efeitos que afetem defesa.
