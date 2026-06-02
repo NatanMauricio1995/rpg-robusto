@@ -1,21 +1,70 @@
+**Objetivo:** explicar todos os módulos do sistema.
+
 ================================================================================
-SISTEMA RPG — ARQUITETURA FUNCIONAL DEFINITIVA v1.0
+ARQUITETURA
 ================================================================================
 
-Filosofia do Sistema
+## 1. Core
+    - Usuários
+    - Permissões
+    - Configurações
+    - Logs
 
-O sistema é baseado em:
-  - D&D 5e Adaptado
+## 2. Mundo
+    - Mundos
+        - Religiões
+        - Facções
+        - Organizações
+        - Lojas
+        - Espaço geográfico
+            - Continentes
+                - Reinos
+                    - Cidades
+                        - Ambientes
+                            - Locais
 
-Princípios:
-  - ✓ Automatizar cálculos
-  - ✓ Automatizar progressão
-  - ✓ Automatizar recursos
-  - ✓ Automatizar descanso
-  - ✓ Automatizar subida de nível
-  - ✓ NÃO automatizar narrativa
-  - ✓ NÃO automatizar decisões do mestre
-  - ✓ NÃO automatizar combate completo
+## 3. Biblioteca RPG
+    - Idiomas
+    - Escolas de Magia
+    - Raças
+        - Sub-Raças
+    - Classes
+        - Sub-classes
+    - Habilidades
+    - Magias
+    - Equipamentos
+        - Armas
+        - Armaduras
+        - Itens
+        - Encantamentos
+    - Crafting
+        - Receitas
+    - NPCs
+    - Inimigos
+
+## 4. Personagens
+    - Personagens base
+    - Fichas de campanha
+
+## 5. Campanhas
+    - Campanhas
+    - Capítulos
+    - Missões
+    - Sessões
+    - Combates
+
+## 6. Arquivos
+    - Imagens
+    - Mapas
+    - Ícones
+    - Documentos
+
+## 7. Relatórios  
+    - Campanhas
+    - Personagens
+    - Combates
+    - Inimigos  
+
 
 ================================================================================
 TIPOS DE USUÁRIO
