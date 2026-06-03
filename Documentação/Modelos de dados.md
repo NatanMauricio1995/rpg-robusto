@@ -1,11 +1,10 @@
-================================================================================
-MODELO DE DADOS (FIRESTORE)
-================================================================================
 
 # CAPÍTULO 1 — CONVENÇÕES GERAIS
 ## 1.1 Padrão de IDs
  - Todas as entidades utilizam ID próprio.
-    Exemplos:
+
+Exemplos:
+
         USR0001
         MND0001
         REL0001
@@ -45,8 +44,8 @@ MODELO DE DADOS (FIRESTORE)
 
 ## 1.2 Datas
  - Todos os documentos possuem:
-    createdAt: Timestamp
-    updatedAt: Timestamp
+    - createdAt: Timestamp
+    - updatedAt: Timestamp
 
 ## 1.3 Imagens
  - Imagem principal:
@@ -63,10 +62,10 @@ MODELO DE DADOS (FIRESTORE)
  - Armazenamento único.
     moedas: number
  - Conversão:
-    Cobre = 1
-    Prata = 10
-    Ouro = 100
-    Platina = 1000
+    - Cobre = 1
+    - Prata = 10
+    - Ouro = 100
+    - Platina = 1000
    
 # CAPÍTULO 2 — CORE
  - usuarios

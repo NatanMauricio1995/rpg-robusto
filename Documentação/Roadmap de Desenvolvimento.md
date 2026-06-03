@@ -1,4 +1,4 @@
-# Filosofia (489)
+# Filosofia
 **Regra principal:**
  - Construir primeiro as dependências.
  - Construir por último os consumidores.
@@ -32,16 +32,16 @@ Exemplo:
 
 ### Etapa 1.3 - Estrutura de pastas
 
-    src/
-        components/
-        layouts/
-        modules/
-        services/
-        hooks/
-        contexts/
-        lib/
-        firebase/
-        styles/
+    src
+        components
+        layouts
+        modules
+        services
+        hooks
+        contexts
+        lib
+        firebase
+        styles
 
 ## Etapa 1.4 - Entrega
 

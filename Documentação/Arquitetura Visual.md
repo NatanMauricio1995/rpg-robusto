@@ -15,8 +15,6 @@ Seu objetivo é garantir:
 * Facilidade de manutenção
 * Experiência consistente para Mestres e Jogadores
 
----
-
 ## 1.2 Princípios Visuais
 
 O sistema seguirá obrigatoriamente:
@@ -33,8 +31,6 @@ Página
 
 Não é permitido criar elementos específicos diretamente nas páginas quando já existir um componente reutilizável equivalente.
 
----
-
 ### Desktop First
 
 O sistema é prioritariamente desenvolvido para utilização em computadores.
@@ -45,8 +41,6 @@ O foco principal é:
 * Criação de conteúdo
 * Gerenciamento de combates
 * Administração da biblioteca RPG
-
----
 
 ### Responsividade
 
@@ -70,7 +64,6 @@ Mobile:
 
 * Consulta simplificada
 
----
 
 ### Combate Assistido
 
@@ -86,8 +79,6 @@ O sistema auxilia:
 
 A narrativa continua sendo conduzida pelo mestre.
 
----
-
 ### D&D 5e Adaptado
 
 Todos os componentes devem considerar:
@@ -102,26 +93,22 @@ Todos os componentes devem considerar:
 
 como elementos centrais da experiência.
 
----
-
 # CAPÍTULO 2 — LAYOUT MESTRE
 
 ## 2.1 Estrutura Geral
 
 Layout padrão:
 
-┌─────────────────────────────────────────┐
-│ Header                                  │
-├──────────────┬──────────────────────────┤
-│              │                          │
-│ Menu Lateral │ Área de Conteúdo         │
-│              │                          │
-│              │                          │
-├──────────────┴──────────────────────────┤
-│ Footer                                  │
-└─────────────────────────────────────────┘
-
----
+    ┌─────────────────────────────────────────┐
+    │ Header                                  │
+    ├──────────────┬──────────────────────────┤
+    │              │                          │
+    │ Menu Lateral │ Área de Conteúdo         │
+    │              │                          │
+    │              │                          │
+    ├──────────────┴──────────────────────────┤
+    │ Footer                                  │
+    └─────────────────────────────────────────┘
 
 ## 2.2 Header
 
@@ -134,8 +121,6 @@ Componentes:
 * Notificações
 * Perfil do Usuário
 
----
-
 ### Pesquisa Global
 
 Permite localizar:
@@ -147,8 +132,6 @@ Permite localizar:
 * Locais
 * Itens
 
----
-
 ### Notificações
 
 Exemplos:
@@ -157,8 +140,6 @@ Exemplos:
 * Convite para campanha
 * Subida de nível
 * Missão concluída
-
----
 
 ### Perfil
 
@@ -174,31 +155,26 @@ Ações:
 * Configurações
 * Sair
 
----
-
 ## 2.3 Menu Lateral
 
 Exibido permanentemente no Desktop.
 
-Estrutura:
+### Menu do Mestre
+- Dashboard
+- Mundo
+- Biblioteca RPG
+- Personagens
+- Campanhas
+- Combates
+- Relatórios
+- Configurações
 
-Dashboard
-
-Mundo
-
-Biblioteca RPG
-
-Personagens
-
-Campanhas
-
-Combates
-
-Relatórios
-
-Configurações
-
----
+### Menu do Jogador
+- Dashboard
+- Meus Personagens
+- Minhas Campanhas
+- Combates
+- Configurações
 
 ## 2.4 Footer
 
@@ -210,31 +186,27 @@ Informações:
 * Direitos Autorais
 * Informações técnicas
 
----
-
 # CAPÍTULO 3 — NAVEGAÇÃO
 
 ## 3.1 Estrutura Principal
 
-Menu Principal
+- Menu Principal
 
-Dashboard
+- Dashboard
 
-Mundo
+- Mundo
 
-Biblioteca RPG
+- Biblioteca RPG
 
-Personagens
+- Personagens
 
-Campanhas
+- Campanhas
 
-Combates
+- Combates
 
-Relatórios
+- Relatórios
 
-Configurações
-
----
+- Configurações
 
 ## 3.2 Módulo Mundo
 
@@ -250,8 +222,6 @@ Submenu:
 * Cidades
 * Ambientes
 * Locais
-
----
 
 ## 3.3 Módulo Biblioteca RPG
 
@@ -287,7 +257,7 @@ Submenu:
 
 * Inimigos
 
----
+
 
 ## 3.4 Módulo Personagens
 
@@ -295,7 +265,7 @@ Submenu:
 
 * Lista de Personagens
 
----
+
 
 ## 3.5 Módulo Campanhas
 
@@ -313,7 +283,7 @@ Não abrir:
 
 * Última campanha acessada
 
----
+
 
 ## 3.6 Módulo Combates
 
@@ -321,7 +291,7 @@ Submenu:
 
 * Lista de Combates
 
----
+
 
 ## 3.7 Relatórios
 
@@ -332,7 +302,7 @@ Submenu:
 * Inimigos
 * Combates
 
----
+
 
 ## 3.8 Configurações
 
@@ -342,7 +312,7 @@ Submenu:
 * Preferências
 * Sistema
 
----
+
 
 # CAPÍTULO 4 — DASHBOARD
 
@@ -358,7 +328,7 @@ Não abrir:
 
 Dashboard diretamente.
 
----
+
 
 ## 4.2 Home Screen
 
@@ -372,7 +342,7 @@ Acesso rápido
 
 Atalhos principais
 
----
+
 
 Exemplo:
 
@@ -384,7 +354,7 @@ Botões:
 * Meus Personagens
 * Dashboard
 
----
+
 
 ## 4.3 Dashboard Mestre
 
@@ -392,7 +362,7 @@ Objetivo:
 
 Exibir tudo que necessita atenção.
 
----
+
 
 Cards Principais
 
@@ -403,7 +373,7 @@ Cards Principais
 * Missões
 * Combates
 
----
+
 
 Cards Secundários
 
@@ -412,7 +382,7 @@ Cards Secundários
 * Missões Pendentes
 * Últimos Logs
 
----
+
 
 Ações Rápidas
 
@@ -421,7 +391,7 @@ Ações Rápidas
 * Novo Inimigo
 * Novo Combate
 
----
+
 
 ## 4.4 Dashboard Jogador
 
@@ -429,7 +399,7 @@ Objetivo:
 
 Mostrar progresso do jogador.
 
----
+
 
 Cards
 
@@ -437,7 +407,7 @@ Cards
 * Campanhas
 * Sessões Recentes
 
----
+
 
 Informações
 
@@ -445,7 +415,7 @@ Informações
 * Última Sessão
 * Última Campanha Acessada
 
----
+
 
 ## 4.5 Permissões Visuais
 
@@ -459,7 +429,7 @@ Visualiza:
 * Todos os NPCs
 * Todos os inimigos
 
----
+
 
 ### Jogador
 
@@ -469,11 +439,11 @@ Visualiza apenas:
 * Suas campanhas
 * Seus dados
 
----
+
 
 Jogadores não podem visualizar fichas de outros jogadores.
 
----
+
 
 ## 4.6 Fluxo Inicial
 
@@ -495,7 +465,7 @@ Módulo Selecionado
 
 Tela Específica
 
----
+
 
 # CAPÍTULO 5 — COMPONENTES BASE
 
@@ -505,7 +475,7 @@ Todos os módulos do sistema devem utilizar componentes reutilizáveis.
 
 É proibido criar componentes específicos quando já existir um componente padrão equivalente.
 
----
+
 
 ## 5.2 Componentes de Formulário
 
@@ -530,7 +500,7 @@ Estados:
 * Disabled
 * Loading
 
----
+
 
 ## TextBox
 
@@ -546,7 +516,7 @@ Tipos:
 * Senha
 * URL
 
----
+
 
 ## TextArea
 
@@ -562,7 +532,7 @@ Utilizado em:
 * Anotações
 * Missões
 
----
+
 
 ## Select
 
@@ -570,7 +540,7 @@ Função:
 
 Seleção única.
 
----
+
 
 ## MultiSelect
 
@@ -588,7 +558,7 @@ Utilizado em:
 * Magias
 * Facções
 
----
+
 
 ## Checkbox
 
@@ -596,7 +566,7 @@ Função:
 
 Ativar ou desativar opções.
 
----
+
 
 ## RadioGroup
 
@@ -604,7 +574,7 @@ Função:
 
 Escolha única entre opções.
 
----
+
 
 ## DatePicker
 
@@ -612,7 +582,7 @@ Função:
 
 Seleção de datas.
 
----
+
 
 ## NumberStepper
 
@@ -627,7 +597,7 @@ Utilizado em:
 * Peso
 * Valores
 
----
+
 
 ## 5.3 Componentes de Mídia
 
@@ -640,7 +610,7 @@ Permite:
 
 Conforme definido na arquitetura funcional.
 
----
+
 
 ### ImageGallery
 
@@ -652,7 +622,7 @@ Utilizado em:
 * Campanhas
 * Sessões
 
----
+
 
 ### Avatar
 
@@ -662,7 +632,7 @@ Representação visual de:
 * Jogadores
 * NPCs
 
----
+
 
 ## 5.4 Componentes de Navegação
 
@@ -676,7 +646,7 @@ Utilizado em:
 * Inimigos
 * Diversos módulos
 
----
+
 
 ## Breadcrumb
 
@@ -690,7 +660,7 @@ Mundo
 
 → Cidade
 
----
+
 
 ## 5.5 Componentes de Feedback
 
@@ -703,7 +673,7 @@ Tipos:
 * Upload
 * Card
 
----
+
 
 ## Toast
 
@@ -714,7 +684,7 @@ Tipos:
 * Warning
 * Info
 
----
+
 
 ## ConfirmDialog
 
@@ -723,7 +693,7 @@ Utilizado para:
 * Exclusões
 * Ações irreversíveis
 
----
+
 
 # CAPÍTULO 6 — CRUD PADRÃO
 
@@ -731,18 +701,18 @@ Utilizado para:
 
 Todas as telas administrativas devem seguir:
 
-┌──────────────────────────────────────┐
-│ Título                               │
-├──────────────────────────────────────┤
-│ Toolbar                              │
-├──────────────────────────────────────┤
-│ Filtros                              │
-├─────────────┬────────────────────────┤
-│ Grid        │ Formulário             │
-│             │                        │
-└─────────────┴────────────────────────┘
+    ┌──────────────────────────────────────┐
+    │ Título                               │
+    ├──────────────────────────────────────┤
+    │ Toolbar                              │
+    ├──────────────────────────────────────┤
+    │ Filtros                              │
+    ├─────────────┬────────────────────────┤
+    │ Grid        │ Formulário             │
+    │             │                        │
+    └─────────────┴────────────────────────┘
 
----
+
 
 ## 6.2 CrudToolbar
 
@@ -754,7 +724,7 @@ Botões padrão:
 * Duplicar
 * Exportar
 
----
+
 
 ## 6.3 SearchBox
 
@@ -766,7 +736,7 @@ Permite:
 * Busca parcial
 * Busca instantânea
 
----
+
 
 ## 6.4 DataGrid
 
@@ -778,7 +748,7 @@ Recursos obrigatórios:
 * Seleção
 * Pesquisa
 
----
+
 
 ## 6.5 Formulários
 
@@ -790,7 +760,7 @@ Conforme decisão oficial:
 
 Cadastros grandes não utilizarão páginas próprias.
 
----
+
 
 Exemplos:
 
@@ -799,7 +769,7 @@ Exemplos:
 * Inimigos
 * Personagens
 
----
+
 
 ## 6.6 Organização dos Campos
 
@@ -821,7 +791,7 @@ Equipamentos
 
 Progressão
 
----
+
 
 # CAPÍTULO 7 — MÓDULO MUNDO
 
@@ -829,7 +799,7 @@ Progressão
 
 Gerenciar toda a estrutura narrativa do mundo.
 
----
+
 
 ## 7.2 Mundo
 
@@ -843,7 +813,7 @@ Campos:
 * Imagem
 * Descrição
 
----
+
 
 ### Lore
 
@@ -852,7 +822,7 @@ Campos:
 * História
 * Eventos importantes
 
----
+
 
 ### Origem
 
@@ -861,7 +831,7 @@ Campos:
 * Criação do mundo
 * Mitos
 
----
+
 
 ### Cosmologia
 
@@ -871,7 +841,7 @@ Campos:
 * Divindades
 * Estrutura cósmica
 
----
+
 
 ### Relacionamentos
 
@@ -881,7 +851,7 @@ Campos:
 * Facções
 * Organizações
 
----
+
 
 ## 7.3 Religiões
 
@@ -893,20 +863,20 @@ Abas:
 * Símbolo
 * Descrição
 
----
+
 
 ### Dogmas
 
 * Crenças
 * Regras
 
----
+
 
 ### Relacionamentos
 
 * Mundo
 
----
+
 
 ## 7.4 Facções
 
@@ -918,21 +888,21 @@ Abas:
 * Imagem
 * Descrição
 
----
+
 
 ### Objetivos
 
 * Objetivos
 * Metas
 
----
+
 
 ### Relações
 
 * Aliados
 * Inimigos
 
----
+
 
 ## 7.5 Organizações
 
@@ -944,14 +914,14 @@ Abas:
 * Imagem
 * Descrição
 
----
+
 
 ### Relações
 
 * Facção
 * Mundo
 
----
+
 
 ## 7.6 Lojas
 
@@ -963,13 +933,13 @@ Abas:
 * Imagem
 * Descrição
 
----
+
 
 ### Proprietário
 
 * NPC
 
----
+
 
 ### Estoque
 
@@ -977,13 +947,13 @@ Abas:
 * Preços
 * Quantidade
 
----
+
 
 ### Localização
 
 * Local
 
----
+
 
 ## 7.7 Continentes
 
@@ -993,7 +963,7 @@ Abas:
 * História
 * Relacionamentos
 
----
+
 
 ## 7.8 Reinos
 
@@ -1003,7 +973,7 @@ Abas:
 * Governança
 * História
 
----
+
 
 ## 7.9 Cidades
 
@@ -1013,7 +983,7 @@ Abas:
 * População
 * História
 
----
+
 
 ## 7.10 Ambientes
 
@@ -1023,7 +993,7 @@ Abas:
 * Clima
 * História
 
----
+
 
 ## 7.11 Locais
 
@@ -1034,26 +1004,26 @@ Abas:
 * Nome
 * Descrição
 
----
+
 
 ### Mapa
 
 * Imagem
 * Coordenadas
 
----
+
 
 ### Galeria
 
 * Imagens
 
----
+
 
 ### História
 
 * Lore local
 
----
+
 
 ### Relacionamentos
 
@@ -1065,18 +1035,18 @@ Exibir automaticamente:
 
 Conforme UX oficial.
 
----
+
 
 ## 7.12 WorldTree
 
 Visualização oficial:
 
-Mundo
-└── Continente
-└── Reino
-└── Cidade
-└── Ambiente
-└── Local
+    Mundo
+    └── Continente
+    └── Reino
+    └── Cidade
+    └── Ambiente
+    └── Local
 
 Sem painel lateral.
 
@@ -1084,7 +1054,7 @@ Sem modo mapa.
 
 Sem visualização alternativa.
 
----
+
 
 # CAPÍTULO 8 — BIBLIOTECA RPG
 
@@ -1094,7 +1064,7 @@ Todas as entidades utilizam:
 
 Grid + Formulário Modal
 
----
+
 
 ## 8.2 Idiomas
 
@@ -1105,7 +1075,7 @@ Abas:
 * Nome
 * Descrição
 
----
+
 
 ## 8.3 Escolas de Magia
 
@@ -1116,7 +1086,7 @@ Abas:
 * Nome
 * Descrição
 
----
+
 
 ## 8.4 Raças
 
@@ -1131,7 +1101,7 @@ Abas:
 * Deslocamento
 * Expectativa de Vida
 
----
+
 
 ### Atributos
 
@@ -1142,55 +1112,55 @@ Abas:
 * Sabedoria
 * Carisma
 
----
+
 
 ### Idiomas
 
 * MultiSelect
 
----
+
 
 ### Sentidos
 
 * MultiSelect
 
----
+
 
 ### Resistências
 
 * MultiSelect
 
----
+
 
 ### Fraquezas
 
 * MultiSelect
 
----
+
 
 ### Imunidades
 
 * MultiSelect
 
----
+
 
 ### Habilidades
 
 * MultiSelect
 
----
+
 
 ### Magias
 
 * MultiSelect
 
----
+
 
 ### Sub-Raças Relacionadas
 
 Exibição automática.
 
----
+
 
 ## 8.5 Sub-Raças
 
@@ -1206,7 +1176,7 @@ Abas:
 * Habilidades
 * Magias
 
----
+
 
 ## 8.6 Classes
 
@@ -1219,31 +1189,31 @@ Abas:
 * Descrição
 * Dado de Vida
 
----
+
 
 ### Subclasses
 
 Lista vinculada.
 
----
+
 
 ### Progressão
 
 Tabela por nível.
 
----
+
 
 ### Habilidades
 
 Lista vinculada.
 
----
+
 
 ### Magias
 
 Lista vinculada.
 
----
+
 
 ## 8.7 Subclasses
 
@@ -1254,7 +1224,7 @@ Abas:
 * Habilidades
 * Magias
 
----
+
 
 ## 8.8 Habilidades
 
@@ -1265,27 +1235,27 @@ Abas:
 * Nome
 * Descrição
 
----
+
 
 ### Custos
 
 * Recursos
 * Consumo
 
----
+
 
 ### Efeitos
 
 * Bônus
 * Condições
 
----
+
 
 ### Progressão
 
 * Escalonamento
 
----
+
 
 ## 8.9 Magias
 
@@ -1297,7 +1267,7 @@ Abas:
 * Escola
 * Nível
 
----
+
 
 ### Conjuração
 
@@ -1305,20 +1275,20 @@ Abas:
 * Alcance
 * Área
 
----
+
 
 ### Efeitos
 
 * Dano
 * Condições
 
----
+
 
 ### Escalonamento
 
 * Progressão por nível
 
----
+
 
 ## 8.10 Armas
 
@@ -1329,7 +1299,7 @@ Abas:
 * Encantamentos
 * Habilidades
 
----
+
 
 ## 8.11 Armaduras
 
@@ -1340,7 +1310,7 @@ Abas:
 * Encantamentos
 * Habilidades
 
----
+
 
 ## 8.12 Itens
 
@@ -1350,7 +1320,7 @@ Abas:
 * Efeitos
 * Encantamentos
 
----
+
 
 ## 8.13 Encantamentos
 
@@ -1361,7 +1331,7 @@ Abas:
 * Modificadores
 * Restrições
 
----
+
 
 ## 8.14 Receitas
 
@@ -1372,7 +1342,7 @@ Abas:
 * Resultado
 * Requisitos
 
----
+
 
 ## 8.15 NPCs
 
@@ -1386,7 +1356,7 @@ Abas:
 * Missões
 * Lojas
 
----
+
 
 ## 8.16 Inimigos
 
@@ -1403,7 +1373,7 @@ Abas:
 * Loot
 * XP
 
----
+
 
 # CAPÍTULO 9 — MÓDULO PERSONAGENS
 
@@ -1418,7 +1388,7 @@ O módulo de personagens é responsável por:
 * Inventário
 * Histórico
 
----
+
 
 ## 9.2 Lista de Personagens
 
@@ -1426,7 +1396,7 @@ Layout:
 
 Grid + Formulário Modal
 
----
+
 
 Campos Visíveis
 
@@ -1437,7 +1407,7 @@ Campos Visíveis
 * Nível
 * Status
 
----
+
 
 Status possíveis
 
@@ -1446,7 +1416,7 @@ Status possíveis
 * Desaparecido
 * Aposentado
 
----
+
 
 Permissões
 
@@ -1456,7 +1426,7 @@ Visualiza:
 
 * Apenas seus personagens
 
----
+
 
 ### Mestre
 
@@ -1464,7 +1434,7 @@ Visualiza:
 
 * Todos os personagens ligados às campanhas que administra
 
----
+
 
 ## 9.3 Cadastro de Personagem
 
@@ -1472,7 +1442,7 @@ Abertura:
 
 Modal
 
----
+
 
 ## 9.4 Ficha de Personagem
 
@@ -1482,31 +1452,17 @@ Página Única
 
 Não utilizar abas.
 
----
-
 Estrutura:
-
-```text
-Resumo
-
-Atributos
-
-Perícias
-
-Habilidades
-
-Magias
-
-Equipamentos
-
-Inventário
-
-História
-```
+- Resumo
+- Atributos
+- Perícias
+- Habilidades
+- Magias
+- Equipamentos
+- Inventário
+- História
 
 Tudo em scroll vertical.
-
----
 
 ## 9.5 Seção Resumo
 
@@ -1525,15 +1481,11 @@ Exibir:
 * CA
 * Status
 
----
-
 ## 9.6 Seção Atributos
 
 Utiliza:
 
 AttributePanel
-
----
 
 Exibir:
 
@@ -1544,14 +1496,10 @@ Exibir:
 * Sabedoria
 * Carisma
 
----
-
 Mostrar:
 
 * Valor
 * Modificador
-
----
 
 ## 9.7 Seção Perícias
 
@@ -1561,7 +1509,7 @@ Exibir:
 * Proficiência
 * Bônus Final
 
----
+
 
 ## 9.8 Seção Habilidades
 
@@ -1569,7 +1517,7 @@ Utiliza:
 
 SkillPanel
 
----
+
 
 Exibir:
 
@@ -1578,7 +1526,7 @@ Exibir:
 * Usos
 * Recarga
 
----
+
 
 ## 9.9 Seção Magias
 
@@ -1586,7 +1534,7 @@ Utiliza:
 
 SpellPanel
 
----
+
 
 Exibir:
 
@@ -1596,13 +1544,13 @@ Exibir:
 * Alcance
 * Dano
 
----
+
 
 Mostrar também:
 
 Espaços de Magia
 
----
+
 
 ## 9.10 Seção Equipamentos
 
@@ -1610,7 +1558,7 @@ Utiliza:
 
 EquipmentPanel
 
----
+
 
 Exibir:
 
@@ -1620,7 +1568,7 @@ Exibir:
 * Escudo
 * Acessórios
 
----
+
 
 ## 9.11 Seção Inventário
 
@@ -1628,7 +1576,7 @@ Utiliza:
 
 InventoryGrid
 
----
+
 
 Exibir:
 
@@ -1637,14 +1585,14 @@ Exibir:
 * Peso
 * Valor
 
----
+
 
 Mostrar:
 
 * Peso Atual
 * Peso Máximo
 
----
+
 
 ## 9.12 Seção História
 
@@ -1654,7 +1602,7 @@ Exibir:
 * Aparência
 * Personalidade
 
----
+
 
 Fluxo:
 
@@ -1668,7 +1616,7 @@ Mestre aprova
 
 História oficial
 
----
+
 
 ## 9.13 Ficha de Campanha
 
@@ -1684,7 +1632,7 @@ Exibir:
 * Equipamentos
 * Inventário
 
----
+
 
 # CAPÍTULO 10 — MÓDULO CAMPANHAS
 
@@ -1692,7 +1640,7 @@ Exibir:
 
 Gerenciar campanhas completas.
 
----
+
 
 ## 10.2 Lista de Campanhas
 
@@ -1700,7 +1648,7 @@ Visualização:
 
 CampaignCard
 
----
+
 
 Exibir:
 
@@ -1709,7 +1657,7 @@ Exibir:
 * Status
 * Participantes
 
----
+
 
 Status:
 
@@ -1718,13 +1666,13 @@ Status:
 * Pausada
 * Finalizada
 
----
+
 
 ## 10.3 Cadastro de Campanha
 
 Modal
 
----
+
 
 Campos:
 
@@ -1734,7 +1682,7 @@ Campos:
 * Mundo
 * Mestre
 
----
+
 
 ## 10.4 Tela da Campanha
 
@@ -1742,7 +1690,7 @@ Organização oficial:
 
 Abas
 
----
+
 
 Abas:
 
@@ -1754,7 +1702,7 @@ Abas:
 * Combates
 * Anotações
 
----
+
 
 ## 10.5 Aba Resumo
 
@@ -1767,7 +1715,7 @@ Exibir:
 * Mundo
 * Mestre
 
----
+
 
 ## 10.6 Aba Participantes
 
@@ -1776,14 +1724,14 @@ Exibir:
 * Jogadores
 * Personagens
 
----
+
 
 Ações:
 
 * Adicionar
 * Remover
 
----
+
 
 ## 10.7 Aba Capítulos
 
@@ -1791,7 +1739,7 @@ Utiliza:
 
 ChapterCard
 
----
+
 
 Exibir:
 
@@ -1799,7 +1747,7 @@ Exibir:
 * Ordem
 * Descrição
 
----
+
 
 ## 10.8 Aba Missões
 
@@ -1807,7 +1755,7 @@ Utiliza:
 
 MissionCard
 
----
+
 
 Tipos:
 
@@ -1815,7 +1763,7 @@ Tipos:
 * Secundária
 * Oculta
 
----
+
 
 Exibir:
 
@@ -1823,7 +1771,7 @@ Exibir:
 * Status
 * Local
 
----
+
 
 ## 10.9 Aba Sessões
 
@@ -1831,7 +1779,7 @@ Utiliza:
 
 SessionCard
 
----
+
 
 Exibir:
 
@@ -1839,14 +1787,14 @@ Exibir:
 * Participantes
 * Data
 
----
+
 
 Acesso:
 
 * Anotações
 * Imagens
 
----
+
 
 ## 10.10 Aba Combates
 
@@ -1856,20 +1804,20 @@ Exibir:
 * Participantes
 * Status
 
----
+
 
 Ações:
 
 * Criar Combate
 * Abrir Combate
 
----
+
 
 ## 10.11 Aba Anotações
 
 Uso exclusivo do mestre.
 
----
+
 
 Campos:
 
@@ -1877,7 +1825,7 @@ Campos:
 * Imagens
 * Observações
 
----
+
 
 ## 10.12 Fluxo da Campanha
 
@@ -1907,7 +1855,7 @@ Criar Sessões
 
 Criar Combates
 
----
+
 
 # CAPÍTULO 11 — MÓDULO COMBATE
 
@@ -1919,7 +1867,7 @@ Painel Tático de Consulta Rápida
 
 Não é um sistema automatizado de combate.
 
----
+
 
 ## 11.2 Lista de Combates
 
@@ -1930,7 +1878,7 @@ Exibir:
 * Participantes
 * Status
 
----
+
 
 ## 11.3 Tela de Combate
 
@@ -1938,13 +1886,13 @@ Visualização oficial:
 
 CombatAccordion
 
----
+
 
 Participantes iniciam:
 
 Recolhidos
 
----
+
 
 ## 11.4 Modo Compacto
 
@@ -1952,7 +1900,7 @@ CombatParticipantCard
 
 CombatEnemyCard
 
----
+
 
 Exibir:
 
@@ -1961,7 +1909,7 @@ Exibir:
 * CA
 * Quantidade de Status
 
----
+
 
 Exemplo:
 
@@ -1973,7 +1921,7 @@ CA: 17
 
 Status: 2
 
----
+
 
 ## 11.5 Modo Detalhado
 
@@ -1992,7 +1940,7 @@ Exibir:
 * Fraquezas
 * Imunidades
 
----
+
 
 ## 11.6 CombatHPControl
 
@@ -2001,7 +1949,7 @@ Permitir:
 * Aplicar Dano
 * Aplicar Cura
 
----
+
 
 Modo rápido:
 
@@ -2017,7 +1965,7 @@ Modo rápido:
 
 +10
 
----
+
 
 Modo personalizado:
 
@@ -2027,7 +1975,7 @@ Aplicar Dano
 
 Aplicar Cura
 
----
+
 
 ## 11.7 CombatArmorClassPanel
 
@@ -2042,13 +1990,13 @@ Opcional:
 * Escudo
 * CA Final
 
----
+
 
 ## 11.8 CombatStatusPanel
 
 Controle exclusivo do mestre.
 
----
+
 
 Lista Oficial
 
@@ -2068,7 +2016,7 @@ Lista Oficial
 * Restrito
 * Surdo
 
----
+
 
 ## 11.9 Comportamento Automático
 
@@ -2080,7 +2028,7 @@ Aplicar automaticamente:
 
 Caído
 
----
+
 
 ## 11.10 CombatAttackPanel
 
@@ -2091,13 +2039,13 @@ Exibir:
 * Dano
 * Tipo
 
----
+
 
 Opcional:
 
 * Munição
 
----
+
 
 ## 11.11 CombatSpellPanel
 
@@ -2110,7 +2058,7 @@ Exibir:
 * Área
 * CD
 
----
+
 
 ## 11.12 CombatSkillPanel
 
@@ -2120,7 +2068,7 @@ Exibir:
 * Usos
 * Recarga
 
----
+
 
 ## 11.13 CombatResourcePanel
 
@@ -2133,7 +2081,7 @@ Exibir:
 * Espaços de Magia
 * Recursos Especiais
 
----
+
 
 ## 11.14 CombatEquipmentPanel
 
@@ -2144,7 +2092,7 @@ Exibir:
 * Armadura
 * Escudo
 
----
+
 
 ## 11.15 CombatResistancePanel
 
@@ -2152,7 +2100,7 @@ Exibir:
 
 Resistências Ativas
 
----
+
 
 ## 11.16 CombatWeaknessPanel
 
@@ -2160,7 +2108,7 @@ Exibir:
 
 Fraquezas Ativas
 
----
+
 
 ## 11.17 CombatImmunityPanel
 
@@ -2168,7 +2116,7 @@ Exibir:
 
 Imunidades Ativas
 
----
+
 
 ## 11.18 Busca Tática
 
@@ -2176,7 +2124,7 @@ Campo:
 
 Pesquisar
 
----
+
 
 Exemplos:
 
@@ -2184,13 +2132,13 @@ Exemplos:
 * Espada Longa
 * Fúria
 
----
+
 
 Resultado:
 
 Destacar quem possui o item procurado.
 
----
+
 
 ## 11.19 Indicadores Visuais
 
@@ -2200,7 +2148,7 @@ Destacar:
 * Caído
 * Morto
 
----
+
 
 ## 11.20 Permissões
 
@@ -2214,7 +2162,7 @@ Pode:
 * Remover Status
 * Encerrar Combate
 
----
+
 
 ### Jogador
 
@@ -2222,7 +2170,7 @@ Pode apenas:
 
 * Consultar
 
----
+
 
 # CAPÍTULO 12 — RESPONSIVIDADE
 
@@ -2238,7 +2186,7 @@ Tablet Responsivo
 Mobile Consulta
 ```
 
----
+
 
 ## 12.2 Desktop
 
@@ -2250,7 +2198,7 @@ Resolução alvo:
 
 Experiência Completa.
 
----
+
 
 ### Comportamentos
 
@@ -2260,7 +2208,7 @@ Menu:
 Sempre aberto
 ```
 
----
+
 
 Grid:
 
@@ -2268,7 +2216,7 @@ Grid:
 Todas as colunas visíveis
 ```
 
----
+
 
 Formulários:
 
@@ -2278,7 +2226,7 @@ Grid à esquerda
 Formulário à direita
 ```
 
----
+
 
 Combate:
 
@@ -2290,7 +2238,7 @@ Accordion
 Painéis Táticos
 ```
 
----
+
 
 WorldTree:
 
@@ -2298,7 +2246,7 @@ WorldTree:
 Exibição Completa
 ```
 
----
+
 
 ## 12.3 Tablet
 
@@ -2308,7 +2256,7 @@ Faixa:
 768px até 1279px
 ```
 
----
+
 
 ### Comportamentos
 
@@ -2318,7 +2266,7 @@ Menu:
 Retrátil
 ```
 
----
+
 
 Grid:
 
@@ -2326,7 +2274,7 @@ Grid:
 Colunas reduzidas
 ```
 
----
+
 
 Formulários:
 
@@ -2334,7 +2282,7 @@ Formulários:
 Priorizar largura
 ```
 
----
+
 
 Combate:
 
@@ -2342,7 +2290,7 @@ Combate:
 Modo Compacto por padrão
 ```
 
----
+
 
 WorldTree:
 
@@ -2350,7 +2298,7 @@ WorldTree:
 Exibição simplificada
 ```
 
----
+
 
 ## 12.4 Mobile
 
@@ -2360,7 +2308,7 @@ Faixa:
 Até 767px
 ```
 
----
+
 
 ### Objetivo
 
@@ -2368,7 +2316,7 @@ Consulta rápida.
 
 Não é ambiente principal de administração.
 
----
+
 
 ### Comportamentos
 
@@ -2378,7 +2326,7 @@ Menu:
 Hambúrguer
 ```
 
----
+
 
 Grid:
 
@@ -2386,7 +2334,7 @@ Grid:
 Transformado em Cards
 ```
 
----
+
 
 Formulários:
 
@@ -2394,7 +2342,7 @@ Formulários:
 Limitados
 ```
 
----
+
 
 Combate:
 
@@ -2402,7 +2350,7 @@ Combate:
 Consulta apenas
 ```
 
----
+
 
 Campanhas:
 
@@ -2410,7 +2358,7 @@ Campanhas:
 Consulta apenas
 ```
 
----
+
 
 Personagens:
 
@@ -2418,7 +2366,7 @@ Personagens:
 Consulta completa
 ```
 
----
+
 
 ## 12.5 Componentes Responsivos
 
@@ -2436,7 +2384,7 @@ Espaçamento
 
 automaticamente.
 
----
+
 
 ## 12.6 Prioridade de Conteúdo
 
@@ -2460,7 +2408,7 @@ Ocultar inicialmente:
 Detalhes avançados
 ```
 
----
+
 
 # CAPÍTULO 13 — UX OFICIAL
 
@@ -2476,7 +2424,7 @@ Home Screen
 
 Não abrir Dashboard diretamente.
 
----
+
 
 ### Elementos
 
@@ -2486,7 +2434,7 @@ Mensagem de boas-vindas.
 
 Botões rápidos.
 
----
+
 
 Exemplo:
 
@@ -2494,7 +2442,7 @@ Exemplo:
 Bem-vindo ao Sistema RPG
 ```
 
----
+
 
 Atalhos:
 
@@ -2506,7 +2454,7 @@ Meus Personagens
 Dashboard
 ```
 
----
+
 
 ## 13.2 Perfil Mestre
 
@@ -2518,7 +2466,7 @@ Administra campanhas
 
 Não é tratado como jogador.
 
----
+
 
 Permissões:
 
@@ -2532,7 +2480,7 @@ Aprovar personagens
 Gerenciar combates
 ```
 
----
+
 
 ## 13.3 Perfil Jogador
 
@@ -2546,7 +2494,7 @@ Editar personagem próprio
 Consultar campanhas
 ```
 
----
+
 
 Não pode:
 
@@ -2558,7 +2506,7 @@ Editar mundo
 Editar biblioteca RPG
 ```
 
----
+
 
 ## 13.4 Personagens
 
@@ -2568,7 +2516,7 @@ Jogador visualiza:
 Somente seus personagens
 ```
 
----
+
 
 Mestre visualiza:
 
@@ -2578,7 +2526,7 @@ ligados às campanhas
 que administra
 ```
 
----
+
 
 ## 13.5 Privacidade
 
@@ -2589,7 +2537,7 @@ Não podem visualizar
 personagens de outros jogadores
 ```
 
----
+
 
 ## 13.6 Ficha do Personagem
 
@@ -2599,7 +2547,7 @@ Estrutura oficial:
 Página Única
 ```
 
----
+
 
 Organização:
 
@@ -2621,7 +2569,7 @@ Inventário
 História
 ```
 
----
+
 
 ## 13.7 Campanhas
 
@@ -2631,7 +2579,7 @@ Estrutura oficial:
 Abas
 ```
 
----
+
 
 Abas:
 
@@ -2651,7 +2599,7 @@ Combates
 Anotações
 ```
 
----
+
 
 ## 13.8 Combate
 
@@ -2662,7 +2610,7 @@ Todos os participantes
 recolhidos
 ```
 
----
+
 
 Motivo:
 
@@ -2670,7 +2618,7 @@ Motivo:
 Reduzir poluição visual
 ```
 
----
+
 
 ## 13.9 Busca Tática
 
@@ -2688,7 +2636,7 @@ Habilidades
 Equipamentos
 ```
 
----
+
 
 ## 13.10 Indicadores Visuais
 
@@ -2702,7 +2650,7 @@ Caído
 Morto
 ```
 
----
+
 
 ## 13.11 Comportamento de HP
 
@@ -2720,7 +2668,7 @@ Status Caído
 
 automaticamente.
 
----
+
 
 ## 13.12 WorldTree
 
@@ -2730,7 +2678,7 @@ Visualização oficial:
 Árvore Simples
 ```
 
----
+
 
 Estrutura:
 
@@ -2748,7 +2696,7 @@ Mundo
                 └── Local
 ```
 
----
+
 
 ## 13.13 Tela de Local
 
@@ -2770,7 +2718,7 @@ Lojas
 Missões
 ```
 
----
+
 
 ## 13.14 Tela de Raça
 
@@ -2780,7 +2728,7 @@ Exibir automaticamente:
 Sub-Raças relacionadas
 ```
 
----
+
 
 ## 13.15 Tela de Classe
 
@@ -2798,7 +2746,7 @@ Habilidades
 Magias
 ```
 
----
+
 
 ## 13.16 CRUD
 
@@ -2810,7 +2758,7 @@ Grid à esquerda
 Formulário à direita
 ```
 
----
+
 
 ## 13.17 Cadastros Grandes
 
@@ -2820,7 +2768,7 @@ Utilizar:
 Modal
 ```
 
----
+
 
 Exemplos:
 
@@ -2834,7 +2782,7 @@ Personagens
 Inimigos
 ```
 
----
+
 
 # CAPÍTULO 14 — CATÁLOGO OFICIAL DE COMPONENTES
 
@@ -2860,7 +2808,7 @@ DatePicker
 NumberStepper
 ```
 
----
+
 
 ## 14.2 Componentes de Mídia
 
@@ -2872,7 +2820,7 @@ ImageGallery
 Avatar
 ```
 
----
+
 
 ## 14.3 Componentes de Navegação
 
@@ -2886,7 +2834,7 @@ Sidebar
 Header
 ```
 
----
+
 
 ## 14.4 Componentes CRUD
 
@@ -2904,7 +2852,7 @@ Loading
 Toast
 ```
 
----
+
 
 ## 14.5 Componentes RPG
 
@@ -2926,7 +2874,7 @@ SpellPanel
 ProgressionPanel
 ```
 
----
+
 
 ## 14.6 Componentes Mundo
 
@@ -2936,7 +2884,7 @@ WorldTree
 LocationCard
 ```
 
----
+
 
 ## 14.7 Componentes Campanhas
 
@@ -2950,7 +2898,7 @@ MissionCard
 SessionCard
 ```
 
----
+
 
 ## 14.8 Componentes Combate
 
@@ -2984,7 +2932,7 @@ CombatWeaknessPanel
 CombatImmunityPanel
 ```
 
----
+
 
 ## 14.9 Componentes Futuros
 
@@ -3004,7 +2952,7 @@ CraftingPanel
 DiceRollPanel
 ```
 
----
+
 
 ## 14.10 Hierarquia Oficial dos Componentes
 
@@ -3018,7 +2966,7 @@ Página
         └── Subcomponentes
 ```
 
----
+
 
 Exemplo:
 
@@ -3040,7 +2988,7 @@ Combate
     └── CombatEquipmentPanel
 ```
 
----
+
 
 # FECHAMENTO DO DOCUMENTO 04
 
