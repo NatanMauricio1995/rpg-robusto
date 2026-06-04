@@ -1,8 +1,8 @@
 **Objetivo:** explicar todos os módulos do sistema.
 
-================================================================================
-ARQUITETURA
-================================================================================
+
+# ARQUITETURA
+
 
 ## 1. Core
     - Usuários
@@ -66,9 +66,9 @@ ARQUITETURA
     - Inimigos  
 
 
-================================================================================
-TIPOS DE USUÁRIO
-================================================================================
+
+# TIPOS DE USUÁRIO
+
 
 Mestre
 Pode:
@@ -84,17 +84,23 @@ Jogador
 Pode:
   - Criar personagens
   - Editar seus personagens
-  - Visualizar biblioteca
   - Participar de campanhas
+  - Durante criação de personagem: selecionar Raça, Classe, Magias e Habilidades
+    disponíveis (via seletores controlados pelo sistema — não acesso direto à biblioteca)
 
 Não pode:
   - Criar campanhas
-  - Editar biblioteca
+  - Visualizar o módulo Biblioteca RPG diretamente
+  - Criar, editar ou excluir itens da biblioteca
   - Excluir componentes globais
 
-================================================================================
-HIERARQUIA DO MUNDO
-================================================================================
+Observação: o acesso do jogador à biblioteca é indireto e filtrado.
+O sistema apresenta apenas as opções permitidas para o personagem no momento
+da criação/evolução. Isso evita spoilers de NPCs, inimigos, fraquezas e loot.
+
+
+# HIERARQUIA DO MUNDO
+
 
 Estrutura obrigatória:
   Mundo
@@ -111,9 +117,9 @@ Estrutura obrigatória:
 
 Não pode existir quebra da hierarquia.
 
-================================================================================
-MUNDO
-================================================================================
+
+# MUNDO
+
 
 Possui:
   - Nome
@@ -126,9 +132,9 @@ Possui:
   - Facções
   - Continentes
 
-================================================================================
-RELIGIÕES
-================================================================================
+
+# RELIGIÕES
+
 
 Possuem:
   - Nome
@@ -136,9 +142,9 @@ Possuem:
   - Descrição
   - Dogmas
 
-================================================================================
-FACÇÕES
-================================================================================
+
+# FACÇÕES
+
 
 Possuem:
   - Nome
@@ -148,18 +154,18 @@ Possuem:
   - Aliados
   - Inimigos
 
-================================================================================
-ORGANIZAÇÕES
-================================================================================
+
+# ORGANIZAÇÕES
+
 
 Podem pertencer a:
   - Facção
 
 ou existir sozinhas.
 
-================================================================================
-ESPAÇO GEOGRÁFICO
-================================================================================
+
+# ESPAÇO GEOGRÁFICO
+
 
 Continente
   - Nome
@@ -196,9 +202,9 @@ Local
   - Galeria
   - História
 
-================================================================================
-BIBLIOTECA RPG
-================================================================================
+
+# BIBLIOTECA RPG
+
 
 Raças
   Raça
@@ -233,9 +239,9 @@ Sub-Raça
   - Habilidades
   - Magias
 
-================================================================================
-CLASSES
-================================================================================
+
+# CLASSES
+
 
   Classe
   └── Subclasse
@@ -261,9 +267,9 @@ Subclasse
   - Habilidades
   - Magias
 
-================================================================================
-HABILIDADES
-================================================================================
+
+# HABILIDADES
+
 
 Possuem:
   - Nome
@@ -280,9 +286,9 @@ Possuem:
   - Fraquezas Concedidas
   - Imunidades Concedidas
 
-================================================================================
-MAGIAS
-================================================================================
+
+# MAGIAS
+
 
 Possuem:
   - Nome
@@ -290,7 +296,9 @@ Possuem:
   - Descrição
   - Escola
   - Nível
-  - Autodidata
+  - Autodidata (boolean): se verdadeiro, a magia pode ser aprendida por personagens
+    de qualquer classe, sem precisar constar na lista de magias da classe.
+    Útil para magias de ritual ou aprendizado especial concedido pelo mestre.
   - Componentes
   - Verbal
   - Somático
@@ -303,9 +311,9 @@ Possuem:
   - Tipos de Dano
   - Condições Aplicadas
 
-================================================================================
-ESCOLAS DE MAGIA
-================================================================================
+
+# ESCOLAS DE MAGIA
+
 
 Configuráveis.
 Exemplos:
@@ -314,9 +322,9 @@ Exemplos:
   - Abjuração
   - Ilusão
 
-================================================================================
-RECURSOS DO SISTEMA
-================================================================================
+
+# RECURSOS DO SISTEMA
+
 
 Fixos.
   - HP
@@ -329,9 +337,9 @@ Fixos.
   - Inspiração de Bardo
   - Dados de Vida
 
-================================================================================
-DESCANSOS
-================================================================================
+
+# DESCANSOS
+
 
 Existem:
   - Descanso Curto
@@ -349,9 +357,9 @@ Exemplo:
   Elfo
   Recupera melhor em descanso curto.
 
-================================================================================
-EQUIPAMENTOS
-================================================================================
+
+# EQUIPAMENTOS
+
 
 Armas
 Possuem:
@@ -401,9 +409,9 @@ Possuem:
   - Quantidades
   - Resultado
 
-================================================================================
-NPCs
-================================================================================
+
+# NPCs
+
 
 NPC é exclusivamente narrativo.
 Não possui ficha de combate.
@@ -424,9 +432,9 @@ Possui:
 
 Divindades entram como NPCs.
 
-================================================================================
-INIMIGOS
-================================================================================
+
+# INIMIGOS
+
 
 Possuem:
   - Nome
@@ -454,7 +462,7 @@ Classificações
   - Boss
   - Lendário
 
-Loot
+# Loot
 
 Garantido
   - Item
@@ -468,11 +476,11 @@ Opcional
 Exemplo:
   Poção
   d100
-  >= 85
+  > 85
 
-================================================================================
-PERSONAGENS
-================================================================================
+
+# PERSONAGENS
+
 
 Personagem Base
 Possui:
@@ -498,7 +506,7 @@ Status
   - Desaparecido
   - Aposentado
 
-História
+# História
 Fluxo:
   Jogador cria
   ↓
@@ -506,9 +514,9 @@ Fluxo:
   ↓
   História oficial
 
-================================================================================
-FICHA DE CAMPANHA
-================================================================================
+
+# FICHA DE CAMPANHA
+
 
 Cada personagem pode participar de várias campanhas.
 Cada campanha possui uma ficha independente.
@@ -527,9 +535,9 @@ Possui:
   - Magias
   - Recursos
 
-================================================================================
-MOEDAS
-================================================================================
+
+# MOEDAS
+
 
 Sistema fixo.
   - Cobre
@@ -538,13 +546,13 @@ Sistema fixo.
   - Platina
 
 Conversão:
-  - 10 Cobre = 1 Prata
-  - 10 Prata = 1 Ouro
-  - 10 Ouro = 1 Platina
+  - 10 Cobre  1 Prata
+  - 10 Prata  1 Ouro
+  - 10 Ouro  1 Platina
 
-================================================================================
-INVENTÁRIO
-================================================================================
+
+# INVENTÁRIO
+
 
 Possui:
   - Peso Atual
@@ -552,9 +560,9 @@ Possui:
 
 Calculado automaticamente.
 
-================================================================================
-EQUIPAMENTOS DA FICHA
-================================================================================
+
+# EQUIPAMENTOS DA FICHA
+
 
   - Arma Principal
   - Arma Secundária
@@ -562,9 +570,9 @@ EQUIPAMENTOS DA FICHA
   - Armadura
   - Acessórios
 
-================================================================================
-CAMPANHAS
-================================================================================
+
+# CAMPANHAS
+
 
 Possuem:
   - Nome
@@ -584,9 +592,9 @@ Status
 Limite
   - Máximo de 5 jogadores
 
-================================================================================
-ESTRUTURA DA CAMPANHA
-================================================================================
+
+# ESTRUTURA DA CAMPANHA
+
 
 Campanha
   Capítulos
@@ -594,9 +602,9 @@ Campanha
     Sessões
       Combates
 
-================================================================================
-CAPÍTULOS
-================================================================================
+
+# CAPÍTULOS
+
 
 Possuem:
   - Nome
@@ -604,9 +612,9 @@ Possuem:
   - Imagem
   - Descrição
 
-================================================================================
-MISSÕES
-================================================================================
+
+# MISSÕES
+
 
 Possuem:
   - Nome
@@ -620,9 +628,9 @@ Possuem:
   - Local
   - Recompensas
 
-================================================================================
-SESSÕES
-================================================================================
+
+# SESSÕES
+
 
 Possuem:
   - Nome
@@ -631,18 +639,18 @@ Possuem:
   - Anotações do Mestre
   - Imagens Exibidas
 
-================================================================================
-COMBATES
-================================================================================
+
+# COMBATES
+
 
 Possuem apenas:
   - Participantes
   - Inimigos
   - HP Atual
 
-================================================================================
-PROGRESSÃO
-================================================================================
+
+# PROGRESSÃO
+
 
 XP vem de:
   - Inimigos derrotados
@@ -652,9 +660,9 @@ Ao encerrar combate:
   - Distribuir XP
   - Verificar subida de nível
 
-================================================================================
-SUBIDA DE NÍVEL
-================================================================================
+
+# SUBIDA DE NÍVEL
+
 
 Automática.
 Ao subir:
@@ -664,9 +672,9 @@ Ao subir:
   - Atualizar espaços de magia
   - Restaurar HP completamente
 
-================================================================================
-ELEMENTOS FIXOS DO SISTEMA
-================================================================================
+
+# ELEMENTOS FIXOS DO SISTEMA
+
 
 Atributos
   - Força
@@ -736,13 +744,16 @@ Condições
   - Surdo
 
 Dados
+  Dados de vida (classes):
   - d4
   - d6
   - d8
   - d10
   - d12
-  - d20
-  - d100
+
+  Dados de verificação e outros:
+  - d20  ← exclusivo para testes de atributo, ataques e salvaguardas
+  - d100 ← usado em tabelas de loot opcional
 
 Raridades
   - Comum
@@ -754,9 +765,9 @@ Raridades
 Nível Máximo
   - 20
 
-================================================================================
-RELACIONAMENTOS PRINCIPAIS
-================================================================================
+
+# RELACIONAMENTOS PRINCIPAIS
+
 
 Mundo
     1:N Continentes

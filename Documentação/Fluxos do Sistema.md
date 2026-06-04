@@ -112,17 +112,37 @@ O Documento 06 descreve:
         ↓
     Salvar
 
-## FC-002 — ADICIONAR JOGADOR
+## FC-002 — ADICIONAR JOGADOR (FLUXO DO MESTRE)
 
     Campanha
         ↓
     Participantes
         ↓
-    Adicionar Jogador
+    Adicionar Jogador (buscar por e-mail ou nome)
         ↓
-    Selecionar Personagem
+    Sistema cria convite (campanhaConvites)
         ↓
-    Confirmar
+    Jogador recebe notificação no Header
+
+## FC-002B — ACEITAR/RECUSAR CONVITE (FLUXO DO JOGADOR)
+
+    Jogador recebe notificação: "Convite para campanha X"
+        ↓
+    Aceitar
+        ↓
+    Selecionar Personagem para participar
+        ↓
+    Sistema cria campanhaParticipantes
+        ↓
+    Jogador aparece na campanha
+
+    ou
+
+    Recusar
+        ↓
+    Notificação arquivada
+        ↓
+    Mestre é notificado da recusa
 
 ## FC-003 — CRIAR # CAPÍTULO
 
@@ -132,15 +152,19 @@ O Documento 06 descreve:
         ↓
     Novo capítulo
 
-## FC-004 — ADICIONAR MISSÃO
+## FC-004 — ADICIONAR MISSÃO À CAMPANHA
 
     Campanha
         ↓
     Missões
         ↓
-    Selecionar Missão Global
+    Selecionar Missão Global (da biblioteca)
         ↓
-    Associar à Campanha
+    Associar à Campanha (cria campanhaMissoes)
+        ↓
+    Opcional: Associar a um Capítulo (define capituloId na campanhaMissoes)
+        ↓
+    Definir Status inicial: DISPONIVEL
 
 ## FC-005 — CRIAR SESSÃO
 

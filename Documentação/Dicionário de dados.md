@@ -115,12 +115,14 @@ Os atributos devem armazenar:
 
     {
         base: number,
-        racial: number,
-        subRacial: number,
-        classe: number,
-        equipamento: number,
-        magia: number,
-        temporario: number,
+
+        modificadores: [
+            {
+                origem: string,
+                valor: number
+            }
+        ],
+
         total: number
     }
 Usar para:
@@ -194,13 +196,17 @@ Aplica-se a:
 Estrutura base:
 
     {
-        base: number,
-        racial: number,
-        classe: number,
-        equipamento: number,
-        magia: number,
-        temporario: number,
-        total: number
+    base: number,
+
+    modificadores: [
+        {
+        origemId: string,
+        origemTipo: string,
+        valor: number
+        }
+    ],
+
+    total: number
     }
 
 ## DD-024 — Cálculo dos Valores Compostos

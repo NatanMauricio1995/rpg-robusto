@@ -16,7 +16,7 @@
  Service
   ↓
  Repository
-  ↓
+  ↓a
  Firestore
 
   
@@ -68,9 +68,17 @@ Não possui regras.
  ├── repositories
  ├── firebase
  ├── contexts
+ ├── layouts
+ ├── styles
  ├── utils
  ├── constants
  └── validations
+
+**Notas:**
+- `layouts/` contém Header, Sidebar, Footer e ContentContainer
+- `styles/` contém tokens de design e CSS global
+- `repositories/` e `validations/` são exclusivos do backend/service layer
+- Esta estrutura é a versão unificada e sobrescreve a listagem do doc de Frontend
   
 # CAPÍTULO 4 — REPOSITORIES
   
@@ -294,14 +302,22 @@ Também calcula:
   
 # CAPÍTULO 19 — XP SERVICE
 
+**Classificação:** Utilitário interno — NÃO é um Service público.
 
 **Responsável:**
-- Distribuição de XP.
+- Cálculo e distribuição de XP ao encerrar combate.
 
 **Métodos:**
 
     calculateXP()
     distributeXP()
+
+**Regra:** XPService é utilizado exclusivamente pelo ProgressionService.
+Nenhuma outra camada (Hook, Página, outro Service) pode chamar XPService diretamente.
+A única entrada pública para XP é: ProgressionService.addXP()
+
+**Motivo:** A RN-90 define que ProgressionService é o único autorizado a alterar XP.
+XPService implementa a lógica de cálculo/distribuição como detalhe interno desse fluxo.
 
 # CAPÍTULO 20 — WORLD SERVICE
 **Responsável:**

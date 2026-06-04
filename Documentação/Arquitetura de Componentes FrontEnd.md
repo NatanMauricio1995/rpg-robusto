@@ -46,10 +46,16 @@ Exemplo:
     ├── layouts
     ├── hooks
     ├── services
+    ├── repositories
     ├── contexts
     ├── firebase
     ├── styles
-    └── utils
+    ├── utils
+    ├── constants
+    └── validations
+
+    Estrutura unificada com Arquitetura BackEnd e Camada de Serviços.
+    Referência canônica: Arquitetura BackEnd cap. 3.
 
 # CAPÍTULO 3 — COMPONENTES BASE
 ## Button

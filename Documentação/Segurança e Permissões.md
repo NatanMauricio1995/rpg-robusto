@@ -121,21 +121,24 @@ Entidades:
 * NPCs
 * Inimigos
 
-**Acesso:**
-- **Mestre:** Total
-- **Jogador:** Nenhum
+**Acesso direto ao módulo:**
+- **Mestre:** Total (criar, editar, excluir, visualizar)
+- **Jogador:** Nenhum — jogadores não acessam o módulo Biblioteca RPG diretamente
 
-**Motivo:**
+**Acesso indireto (controlado):**
+- **Jogador:** Durante a criação ou evolução de personagem, o sistema fornece
+  seletores filtrados de Raças, Classes, Magias e Habilidades disponíveis.
+  Isso é feito via PersonagemService/ProgressionService — não expõe a biblioteca.
 
-Evitar consulta de:
+**Motivo do bloqueio:**
 
-* NPCs secretos
-* Inimigos
-* Fraquezas
-* Resistências
-* Loots
-* Magias ocultas
-* Conteúdo administrativo
+Evitar que jogadores consultem:
+
+* NPCs secretos e suas estatísticas
+* Inimigos e suas fraquezas/resistências
+* Loot de inimigos
+* Magias e habilidades ocultas
+* Conteúdo narrativo reservado ao mestre
 
 # CAPÍTULO 7 — MÓDULO PERSONAGENS
 
@@ -290,3 +293,20 @@ Registrar:
 * Personagens de terceiros
 
 **Mestre:** Acesso total às entidades administradas.
+
+# CAPÍTULO 18 — CONVITES DE CAMPANHA
+
+## 18.1 Fluxo de Permissões
+
+**Enviar convite:** Mestre
+**Aceitar convite:** Jogador convidado
+**Recusar convite:** Jogador convidado
+**Cancelar convite pendente:** Mestre
+
+## 18.2 Regras
+
+- Apenas o Mestre da campanha pode enviar convites.
+- Um jogador só aparece como participante após aceitar o convite.
+- O Jogador só pode aceitar um convite se possuir pelo menos um personagem criado.
+- Convites expiram após 30 dias sem resposta.
+- Um jogador não pode ter dois personagens na mesma campanha.

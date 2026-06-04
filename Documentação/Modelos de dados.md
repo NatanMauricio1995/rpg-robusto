@@ -190,6 +190,7 @@ Exemplos:
     - id: string
     - ambienteId: string
     - nome: string
+    - imagem: string
     - descricao: string
     - historia: string
     - galeria: string[]
@@ -346,6 +347,7 @@ Exemplos:
     - descricao: string
     - escolaMagiaId: string
     - nivel: number
+    - autodidata: boolean     ← se true, qualquer classe pode aprender
     - tempoConjuracao: string
     - alcance: string
     - area: string
@@ -529,21 +531,26 @@ Exemplos:
     - subRacaId: string | null
     - classeId: string
     - subclasseId: string | null
+    - religioId: string | null
+    - faccaoId: string | null
     - status:
         - "VIVO"
         - "MORTO"
         - "DESAPARECIDO"
         - "APOSENTADO"
-    - forca: number
-    - destreza: number
-    - constituicao: number
-    - inteligencia: number
-    - sabedoria: number
-    - carisma: number
+    - forca: { base, racial, subRacial, classe, equipamento, magia, temporario, total }
+    - destreza: { base, racial, subRacial, classe, equipamento, magia, temporario, total }
+    - constituicao: { base, racial, subRacial, classe, equipamento, magia, temporario, total }
+    - inteligencia: { base, racial, subRacial, classe, equipamento, magia, temporario, total }
+    - sabedoria: { base, racial, subRacial, classe, equipamento, magia, temporario, total }
+    - carisma: { base, racial, subRacial, classe, equipamento, magia, temporario, total }
     - idiomasIds: string[]
     - sentidosIds: string[]
     - createdAt
     - updatedAt
+    
+    Observação: cada atributo é um objeto composto conforme DD-017.
+    O campo `total` é calculado pelo AttributeService e nunca salvo manualmente.
 
  - personagensAprovacoes
     - id: string
@@ -661,11 +668,15 @@ Exemplos:
     - id: string
     - campanhaId: string
     - missaoId: string
+    - capituloId: string | null
     - status:
         - "DISPONIVEL"
         - "EM_ANDAMENTO"
         - "CONCLUIDA"
         - "FALHADA"
+    
+    Observação: a associação de uma missão a um capítulo é feita nesta tabela,
+    não na entidade missoes (que é global e reutilizável).
 
  - sessoes
     - id: string
@@ -699,6 +710,19 @@ Exemplos:
     - titulo: string
     - conteudo: string
     - ordem: number
+
+
+ - campanhaConvites
+    - id: string
+    - campanhaId: string
+    - usuarioConvidadoId: string
+    - status:
+        - "PENDENTE"
+        - "ACEITO"
+        - "RECUSADO"
+    - createdAt: Timestamp
+    - respondidoEm: Timestamp | null
+    - expiresAt: Timestamp    ← createdAt + 30 dias
 
 # CAPÍTULO 7 — COMBATES
  - combates
@@ -897,7 +921,6 @@ Exemplos:
     - status
 
  - fichasCampanha
-    - text
     - personagemId
     - campanhaId
     - nivel

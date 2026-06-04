@@ -101,16 +101,16 @@
 **RN-048:** Campanhas pertencem obrigatoriamente a um Mundo.\
 **RN-049:** Uma campanha possui apenas um Mestre.\
 **RN-050:** Uma campanha pode possuir até 5 jogadores.\
-**RN-051:** A estrutura da campanha é obrigatória:
+**RN-051:** A estrutura da campanha é:
 
     Campanha
         → Capítulos
-            → Missões
-                → Sessões
-                    → Combates
-**RN-052:** Missões pertencem obrigatoriamente a um Capítulo.\
-**RN-053:** Sessões pertencem obrigatoriamente a um Capítulo.\
-**RN-054:** Combates podem existir sem Sessão.\
+        → Missões (globais, associadas à campanha)
+        → Sessões
+            → Combates
+**RN-052:** Missões são entidades globais e reutilizáveis. São associadas a campanhas via tabela `campanhaMissoes`. Não pertencem obrigatoriamente a um capítulo.\
+**RN-053:** Sessões pertencem a uma campanha. O vínculo a um capítulo é opcional (`capituloId` pode ser nulo).\
+**RN-054:** Combates podem existir sem sessão vinculada.\
 **RN-055:** O sistema opera exclusivamente em Português
 
 ## 8. Combate Tático
@@ -133,7 +133,7 @@
 
 ## 9. Segurança
 **RN-072:** O módulo Mundo é exclusivo do Mestre.\
-**RN-073:** Jogadores não possuem acesso ao módulo Biblioteca RPG.\
+**RN-073:** Jogadores não possuem acesso administrativo ao módulo Biblioteca RPG (não podem criar, editar ou excluir). Durante a criação de personagem, o sistema apresenta seletores filtrados de Raças, Classes, Magias e Habilidades — mas isso é uma consulta interna do Service, não acesso direto à biblioteca.\
 **RN-074:** Toda alteração em personagem aprovado gera: **PENDENTE_APROVACAO**\
 **RN-075:** Jogadores não alteram informações de combate.\
 **RN-076:** Relatórios são exclusivos do Mestre.\
@@ -145,9 +145,9 @@
 **RN-079:** Jogadores não possuem acesso ao módulo Mundo.\
 **RN-080:** Jogadores não possuem acesso ao módulo Biblioteca RPG.\
 **RN-081:** Jogadores não podem alterar HP.\
-**RN-081:** Jogadores não podem alterar status.\
-**RN-082:** Jogadores não podem iniciar ou encerrar combates.\
-**RN-083:** Todo personagem aprovado que sofrer alteração retorna para: **PENDENTE_APROVACAO**
+**RN-082:** Jogadores não podem alterar status.\
+**RN-083:** Jogadores não podem iniciar ou encerrar combates.\
+**RN-084:** Todo personagem aprovado que sofrer alteração retorna para: **PENDENTE_APROVACAO**
 
 ## 10. Regras Arquiteturais
 **RN-84:** Nenhuma página acessa Firestore.\
@@ -156,6 +156,44 @@
 **RN-87:** Toda regra passa por Service.\
 **RN-88:** Repository não possui regra.\
 **RN-89:** CombatService é o único autorizado a alterar HP.\
-**RN-90:** ProgressionService é o único autorizado a alterar XP.\
+**RN-90:** ProgressionService é o único autorizado a alterar XP e nível do personagem. O XPService é um utilitário interno usado exclusivamente pelo ProgressionService para calcular e distribuir XP ao encerrar combates — nunca deve ser chamado diretamente por outras camadas.\
 **RN-91:** ApprovalService é o único autorizado a aprovar personagens.
 **RN-92:** InventoryService é o único autorizado a alterar inventário.
+
+## 11. Progressão e Fórmulas Base
+
+**RN-093:** A tabela de XP por nível segue o padrão D&D 5e adaptado:
+
+| Nível | XP Necessária | Bônus de Proficiência |
+|-------|--------------|----------------------|
+| 1     | 0            | +2                   |
+| 2     | 300          | +2                   |
+| 3     | 900          | +2                   |
+| 4     | 2.700        | +2                   |
+| 5     | 6.500        | +3                   |
+| 6     | 14.000       | +3                   |
+| 7     | 23.000       | +3                   |
+| 8     | 34.000       | +3                   |
+| 9     | 48.000       | +4                   |
+| 10    | 64.000       | +4                   |
+| 11    | 85.000       | +4                   |
+| 12    | 100.000      | +4                   |
+| 13    | 120.000      | +5                   |
+| 14    | 140.000      | +5                   |
+| 15    | 165.000      | +5                   |
+| 16    | 195.000      | +5                   |
+| 17    | 225.000      | +6                   |
+| 18    | 265.000      | +6                   |
+| 19    | 305.000      | +6                   |
+| 20    | 355.000      | +6                   |
+
+**RN-094:** Fórmula de HP máximo por nível:
+- Nível 1: Dado de Vida máximo + Modificador de Constituição
+- Níveis 2+: (Dado de Vida ÷ 2 + 1) + Modificador de Constituição por nível adicional
+- Exemplo: Guerreiro (d10), CON 16 (mod +3), nível 3 → HP = 10 + 3 + (6 + 3) + (6 + 3) = 31
+
+**RN-095:** Fórmula do Bônus de Proficiência: definido pela tabela da RN-093 conforme o nível atual do personagem na ficha de campanha.
+
+**RN-096:** Crafting — validação de requisitos: antes de executar uma receita, o sistema valida se o personagem possui a classe exigida (`classeId`) e a proficiência de ferramenta exigida (`ferramentaId`). Se algum requisito não for atendido, o crafting é bloqueado com mensagem de erro.
+
+**RN-097:** Dado de vida permitidos para classes: d4, d6, d8, d10, d12. O valor d20 listado anteriormente em elementos fixos é um erro — d20 é exclusivamente dado de verificação, não dado de vida.

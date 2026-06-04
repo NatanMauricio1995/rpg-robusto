@@ -1448,11 +1448,11 @@ Modal
 
 Decisão Oficial:
 
-Página Única
+Página Única com scroll vertical contínuo.
 
-Não utilizar abas.
+Não utilizar abas na ficha principal.
 
-Estrutura:
+Estrutura (seções em scroll):
 - Resumo
 - Atributos
 - Perícias
@@ -1462,7 +1462,12 @@ Estrutura:
 - Inventário
 - História
 
-Tudo em scroll vertical.
+**Justificativa:** A ficha é consultada durante o combate, onde o mestre precisa
+de acesso rápido a múltiplas seções sem trocar de aba. O scroll contínuo mantém
+o contexto visual e é mais eficiente em uso tático.
+
+**Exceção:** O cadastro/edição de personagem (modal) pode usar abas para
+organizar os campos de entrada, pois é um contexto diferente da visualização.
 
 ## 9.5 Seção Resumo
 
