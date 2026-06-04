@@ -1,113 +1,85 @@
-import personagemRepository from '../repositories/PersonagemRepository';
+import campanhaPersonagemRepository from '../repositories/CampanhaPersonagemRepository';
 
 /**
- * ProgressionService - Responsável pela lógica de XP, Nível e Progressão
- * Conforme Capítulo 14 da Arq. BackEnd e RN-019 a RN-024
+ * ProgressionService - Responsável pela lógica de evolução de nível.
+ * Regras: RN-022 a RN-024 | Atualiza exclusivamente a Ficha de Campanha.
  */
 class ProgressionService {
   constructor() {
-    this.MAX_LEVEL = 20;
-    // Tabela de XP baseada no padrão d20 (XP acumulada para atingir o nível)
-    this.XP_TABLE = [
-      0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 
-      85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
-    ];
-  }
-
-  /**
-   * Adiciona XP a um personagem e processa subida de nível
-   * RN-090: ProgressionService é o único autorizado a alterar XP
-   */
-  async addXP(personagemId, xpGanha) {
-    const personagem = await personagemRepository.findById(personagemId);
-    if (!personagem) throw new Error('Personagem não encontrado.');
-
-    let currentXP = (personagem.xp || 0) + xpGanha;
-    let currentLevel = personagem.nivel || 1;
-    let leveledUp = false;
-
-    // Loop de subida de nível (pode subir mais de um nível por vez)
-    while (this.checkLevelUp(currentXP, currentLevel)) {
-      personagem.nivel = currentLevel + 1;
-      this.applyLevelUp(personagem);
-      currentLevel = personagem.nivel;
-      leveledUp = true;
-    }
-
-    const updateData = {
-      xp: currentXP,
-      nivel: currentLevel,
-      updatedAt: new Date()
-    };
-
-    if (leveledUp) {
-      updateData.hpAtual = personagem.hpAtual;
-      updateData.hpMaximo = personagem.hpMaximo;
-      updateData.habilidadesDesbloqueadas = personagem.habilidadesDesbloqueadas;
-      updateData.magiasDesbloqueadas = personagem.magiasDesbloqueadas;
-    }
-
-    await personagemRepository.update(personagemId, updateData);
-    
-    return {
-      leveledUp,
-      newLevel: currentLevel,
-      totalXP: currentXP
+    // Tabela padrão de escalonamento de níveis de XP do RPG Robusto (Acumulativa)
+    this.tabelaNiveis = {
+      1: 0,
+      2: 300,
+      3: 900,
+      4: 2700,
+      5: 6500,
+      6: 14000,
+      7: 23000,
+      8: 34000,
+      9: 48000,
+      10: 64000,
+      11: 85000,
+      12: 100000,
+      13: 120000,
+      14: 140000,
+      15: 165000,
+      16: 195000,
+      17: 225000,
+      18: 265000,
+      19: 305000,
+      20: 355000
     };
   }
 
   /**
-   * Valida se a XP atual atinge o limiar do próximo nível
+   * Avalia a XP atual da Ficha de Campanha e realiza a progressão automática de nível se aplicável.
    */
-  checkLevelUp(currentXP, currentLevel) {
-    if (currentLevel >= this.MAX_LEVEL) return false;
-    const nextLevelXP = this.XP_TABLE[currentLevel + 1];
-    return currentXP >= nextLevelXP;
-  }
+  async checkAndExecuteLevelUp(campanhaPersonagemId) {
+    try {
+      const ficha = await campanhaPersonagemRepository.findById(campanhaPersonagemId);
+      if (!ficha) return { success: false, data: null, error: { code: 'SHEET_NOT_FOUND', message: 'Ficha não encontrada.' } };
 
-  /**
-   * Aplica modificações de nível síncronas no objeto
-   */
-  applyLevelUp(personagem) {
-    // DD-022: Cálculo de HP Máximo (Nível anterior + dado de vida médio + Mod. Const)
-    // Aqui usamos um valor fixo médio de 6 + Mod. Const para simplificação síncrona
-    const modConstituicao = Math.floor(((personagem.atributos?.constituicao || 10) - 10) / 2);
-    const hpGain = Math.max(1, 6 + modConstituicao); 
-    
-    personagem.hpMaximo = (personagem.hpMaximo || 10) + hpGain;
+      const nivelAtual = ficha.nivel || 1;
+      const xpAtual = ficha.xp || 0;
+      let novoNivel = nivelAtual;
 
-    this.restoreHP(personagem);
-    this.unlockAbilities(personagem);
-    this.unlockSpells(personagem);
+      // Determinar o maior nível que o personagem se enquadra de acordo com seu montante de XP
+      for (let lvl = 1; lvl <= 20; lvl++) {
+        if (xpAtual >= this.tabelaNiveis[lvl]) {
+          novoNivel = lvl;
+        }
+      }
 
-    return personagem;
-  }
+      if (novoNivel > nivelAtual) {
+        // Incrementa parâmetros de vida baseados no multiplicador estático simples de progressão da classe
+        const hpMaxAntigo = ficha.hpMaximo || 10;
+        const ganhoHp = 8; // Média de ganho padrão por nível do sistema
+        const novoHpMax = hpMaxAntigo + ganhoHp;
 
-  /**
-   * RN-022: Recuperação total de HP ao subir de nível
-   */
-  restoreHP(personagem) {
-    personagem.hpAtual = personagem.hpMaximo;
-    return personagem;
-  }
+        // RN-022: Recuperação total de HP ao subir de nível
+        await campanhaPersonagemRepository.update(campanhaPersonagemId, {
+          nivel: novoNivel,
+          hpMaximo: novoHpMax,
+          hpAtual: novoHpMax, 
+          updatedAt: new Date().toISOString()
+        });
 
-  /**
-   * RN-023: Desbloqueia habilidades baseadas na Classe/Nível
-   */
-  unlockAbilities(personagem) {
-    // Lógica de consulta à coleção de Classes para extrair novas habilidades
-    // Por ser síncrono no objeto, preparamos a estrutura de dados
-    if (!personagem.habilidadesDesbloqueadas) personagem.habilidadesDesbloqueadas = [];
-    return personagem;
-  }
+        return { 
+          success: true, 
+          data: { 
+            leveledUp: true, 
+            nivelAnterior: nivelAtual, 
+            novoNivel, 
+            novoHpMax 
+          }, 
+          error: null 
+        };
+      }
 
-  /**
-   * RN-024: Desbloqueia espaços/magias baseadas na Classe/Nível
-   */
-  unlockSpells(personagem) {
-    // Lógica de consulta à tabela de espaços de magia da Classe
-    if (!personagem.magiasDesbloqueadas) personagem.magiasDesbloqueadas = [];
-    return personagem;
+      return { success: true, data: { leveledUp: false, nivel: nivelAtual }, error: null };
+    } catch (err) {
+      return { success: false, data: null, error: { code: 'PROGRESSION_ERROR', message: err.message } };
+    }
   }
 }
 
