@@ -37,7 +37,7 @@ export const ROUTES = {
   // Combates
   combates: '/admin/combates',
   iniciativas: null,
-  loot: null,
+  loot: '/admin/loot',
   relatoriosCampanhas: null,
   relatoriosPersonagens: null,
   relatoriosInimigos: null
