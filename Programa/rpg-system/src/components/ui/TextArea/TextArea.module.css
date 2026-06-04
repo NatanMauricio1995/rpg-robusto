@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.required {
+  color: var(--ruby-light);
+  margin-left: 4px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background-color: var(--ink-soft);
+  border: 1px solid var(--gray-700);
+  border-radius: var(--border-radius);
+  color: var(--parchment);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+  resize: vertical;
+}
+
+.textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.inputError {
+  border-color: var(--error);
+}
+
+.textarea::placeholder {
+  color: var(--gray-500);
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: var(--error);
+}
+
+.helperText {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}

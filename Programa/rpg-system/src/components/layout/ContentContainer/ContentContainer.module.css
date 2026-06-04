@@ -1,0 +1,24 @@
+.container {
+  width: 100%;
+  padding: 24px;
+  margin: 0 auto;
+  min-height: calc(100vh - var(--header-height));
+  animation: fadeIn 0.3s ease-out;
+}
+
+.sm { max-width: 640px; }
+.md { max-width: 768px; }
+.lg { max-width: 1024px; }
+.xl { max-width: 1280px; }
+.full { max-width: 100%; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+  }
+}

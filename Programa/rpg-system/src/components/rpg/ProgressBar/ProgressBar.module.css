@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-400);
+}
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.track {
+  width: 100%;
+  background-color: var(--gray-800);
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid var(--gray-700);
+}
+
+.fill {
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+  border-radius: 9999px;
+}
+
+/* Colors */
+.gold { background-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+.ruby { background-color: var(--ruby-light); box-shadow: 0 0 10px rgba(178, 34, 34, 0.3); }
+.blue { background-color: var(--info); box-shadow: 0 0 10px rgba(37, 99, 235, 0.3); }
+.green { background-color: var(--success); box-shadow: 0 0 10px rgba(5, 150, 105, 0.3); }
+
+/* Sizes */
+.sm { height: 4px; }
+.md { height: 8px; }
+.lg { height: 12px; }
