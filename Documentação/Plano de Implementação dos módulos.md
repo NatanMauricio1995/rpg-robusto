@@ -1,13 +1,3 @@
-# DOCUMENTO 11
-
-# PLANO DE IMPLEMENTAÇÃO DOS MÓDULOS
-
-**Versão:** 1.0
-
-**Status:** Oficial
-
----
-
 # 1. OBJETIVO
 
 Este documento define a ordem oficial de implementação do sistema RPG.
