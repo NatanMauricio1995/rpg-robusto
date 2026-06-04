@@ -1,0 +1,16 @@
+.container {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+}
+
+.deleteIcon {
+  color: var(--error);
+}
+
+.deleteIcon:hover {
+  color: #ef4444;
+}

@@ -1,0 +1,5 @@
+.layout { display: flex; flex-direction: column; min-height: 100vh; }
+.main { display: flex; flex: 1; }
+.viewContent { display: flex; flex-direction: column; gap: 16px; color: var(--parchment); }
+.viewContent strong { color: var(--gold); }
+.colorIndicator { padding: 8px 16px; border-radius: var(--border-radius); color: white; font-weight: 700; text-shadow: 0 1px 2px black; text-align: center; }
