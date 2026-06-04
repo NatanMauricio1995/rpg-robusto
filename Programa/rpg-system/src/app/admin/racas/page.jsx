@@ -4,8 +4,8 @@ import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
-import RacaList from './components/RacaList';
-import RacaForm from './components/RacaForm';
+import RacaList from '../../../modules/biblioteca-rpg/components/racas/RacaList';
+import RacaForm from '../../../modules/biblioteca-rpg/components/racas/RacaForm';
 import { useRacas } from '../../../hooks/useRacas';
 import styles from './page.module.css';
 

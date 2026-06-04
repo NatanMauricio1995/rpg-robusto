@@ -4,8 +4,8 @@ import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
-import ProficienciaList from './components/ProficienciaList';
-import ProficienciaForm from './components/ProficienciaForm';
+import ProficienciaList from '../../../modules/biblioteca-rpg/components/proficiencias/ProficienciaList';
+import ProficienciaForm from '../../../modules/biblioteca-rpg/components/proficiencias/ProficienciaForm';
 import { useProfiencias } from '../../../hooks/useProfiencias';
 import styles from './page.module.css';
 

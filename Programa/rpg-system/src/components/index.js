@@ -13,10 +13,10 @@ export { default as CrudToolbar } from './crud/CrudToolbar';
 export { default as SearchBox } from './crud/SearchBox';
 export { default as ConfirmDialog } from './crud/ConfirmDialog';
 
-export { default as Header } from './layout/Header';
-export { default as Sidebar } from './layout/Sidebar';
-export { default as Footer } from './layout/Footer';
-export { default as ContentContainer } from './layout/ContentContainer';
+export { default as Header } from '../layouts/Header';
+export { default as Sidebar } from '../layouts/Sidebar';
+export { default as Footer } from '../layouts/Footer';
+export { default as ContentContainer } from '../layouts/ContentContainer';
 
 export { default as StatCard } from './rpg/StatCard';
 export { default as StatusBadge } from './rpg/StatusBadge';

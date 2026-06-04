@@ -4,8 +4,8 @@ import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
-import EscolaMagiaList from './components/EscolaMagiaList';
-import EscolaMagiaForm from './components/EscolaMagiaForm';
+import EscolaMagiaList from '../../../modules/biblioteca-rpg/components/escolasMagia/EscolaMagiaList';
+import EscolaMagiaForm from '../../../modules/biblioteca-rpg/components/escolasMagia/EscolaMagiaForm';
 import { useEscolasMagia } from '../../../hooks/useEscolasMagia';
 import styles from './page.module.css';
 

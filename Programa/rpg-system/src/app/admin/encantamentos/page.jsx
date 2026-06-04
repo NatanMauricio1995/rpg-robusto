@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast } from '../../../components';
-import EncantamentoList from './components/EncantamentoList';
-import EncantamentoForm from './components/EncantamentoForm';
+import EncantamentoList from '../../../modules/biblioteca-rpg/components/encantamentos/EncantamentoList';
+import EncantamentoForm from '../../../modules/biblioteca-rpg/components/encantamentos/EncantamentoForm';
 import { useEncantamentos } from '../../../hooks/useEncantamentos';
 
 export default function EncantamentosPage() {

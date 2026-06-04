@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast } from '../../../components';
-import ArmaduraList from './components/ArmaduraList';
-import ArmaduraForm from './components/ArmaduraForm';
+import ArmaduraList from '../../../modules/biblioteca-rpg/components/armaduras/ArmaduraList';
+import ArmaduraForm from '../../../modules/biblioteca-rpg/components/armaduras/ArmaduraForm';
 import { useArmaduras } from '../../../hooks/useArmaduras';
 
 export default function ArmadurasPage() {

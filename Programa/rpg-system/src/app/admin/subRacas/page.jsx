@@ -4,8 +4,8 @@ import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
-import SubRacaList from './components/SubRacaList';
-import SubRacaForm from './components/SubRacaForm';
+import SubRacaList from '../../../modules/biblioteca-rpg/components/subRacas/SubRacaList';
+import SubRacaForm from '../../../modules/biblioteca-rpg/components/subRacas/SubRacaForm';
 import { useSubRacas } from '../../../hooks/useSubRacas';
 import styles from './page.module.css';
 

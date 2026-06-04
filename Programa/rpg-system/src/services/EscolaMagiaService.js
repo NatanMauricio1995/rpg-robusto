@@ -10,13 +10,11 @@ class EscolaMagiaService extends BaseService {
   validate(data) {
     return EscolaMagiaValidation.validate(data);
   }
-...
+
   transform(data) {
     return {
       nome: data.nome,
-      descricao: data.descricao || '',
-      cor: data.cor || '#d4af37',
-      ativo: data.ativo !== undefined ? data.ativo : true
+      descricao: data.descricao || ''
     };
   }
 }

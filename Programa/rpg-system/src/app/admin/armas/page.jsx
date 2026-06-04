@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast } from '../../../components';
-import ArmaList from './components/ArmaList';
-import ArmaForm from './components/ArmaForm';
+import ArmaList from '../../../modules/biblioteca-rpg/components/armas/ArmaList';
+import ArmaForm from '../../../modules/biblioteca-rpg/components/armas/ArmaForm';
 import { useArmas } from '../../../hooks/useArmas';
 
 export default function ArmasPage() {

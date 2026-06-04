@@ -4,8 +4,8 @@ import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
-import ClasseList from './components/ClasseList';
-import ClasseForm from './components/ClasseForm';
+import ClasseList from '../../../modules/biblioteca-rpg/components/classes/ClasseList';
+import ClasseForm from '../../../modules/biblioteca-rpg/components/classes/ClasseForm';
 import { useClasses } from '../../../hooks/useClasses';
 import styles from './page.module.css';
 

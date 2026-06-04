@@ -12,8 +12,8 @@ import {
   Toast,
   Loading
 } from '../../../components';
-import ReceitaList from './components/ReceitaList';
-import ReceitaForm from './components/ReceitaForm';
+import ReceitaList from '../../../modules/biblioteca-rpg/components/receitas/ReceitaList';
+import ReceitaForm from '../../../modules/biblioteca-rpg/components/receitas/ReceitaForm';
 import { useReceitas } from '../../../hooks/useReceitas';
 import styles from './page.module.css';
 

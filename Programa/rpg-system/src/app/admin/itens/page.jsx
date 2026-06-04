@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast } from '../../../components';
-import ItemList from './components/ItemList';
-import ItemForm from './components/ItemForm';
+import ItemList from '../../../modules/biblioteca-rpg/components/itens/ItemList';
+import ItemForm from '../../../modules/biblioteca-rpg/components/itens/ItemForm';
 import { useItens } from '../../../hooks/useItens';
 
 export default function ItensPage() {

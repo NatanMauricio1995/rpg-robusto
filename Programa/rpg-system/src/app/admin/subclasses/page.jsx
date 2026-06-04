@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast } from '../../../components';
-import SubclasseList from './components/SubclasseList';
-import SubclasseForm from './components/SubclasseForm';
+import SubclasseList from '../../../modules/biblioteca-rpg/components/subclasses/SubclasseList';
+import SubclasseForm from '../../../modules/biblioteca-rpg/components/subclasses/SubclasseForm';
 import { useSubclasses } from '../../../hooks/useSubclasses';
 
 export default function SubclassesPage() {

@@ -4,8 +4,8 @@ import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
-import SentidoList from './components/SentidoList';
-import SentidoForm from './components/SentidoForm';
+import SentidoList from '../../../modules/biblioteca-rpg/components/sentidos/SentidoList';
+import SentidoForm from '../../../modules/biblioteca-rpg/components/sentidos/SentidoForm';
 import { useSentidos } from '../../../hooks/useSentidos';
 import styles from './page.module.css';
 

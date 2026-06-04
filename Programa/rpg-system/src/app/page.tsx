@@ -1,6 +1,4 @@
-import ContentContainer from "@/components/layout/ContentContainer";
-import StatCard from "@/components/rpg/StatCard";
-import ProgressBar from "@/components/rpg/ProgressBar";
+import { ContentContainer, StatCard, ProgressBar } from "@/components";
 
 import {
   Users,

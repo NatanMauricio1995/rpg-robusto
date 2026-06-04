@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast } from '../../../components';
-import HabilidadeList from './components/HabilidadeList';
-import HabilidadeForm from './components/HabilidadeForm';
+import HabilidadeList from '../../../modules/biblioteca-rpg/components/habilidades/HabilidadeList';
+import HabilidadeForm from '../../../modules/biblioteca-rpg/components/habilidades/HabilidadeForm';
 import { useHabilidades } from '../../../hooks/useHabilidades';
 
 export default function HabilidadesPage() {

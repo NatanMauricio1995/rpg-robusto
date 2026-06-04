@@ -12,8 +12,8 @@ import {
   Toast,
   Loading
 } from '../../../components';
-import IdiomaList from './components/IdiomaList';
-import IdiomaForm from './components/IdiomaForm';
+import IdiomaList from '../../../modules/biblioteca-rpg/components/idiomas/IdiomaList';
+import IdiomaForm from '../../../modules/biblioteca-rpg/components/idiomas/IdiomaForm';
 import { useIdiomas } from '../../../hooks/useIdiomas';
 import styles from './page.module.css';
 

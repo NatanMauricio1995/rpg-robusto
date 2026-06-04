@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast } from '../../../components';
-import MagiaList from './components/MagiaList';
-import MagiaForm from './components/MagiaForm';
+import MagiaList from '../../../modules/biblioteca-rpg/components/magias/MagiaList';
+import MagiaForm from '../../../modules/biblioteca-rpg/components/magias/MagiaForm';
 import { useMagias } from '../../../hooks/useMagias';
 
 export default function MagiasPage() {

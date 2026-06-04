@@ -10,16 +10,14 @@ class ClasseService extends BaseService {
   validate(data) {
     return ClasseValidation.validate(data);
   }
-...
+
   transform(data) {
     return {
       nome: data.nome,
+      imagem: data.imagem || '',
       descricao: data.descricao || '',
       dadoVida: Number(data.dadoVida) || 8,
-      periciasDisponiveis: data.periciasDisponiveis || [],
-      quantidadePericias: Number(data.quantidadePericias) || 2,
-      proficiencias: data.proficiencias || [],
-      ativo: data.ativo !== undefined ? data.ativo : true
+      nivelMaximo: 20
     };
   }
 }

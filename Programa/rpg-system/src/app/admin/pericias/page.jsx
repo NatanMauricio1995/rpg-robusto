@@ -4,8 +4,8 @@ import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
-import PericiaList from './components/PericiaList';
-import PericiaForm from './components/PericiaForm';
+import PericiaList from '../../../modules/biblioteca-rpg/components/pericias/PericiaList';
+import PericiaForm from '../../../modules/biblioteca-rpg/components/pericias/PericiaForm';
 import { usePericias } from '../../../hooks/usePericias';
 import styles from './page.module.css';
 
