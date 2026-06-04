@@ -1,6 +1,8 @@
+"use client";
+
 import React from 'react';
 import { Bell, Search, Menu } from 'lucide-react';
-import CharacterAvatar from '../../rpg/CharacterAvatar';
+import CharacterAvatar from '../../components/rpg/CharacterAvatar';
 import styles from './Header.module.css';
 
 /**

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import { X, ChevronDown, Search } from 'lucide-react';

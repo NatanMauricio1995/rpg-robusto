@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { ChevronLeft, ChevronRight, ArrowUp, ArrowDown } from 'lucide-react';
 import clsx from 'clsx';
