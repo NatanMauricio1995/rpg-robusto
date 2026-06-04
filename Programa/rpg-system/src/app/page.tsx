@@ -1,107 +1,22 @@
-import { ContentContainer, StatCard, ProgressBar } from "@/components";
+import React from 'react';
+import { Header, Sidebar, Footer, ContentContainer } from '../components';
+import HomeScreen from '../components/home/HomeScreen';
 
-import {
-  Users,
-  ScrollText,
-  Swords,
-  BookOpen,
-} from "lucide-react";
-
-import styles from "./page.module.css";
-
-export default function HomePage() {
+/**
+ * Página Inicial do Sistema - Portal de Navegação
+ * Integração com Layout Mestre conforme Arquitetura Visual
+ */
+export default function Page() {
   return (
-    <ContentContainer>
-      <div className={styles.page}>
-        <section className={styles.hero}>
-          <div>
-            <h1 className={styles.title}>
-              Bem-vindo ao RPG Robusto
-            </h1>
-
-            <p className={styles.subtitle}>
-              Gerencie mundos, personagens,
-              campanhas e combates em um único sistema.
-            </p>
-          </div>
-        </section>
-
-        <section className={styles.stats}>
-          <StatCard
-            label="Personagens"
-            value="0"
-            icon={Users}
-            color="gold"
-          />
-
-          <StatCard
-            label="Campanhas"
-            value="0"
-            icon={BookOpen}
-            color="gold"
-          />
-
-          <StatCard
-            label="Combates"
-            value="0"
-            icon={Swords}
-            color="gold"
-          />
-
-          <StatCard
-            label="Missões"
-            value="0"
-            icon={ScrollText}
-            color="gold"
-          />
-        </section>
-
-        <section className={styles.progressSection}>
-          <h2>Progresso do Projeto</h2>
-
-          <div className={styles.progressGrid}>
-            <ProgressBar
-              label="Biblioteca RPG"
-              value={25}
-              max={100}
-              showValue
-              color="gold"
-            />
-
-            <ProgressBar
-              label="Personagens"
-              value={0}
-              max={100}
-              showValue
-              color="gold"
-            />
-
-            <ProgressBar
-              label="Campanhas"
-              value={0}
-              max={100}
-              showValue
-              color="gold"
-            />
-
-            <ProgressBar
-              label="Combates"
-              value={0}
-              max={100}
-              showValue
-              color="gold"
-            />
-          </div>
-        </section>
-
-        <section className={styles.activity}>
-          <h2>Últimas Atividades</h2>
-
-          <div className={styles.activityCard}>
-            <p>Nenhuma atividade registrada.</p>
-          </div>
-        </section>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Header />
+      <div style={{ display: 'flex', flex: 1 }}>
+        <Sidebar activeModule="dashboard" />
+        <ContentContainer>
+          <HomeScreen />
+        </ContentContainer>
       </div>
-    </ContentContainer>
+      <Footer />
+    </div>
   );
 }
