@@ -30,10 +30,8 @@ export const ROUTES = {
   adminPersonagens: null, // Inexistente (usar admin/campanhas/personagens se for o caso)
   fichasCampanha: '/admin/campanhas/personagens',
 
-  // Módulos em Desenvolvimento (Null ou sem rota real)
-  dashboard: null,
-  personagens: null,
-  campanhas: null,
+  // Campanhas
+  campanhas: '/admin/campanhas',
   convites: null,
   participantes: null,
   combates: null,
