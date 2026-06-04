@@ -34,7 +34,8 @@ export const ROUTES = {
   campanhas: '/admin/campanhas',
   convites: null,
   participantes: null,
-  combates: null,
+  // Combates
+  combates: '/admin/combates',
   iniciativas: null,
   loot: null,
   relatoriosCampanhas: null,
