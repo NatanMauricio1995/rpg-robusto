@@ -129,7 +129,12 @@ class PersonagemService {
    * @param {string} id 
    */
   async getCharacter(id) {
-    return await personagemRepository.findById(id);
+    try {
+      const res = await personagemRepository.findById(id);
+      return { success: true, data: res, error: null };
+    } catch (e) {
+      return { success: false, data: null, error: { message: e.message } };
+    }
   }
 
   /**
