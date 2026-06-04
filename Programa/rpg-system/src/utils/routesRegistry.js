@@ -47,6 +47,8 @@ export const ROUTES = {
   relatoriosCombates: '/admin/relatorios/combates',
   relatoriosLoot: '/admin/relatorios/loot',
   relatoriosProgressao: '/admin/relatorios/progressao',
+  // Mundos
+  mundo: '/admin/mundo',
   // Auditoria
   auditoria: '/admin/auditoria',
   // Aprovações
