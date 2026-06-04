@@ -1,41 +1,24 @@
+import BaseService from '../../../../services/BaseService';
 import ProficienciaRepository from '../repositories/ProficienciaRepository';
 
-const ProficienciaService = {
-  async getAll() {
-    return await ProficienciaRepository.findAll();
-  },
+class ProficienciaService extends BaseService {
+  constructor() {
+    super(ProficienciaRepository);
+  }
 
-  async getById(id) {
-    return await ProficienciaRepository.findById(id);
-  },
+  validate(data) {
+    if (!data.nome) throw new Error('O nome da proficiência é obrigatório.');
+    return true;
+  }
 
-  async search(filters) {
-    return await ProficienciaRepository.search(filters);
-  },
-
-  async save(id, data) {
-    if (!data.nome) {
-      throw new Error('O nome da proficiência é obrigatório.');
-    }
-
-    const payload = {
+  transform(data) {
+    return {
       nome: data.nome,
       descricao: data.descricao || '',
       categoria: data.categoria || 'Outros',
       ativo: data.ativo !== undefined ? data.ativo : true
     };
-
-    if (id) {
-      await ProficienciaRepository.update(id, payload);
-      return id;
-    } else {
-      return await ProficienciaRepository.create(payload);
-    }
-  },
-
-  async delete(id) {
-    await ProficienciaRepository.delete(id);
   }
-};
+}
 
-export default ProficienciaService;
+export default new ProficienciaService();

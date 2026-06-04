@@ -1,0 +1,3 @@
+.form { display: flex; flex-direction: column; gap: 16px; }
+.row { display: flex; gap: 16px; align-items: flex-end; }
+.actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; border-top: 1px solid var(--gray-800); padding-top: 16px; }
