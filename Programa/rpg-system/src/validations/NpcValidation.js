@@ -1,3 +1,6 @@
+import { locRepo } from '../repositories/WorldRepositories';
+
+
 const NpcValidation = {
   validate(data) {
     if (!data.nome) {

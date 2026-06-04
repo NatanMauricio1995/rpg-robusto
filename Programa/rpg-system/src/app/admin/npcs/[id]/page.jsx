@@ -1,143 +1,46 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { 
-  Header, 
-  Sidebar, 
-  ContentContainer, 
-  SectionTitle, 
-  Button,
-  Loading,
-  Toast
-} from '../../../components';
-import NpcService from '../../../../services/NpcService';
-import LocalService from '../../../../services/LocalService';
-import FaccaoService from '../../../../services/FaccaoService';
-import OrganizacaoService from '../../../../services/OrganizacaoService';
-import styles from '../page.module.css';
-
-export default function NpcDetailsPage() {
-  const params = useParams();
-  const router = useRouter();
-  const [npc, setNpc] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [toast, setToast] = useState(null);
-
-  useEffect(() => {
-    const loadNpc = async () => {
-      try {
-        setLoading(true);
-        const data = await NpcService.findById(params.id);
-        if (!data) {
-          setToast({ message: 'NPC não encontrado.', type: 'error' });
-          return;
-        }
-
-        // Fetch related names
-        const [local, faccao, organizacao] = await Promise.all([
-          data.localId ? LocalService.findById(data.localId) : Promise.resolve(null),
-          data.faccaoId ? FaccaoService.findById(data.faccaoId) : Promise.resolve(null),
-          data.organizacaoId ? OrganizacaoService.findById(data.organizacaoId) : Promise.resolve(null)
-        ]);
-
-        setNpc({
-          ...data,
-          localNome: local?.nome || 'Local desconhecido',
-          faccaoNome: faccao?.nome || 'Independente',
-          organizacaoNome: organizacao?.nome || 'Nenhuma'
-        });
-      } catch (error) {
-        setToast({ message: 'Erro ao carregar detalhes: ' + error.message, type: 'error' });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (params.id) {
-      loadNpc();
-    }
-  }, [params.id]);
-
-  if (loading) return <Loading type="full" label="Carregando detalhes do NPC..." />;
-  if (!npc) return (
-    <div className={styles.layout}>
-      <Header />
-      <div className={styles.main}>
-        <Sidebar activeModule="biblioteca" />
-        <ContentContainer>
-          <SectionTitle title="Erro" subtitle="NPC não encontrado." />
-          <Button onClick={() => router.push('/admin/npcs')}>Voltar para Lista</Button>
-        </ContentContainer>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className={styles.layout}>
-      <Header />
-      <div className={styles.main}>
-        <Sidebar activeModule="biblioteca" />
-        <ContentContainer>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-            <SectionTitle 
-              title={npc.nome} 
-              subtitle={`NPC de ${npc.localNome}`}
-            />
-            <Button variant="ghost" onClick={() => router.push('/admin/npcs')}>Voltar</Button>
-          </div>
-
-          <div className={styles.viewContent} style={{ maxWidth: '800px' }}>
-            {npc.imagem && (
-              <img src={npc.imagem} alt={npc.nome} className={styles.portrait} style={{ maxWidth: '400px' }} />
-            )}
-            
-            <div className={styles.viewRow}>
-              <strong>Nome Completo</strong> 
-              <span>{npc.nome}</span>
-            </div>
-            
-            <div className={styles.viewRow}>
-              <strong>Localização</strong> 
-              <span>{npc.localNome}</span>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-              <div className={styles.viewRow}>
-                <strong>Facção</strong> 
-                <span>{npc.faccaoNome}</span>
-              </div>
-              <div className={styles.viewRow}>
-                <strong>Organização</strong> 
-                <span>{npc.organizacaoNome}</span>
-              </div>
-            </div>
-
-            <div className={styles.viewRow}>
-              <strong>Descrição Geral</strong> 
-              <p>{npc.descricao}</p>
-            </div>
-
-            <div className={styles.viewRow}>
-              <strong>Personalidade</strong> 
-              <p>{npc.personalidade || 'Não detalhada.'}</p>
-            </div>
-
-            <div className={styles.viewRow}>
-              <strong>História e Background</strong> 
-              <p>{npc.historia || 'História não registrada.'}</p>
-            </div>
-
-            <div className={styles.viewRow}>
-              <strong>Status</strong> 
-              <span className={`${styles.statusBadge} ${npc.ativo ? styles.statusActive : styles.statusInactive}`}>
-                {npc.ativo ? 'NPC Ativo' : 'NPC Inativo'}
-              </span>
-            </div>
-          </div>
-        </ContentContainer>
-      </div>
-      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
-    </div>
-  );
-}
+   261 import React, { useEffect, useState } from 'react';
+   262 import { useNpcs } from '../../../../hooks/useNpcs';
+   263 import { ContentContainer, Header, Sidebar, Loading, SectionTitle } from '../../../../components';
+   264
+   265 export default function NpcAdminDetailPage({ params }) {
+   266   const { getNpc, loading } = useNpcs();
+   267   const [npc, setNpc] = useState(null);
+   268
+   269   useEffect(() => {
+   270     getNpc(params.id).then(r => r.success && setNpc(r.data));
+   271   }, [params.id]);
+   272
+   273   if (loading || !npc) return <Loading full label="Consultando registros de habitantes..." />;
+   274
+   275   return (
+   276     <div className="flex flex-col min-h-screen bg-parchment">
+   277       <Header />
+   278       <div className="flex flex-1">
+   279         <Sidebar activeModule="npcs" />
+   280         <ContentContainer>
+   281           <SectionTitle title={`Ficha de NPC: ${npc.nome}`} subtitle={npc.titulo || 'Habitante do Mundo'} />
+   282           
+   283           <div className="mt-6 bg-white p-8 rounded border-2 border-red-900 shadow-lg">
+   284             <div className="mb-8">
+   285               <h4 className="text-red-900 font-medieval text-lg border-b-2 border-red-900 mb-2">📍 Localização Atual</h4>
+   286               <p className="text-lg italic font-serif">{npc.locationPath}</p>
+   287             </div>
+   288
+   289             <div className="mb-8">
+   290               <h4 className="text-red-900 font-medieval text-lg border-b-2 border-red-900 mb-2">📜 Biografia e Lore</h4>
+   291               <p className="whitespace-pre-wrap leading-relaxed font-serif text-gray-800">
+   292                 {npc.descricao || "Nenhum relato histórico registrado para este indivíduo nos anais da cartografia."}
+   293               </p>
+   294             </div>
+   295
+   296             <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 pt-6 border-t">
+   297               <div><strong>Vínculo do Sistema:</strong> {npc.id}</div>
+   298               <div><strong>Data de Registro:</strong> {new Date(npc.createdAt).toLocaleDateString()}</div>
+   299             </div>
+   300           </div>
+   301         </ContentContainer>
+   302       </div>
+   303     </div>
+   304   );
+   305 }

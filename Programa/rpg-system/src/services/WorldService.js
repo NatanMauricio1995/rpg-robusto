@@ -7,7 +7,6 @@ class WorldService {
     const role = user?.role || user?.userRole || '';
     return ['MESTRE', 'ADMINISTRADOR'].includes(role.toUpperCase());
   }
-
   // --- MUNDO ---
   async createWorld(user, data) {
     try {
