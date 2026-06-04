@@ -38,6 +38,7 @@ export const ROUTES = {
   combates: '/admin/combates',
   iniciativas: null,
   loot: '/admin/loot',
+  progressao: '/admin/progressao',
   relatoriosCampanhas: null,
   relatoriosPersonagens: null,
   relatoriosInimigos: null

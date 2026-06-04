@@ -1,38 +1,21 @@
 import campanhaPersonagemRepository from '../repositories/CampanhaPersonagemRepository';
+import unlockService from './UnlockService';
 
 /**
- * ProgressionService - Responsável pela lógica de evolução de nível.
- * Regras: RN-022 a RN-024 | Atualiza exclusivamente a Ficha de Campanha.
+ * ProgressionService - Responsável pela orquestração do Level Up.
+ * Regras: RN-022 a RN-024 | Integrado ao UnlockService para novos conteúdos.
  */
 class ProgressionService {
   constructor() {
-    // Tabela padrão de escalonamento de níveis de XP do RPG Robusto (Acumulativa)
-    this.tabelaNiveis = {
-      1: 0,
-      2: 300,
-      3: 900,
-      4: 2700,
-      5: 6500,
-      6: 14000,
-      7: 23000,
-      8: 34000,
-      9: 48000,
-      10: 64000,
-      11: 85000,
-      12: 100000,
-      13: 120000,
-      14: 140000,
-      15: 165000,
-      16: 195000,
-      17: 225000,
-      18: 265000,
-      19: 305000,
-      20: 355000
+    // Tabela padrão de escalonamento de níveis de XP (Acumulativa)
+    this.tabelaNiveis = { 
+      1: 0, 2: 300, 3: 900, 4: 2700, 5: 6500, 6: 14000, 7: 23000, 8: 34000, 9: 48000, 10: 64000,
+      11: 85000, 12: 100000, 13: 120000, 14: 140000, 15: 165000, 16: 195000, 17: 225000, 18: 265000, 19: 305000, 20: 355000
     };
   }
 
   /**
-   * Avalia a XP atual da Ficha de Campanha e realiza a progressão automática de nível se aplicável.
+   * Orquestrador de Level Up: Valida a XP, recalcula HP, concede habilidades e magias automaticamente.
    */
   async checkAndExecuteLevelUp(campanhaPersonagemId) {
     try {
@@ -43,7 +26,7 @@ class ProgressionService {
       const xpAtual = ficha.xp || 0;
       let novoNivel = nivelAtual;
 
-      // Determinar o maior nível que o personagem se enquadra de acordo com seu montante de XP
+      // Determinar o nível correspondente à XP acumulada
       for (let lvl = 1; lvl <= 20; lvl++) {
         if (xpAtual >= this.tabelaNiveis[lvl]) {
           novoNivel = lvl;
@@ -51,28 +34,33 @@ class ProgressionService {
       }
 
       if (novoNivel > nivelAtual) {
-        // Incrementa parâmetros de vida baseados no multiplicador estático simples de progressão da classe
+        // RN-022: Recuperação total e aumento do HP Máximo ao subir de nível
         const hpMaxAntigo = ficha.hpMaximo || 10;
-        const ganhoHp = 8; // Média de ganho padrão por nível do sistema
-        const novoHpMax = hpMaxAntigo + ganhoHp;
+        // Simulação de ganho baseado em dado de vida médio (8) + Mod. Const (aqui simplificado)
+        const ganhoPorNivel = 8; 
+        const novoHpMax = hpMaxAntigo + (ganhoPorNivel * (novoNivel - nivelAtual));
 
-        // RN-022: Recuperação total de HP ao subir de nível
+        // 1. Atualizar base de sobrevivência e nível
         await campanhaPersonagemRepository.update(campanhaPersonagemId, {
           nivel: novoNivel,
           hpMaximo: novoHpMax,
-          hpAtual: novoHpMax, 
+          hpAtual: novoHpMax, // Cura total no Level Up (RN-022)
           updatedAt: new Date().toISOString()
         });
 
-        return { 
-          success: true, 
-          data: { 
-            leveledUp: true, 
-            nivelAnterior: nivelAtual, 
-            novoNivel, 
-            novoHpMax 
-          }, 
-          error: null 
+        // 2. Disparar desbloqueio de conteúdo dinâmico (RN-023, RN-024)
+        const unlockRes = await unlockService.unlockLevelContent(campanhaPersonagemId, novoNivel);
+
+        return {
+          success: true,
+          data: {
+            leveledUp: true,
+            nivelAnterior: nivelAtual,
+            novoNivel,
+            novoHpMax,
+            desbloqueios: unlockRes.success ? unlockRes.data : null
+          },
+          error: null
         };
       }
 
