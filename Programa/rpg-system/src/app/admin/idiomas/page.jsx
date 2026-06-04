@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import { 
   Header, 
   Sidebar, 
@@ -14,93 +14,29 @@ import {
 } from '../../../components';
 import IdiomaList from './components/IdiomaList';
 import IdiomaForm from './components/IdiomaForm';
-import IdiomaService from './services/IdiomaService';
+import { useIdiomas } from '../../../hooks/useIdiomas';
 import styles from './page.module.css';
 
 export default function IdiomasPage() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [selectedIdioma, setSelectedIdioma] = useState(null);
-  const [isViewMode, setIsViewMode] = useState(false);
-  const [toast, setToast] = useState(null);
-  const [filters, setFilters] = useState({ nome: '', raridade: '', ativo: undefined });
-
-  const fetchData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const result = await IdiomaService.search(filters);
-      setData(result);
-    } catch (error) {
-      showToast('Erro ao carregar dados: ' + error.message, 'error');
-    } finally {
-      setLoading(false);
-    }
-  }, [filters]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  const showToast = (message, type = 'success') => {
-    setToast({ message, type });
-  };
-
-  const handleNew = () => {
-    setSelectedIdioma(null);
-    setIsViewMode(false);
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (idioma) => {
-    setSelectedIdioma(idioma);
-    setIsViewMode(false);
-    setIsModalOpen(true);
-  };
-
-  const handleView = (idioma) => {
-    setSelectedIdioma(idioma);
-    setIsViewMode(true);
-    setIsModalOpen(true);
-  };
-
-  const handleDeleteClick = (idioma) => {
-    setSelectedIdioma(idioma);
-    setIsConfirmOpen(true);
-  };
-
-  const handleSave = async (formData) => {
-    try {
-      setLoading(true);
-      await IdiomaService.save(selectedIdioma?.id, formData);
-      showToast(selectedIdioma ? 'Idioma atualizado com sucesso!' : 'Idioma criado com sucesso!');
-      setIsModalOpen(false);
-      fetchData();
-    } catch (error) {
-      showToast(error.message, 'error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleConfirmDelete = async () => {
-    try {
-      setLoading(true);
-      await IdiomaService.delete(selectedIdioma.id);
-      showToast('Idioma excluído com sucesso!');
-      setIsConfirmOpen(false);
-      fetchData();
-    } catch (error) {
-      showToast(error.message, 'error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = (term) => {
-    setFilters(prev => ({ ...prev, nome: term }));
-  };
+  const {
+    data,
+    loading,
+    isModalOpen,
+    setIsModalOpen,
+    isConfirmOpen,
+    setIsConfirmOpen,
+    selected,
+    isViewMode,
+    toast,
+    setToast,
+    handleNew,
+    handleEdit,
+    handleView,
+    handleDeleteClick,
+    handleSave,
+    handleConfirmDelete,
+    handleSearch
+  } = useIdiomas();
 
   return (
     <div className={styles.layout}>
@@ -130,30 +66,30 @@ export default function IdiomasPage() {
           <Modal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            title={isViewMode ? 'Visualizar Idioma' : selectedIdioma ? 'Editar Idioma' : 'Novo Idioma'}
+            title={isViewMode ? 'Visualizar Idioma' : selected ? 'Editar Idioma' : 'Novo Idioma'}
             size="md"
           >
             {isViewMode ? (
               <div className={styles.viewContent}>
                 <div className={styles.viewRow}>
-                  <strong>Nome:</strong> {selectedIdioma.nome}
+                  <strong>Nome:</strong> {selected.nome}
                 </div>
                 <div className={styles.viewRow}>
-                  <strong>Raridade:</strong> {selectedIdioma.raridade}
+                  <strong>Raridade:</strong> {selected.raridade}
                 </div>
                 <div className={styles.viewRow}>
-                  <strong>Escrita:</strong> {selectedIdioma.escrita || 'Nenhuma'}
+                  <strong>Escrita:</strong> {selected.escrita || 'Nenhuma'}
                 </div>
                 <div className={styles.viewRow}>
-                  <strong>Descrição:</strong> {selectedIdioma.descricao || 'Sem descrição.'}
+                  <strong>Descrição:</strong> {selected.descricao || 'Sem descrição.'}
                 </div>
                 <div className={styles.viewRow}>
-                  <strong>Status:</strong> {selectedIdioma.ativo ? 'Ativo' : 'Inativo'}
+                  <strong>Status:</strong> {selected.ativo ? 'Ativo' : 'Inativo'}
                 </div>
               </div>
             ) : (
               <IdiomaForm 
-                initialData={selectedIdioma}
+                initialData={selected}
                 onSave={handleSave}
                 onCancel={() => setIsModalOpen(false)}
                 loading={loading}
@@ -166,7 +102,7 @@ export default function IdiomasPage() {
             onClose={() => setIsConfirmOpen(false)}
             onConfirm={handleConfirmDelete}
             title="Excluir Idioma"
-            message={`Tem certeza que deseja excluir o idioma "${selectedIdioma?.nome}"? Esta ação não pode ser desfeita.`}
+            message={`Tem certeza que deseja excluir o idioma "${selected?.nome}"? Esta ação não pode ser desfeita.`}
             loading={loading}
           />
 

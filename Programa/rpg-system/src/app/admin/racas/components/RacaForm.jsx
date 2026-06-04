@@ -7,8 +7,8 @@ import {
   Button,
   MultiSelect
 } from '../../../../components';
-import IdiomaService from '../../idiomas/services/IdiomaService';
-import SentidoService from '../../sentidos/services/SentidoService';
+import IdiomaService from '../../../../services/IdiomaService';
+import SentidoService from '../../../../services/SentidoService';
 import styles from './RacaForm.module.css';
 
 const tamanhoOptions = [

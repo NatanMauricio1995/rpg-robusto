@@ -7,8 +7,8 @@ import {
   Button,
   MultiSelect
 } from '../../../../components';
-import PericiaService from '../../pericias/services/PericiaService';
-import ProficienciaService from '../../proficiencias/services/ProficienciaService';
+import PericiaService from '../../../../services/PericiaService';
+import ProficienciaService from '../../../../services/ProficienciaService';
 import styles from './ClasseForm.module.css';
 
 const dadoOptions = [

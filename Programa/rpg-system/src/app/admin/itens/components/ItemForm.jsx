@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextBox, TextArea, Select, Checkbox, Button, MultiSelect } from '../../../../components';
-import EncantamentoService from '../../encantamentos/services/EncantamentoService';
+import EncantamentoService from '../../../../services/EncantamentoService';
 import styles from './ItemForm.module.css';
 
 const raridadeOptions = [{ value: 'Comum', label: 'Comum' }, { value: 'Incomum', label: 'Incomum' }, { value: 'Rara', label: 'Rara' }, { value: 'Muito Rara', label: 'Muito Rara' }, { value: 'Lendária', label: 'Lendária' }];

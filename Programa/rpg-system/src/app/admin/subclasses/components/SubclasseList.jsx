@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid, StatusBadge, Button } from '../../../../components';
-import ClasseService from '../../classes/services/ClasseService';
+import ClasseService from '../../../../services/ClasseService';
 
 const SubclasseList = ({ data, loading, onEdit, onDelete }) => {
   const [classes, setClasses] = useState({});

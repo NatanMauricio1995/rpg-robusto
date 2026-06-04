@@ -6,7 +6,7 @@ import {
   Checkbox, 
   Button
 } from '../../../../components';
-import RacaService from '../../racas/services/RacaService';
+import RacaService from '../../../../services/RacaService';
 import styles from './SubRacaForm.module.css';
 
 const SubRacaForm = ({ initialData, onSave, onCancel, loading }) => {

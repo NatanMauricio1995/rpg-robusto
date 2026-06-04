@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextBox, TextArea, Select, Checkbox, Button } from '../../../../components';
-import ClasseService from '../../classes/services/ClasseService';
+import ClasseService from '../../../../services/ClasseService';
 import styles from './SubclasseForm.module.css';
 
 const SubclasseForm = ({ initialData, onSave, onCancel, loading }) => {

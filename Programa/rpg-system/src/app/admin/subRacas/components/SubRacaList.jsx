@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Edit, Trash2, Eye } from 'lucide-react';
 import { DataGrid, StatusBadge, Button } from '../../../../components';
-import RacaService from '../../racas/services/RacaService';
+import RacaService from '../../../../services/RacaService';
 import styles from './SubRacaList.module.css';
 
 const SubRacaList = ({ data, loading, onEdit, onDelete, onView }) => {

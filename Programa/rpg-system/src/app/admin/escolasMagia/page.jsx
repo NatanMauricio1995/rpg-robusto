@@ -1,53 +1,20 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import { 
   Header, Sidebar, ContentContainer, SectionTitle, CrudToolbar, Modal, ConfirmDialog, Toast 
 } from '../../../components';
 import EscolaMagiaList from './components/EscolaMagiaList';
 import EscolaMagiaForm from './components/EscolaMagiaForm';
-import EscolaMagiaService from './services/EscolaMagiaService';
+import { useEscolasMagia } from '../../../hooks/useEscolasMagia';
 import styles from './page.module.css';
 
 export default function EscolasMagiaPage() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [selectedEscola, setSelectedEscola] = useState(null);
-  const [isViewMode, setIsViewMode] = useState(false);
-  const [toast, setToast] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const fetchData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const result = await EscolaMagiaService.search({ nome: searchTerm });
-      setData(result);
-    } catch (error) {
-      setToast({ message: error.message, type: 'error' });
-    } finally {
-      setLoading(false);
-    }
-  }, [searchTerm]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  const handleSave = async (formData) => {
-    try {
-      setLoading(true);
-      await EscolaMagiaService.save(selectedEscola?.id, formData);
-      setToast({ message: 'Escola de magia salva!' });
-      setIsModalOpen(false);
-      fetchData();
-    } catch (error) {
-      setToast({ message: error.message, type: 'error' });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    data, loading, isModalOpen, setIsModalOpen, isConfirmOpen, setIsConfirmOpen,
+    selected, setSelected, isViewMode, setIsViewMode, toast, setToast,
+    handleSave, handleConfirmDelete, setSearchTerm
+  } = useEscolasMagia();
 
   return (
     <div className={styles.layout}>
@@ -56,19 +23,19 @@ export default function EscolasMagiaPage() {
         <Sidebar activeModule="biblioteca" />
         <ContentContainer>
           <SectionTitle title="Escolas de Magia" subtitle="Gerencie as diferentes tradições arcanas." />
-          <CrudToolbar onNew={() => { setSelectedEscola(null); setIsViewMode(false); setIsModalOpen(true); }} onSearch={setSearchTerm} newLabel="Nova Escola" />
-          <EscolaMagiaList data={data} loading={loading} onEdit={(e) => { setSelectedEscola(e); setIsViewMode(false); setIsModalOpen(true); }} onView={(e) => { setSelectedEscola(e); setIsViewMode(true); setIsModalOpen(true); }} onDelete={(e) => { setSelectedEscola(e); setIsConfirmOpen(true); }} />
+          <CrudToolbar onNew={() => { setSelected(null); setIsViewMode(false); setIsModalOpen(true); }} onSearch={setSearchTerm} newLabel="Nova Escola" />
+          <EscolaMagiaList data={data} loading={loading} onEdit={(e) => { setSelected(e); setIsViewMode(false); setIsModalOpen(true); }} onView={(e) => { setSelected(e); setIsViewMode(true); setIsModalOpen(true); }} onDelete={(e) => { setSelected(e); setIsConfirmOpen(true); }} />
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={isViewMode ? 'Ver Escola' : 'Escola de Magia'}>
             {isViewMode ? (
               <div className={styles.viewContent}>
-                <div className={styles.colorIndicator} style={{ backgroundColor: selectedEscola.cor }}>Escola de {selectedEscola.nome}</div>
-                <p><strong>Descrição:</strong> {selectedEscola.descricao}</p>
+                <div className={styles.colorIndicator} style={{ backgroundColor: selected.cor }}>Escola de {selected.nome}</div>
+                <p><strong>Descrição:</strong> {selected.descricao}</p>
               </div>
             ) : (
-              <EscolaMagiaForm initialData={selectedEscola} onSave={handleSave} onCancel={() => setIsModalOpen(false)} loading={loading} />
+              <EscolaMagiaForm initialData={selected} onSave={handleSave} onCancel={() => setIsModalOpen(false)} loading={loading} />
             )}
           </Modal>
-          <ConfirmDialog isOpen={isConfirmOpen} onClose={() => setIsConfirmOpen(false)} onConfirm={async () => { await EscolaMagiaService.delete(selectedEscola.id); setIsConfirmOpen(false); fetchData(); }} loading={loading} />
+          <ConfirmDialog isOpen={isConfirmOpen} onClose={() => setIsConfirmOpen(false)} onConfirm={handleConfirmDelete} loading={loading} />
           {toast && <Toast {...toast} onClose={() => setToast(null)} />}
         </ContentContainer>
       </div>

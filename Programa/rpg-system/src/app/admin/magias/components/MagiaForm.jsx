@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextBox, TextArea, Select, Checkbox, Button } from '../../../../components';
-import EscolaMagiaService from '../../escolasMagia/services/EscolaMagiaService';
+import EscolaMagiaService from '../../../../services/EscolaMagiaService';
 import styles from './MagiaForm.module.css';
 
 const MagiaForm = ({ initialData, onSave, onCancel, loading }) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid, StatusBadge, Button } from '../../../../components';
-import EscolaMagiaService from '../../escolasMagia/services/EscolaMagiaService';
+import EscolaMagiaService from '../../../../services/EscolaMagiaService';
 
 const MagiaList = ({ data, loading, onEdit, onDelete }) => {
   const [escolas, setEscolas] = useState({});
