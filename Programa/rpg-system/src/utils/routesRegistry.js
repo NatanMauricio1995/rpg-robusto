@@ -46,5 +46,7 @@ export const ROUTES = {
   relatoriosInimigos: '/admin/relatorios/inimigos',
   relatoriosCombates: '/admin/relatorios/combates',
   relatoriosLoot: '/admin/relatorios/loot',
-  relatoriosProgressao: '/admin/relatorios/progressao'
+  relatoriosProgressao: '/admin/relatorios/progressao',
+  // Auditoria
+  auditoria: '/admin/auditoria'
 };
