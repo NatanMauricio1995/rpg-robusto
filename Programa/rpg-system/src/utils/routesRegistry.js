@@ -39,7 +39,12 @@ export const ROUTES = {
   iniciativas: null,
   loot: '/admin/loot',
   progressao: '/admin/progressao',
-  relatoriosCampanhas: null,
-  relatoriosPersonagens: null,
-  relatoriosInimigos: null
+  // Relatórios
+  relatorios: '/admin/relatorios',
+  relatoriosCampanhas: '/admin/relatorios/campanhas',
+  relatoriosPersonagens: '/admin/relatorios/personagens',
+  relatoriosInimigos: '/admin/relatorios/inimigos',
+  relatoriosCombates: '/admin/relatorios/combates',
+  relatoriosLoot: '/admin/relatorios/loot',
+  relatoriosProgressao: '/admin/relatorios/progressao'
 };
