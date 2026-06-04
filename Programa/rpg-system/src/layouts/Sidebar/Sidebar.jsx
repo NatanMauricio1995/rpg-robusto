@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { 
   LayoutDashboard, 
   Map, 
@@ -9,35 +10,39 @@ import {
   Shield, 
   Settings,
   ChevronLeft,
-  LogOut
+  LogOut,
+  Sword
 } from 'lucide-react';
 import clsx from 'clsx';
+import { ROUTES } from '../../utils/routesRegistry';
 import styles from './Sidebar.module.css';
 
 /**
  * Sidebar component for RPG Robusto
+ * Atualizada via Auditoria de Rotas (ETAPA 5)
  */
 const Sidebar = ({ activeModule = 'dashboard', collapsed = false, onToggle }) => {
   const menuGroups = [
     {
       title: 'Principal',
       items: [
-        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-        { id: 'campanhas', label: 'Campanhas', icon: Map },
-        { id: 'personagens', label: 'Personagens', icon: Users },
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: ROUTES.dashboard },
+        { id: 'campanhas', label: 'Campanhas', icon: Map, href: ROUTES.campanhas },
+        { id: 'personagens', label: 'Personagens', icon: Users, href: ROUTES.personagens },
       ]
     },
     {
       title: 'Recursos',
       items: [
-        { id: 'biblioteca', label: 'Biblioteca', icon: BookOpen },
-        { id: 'bestiario', label: 'Bestiário', icon: Shield },
+        { id: 'biblioteca', label: 'Biblioteca', icon: BookOpen, href: ROUTES.idiomas }, // Aponta para o primeiro item da biblioteca
+        { id: 'fichas', label: 'Fichas Campanha', icon: Shield, href: ROUTES.fichasCampanha },
+        { id: 'combates', label: 'Combates', icon: Sword, href: ROUTES.combates },
       ]
     },
     {
       title: 'Sistema',
       items: [
-        { id: 'configuracoes', label: 'Configurações', icon: Settings },
+        { id: 'configuracoes', label: 'Configurações', icon: Settings, href: null },
       ]
     }
   ];
@@ -55,20 +60,28 @@ const Sidebar = ({ activeModule = 'dashboard', collapsed = false, onToggle }) =>
           <div key={idx} className={styles.group}>
             {!collapsed && <h3 className={styles.groupTitle}>{group.title}</h3>}
             <div className={styles.items}>
-              {group.items.map((item) => (
-                <button
-                  key={item.id}
-                  className={clsx(
-                    styles.item,
-                    activeModule === item.id && styles.active
-                  )}
-                  title={collapsed ? item.label : undefined}
-                >
-                  <item.icon size={20} className={styles.icon} />
-                  {!collapsed && <span className={styles.label}>{item.label}</span>}
-                  {activeModule === item.id && <div className={styles.activeIndicator} />}
-                </button>
-              ))}
+              {group.items.map((item) => {
+                const isDisabled = !item.href;
+                const Component = isDisabled ? 'div' : Link;
+
+                return (
+                  <Component
+                    key={item.id}
+                    href={item.href}
+                    className={clsx(
+                      styles.item,
+                      activeModule === item.id && styles.active,
+                      isDisabled && styles.disabled
+                    )}
+                    title={collapsed ? item.label : undefined}
+                  >
+                    <item.icon size={20} className={styles.icon} />
+                    {!collapsed && <span className={styles.label}>{item.label}</span>}
+                    {isDisabled && !collapsed && <span className={styles.badge}>Breve</span>}
+                    {activeModule === item.id && <div className={styles.activeIndicator} />}
+                  </Component>
+                );
+              })}
             </div>
           </div>
         ))}

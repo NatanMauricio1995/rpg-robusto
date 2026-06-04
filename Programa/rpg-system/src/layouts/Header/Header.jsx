@@ -1,12 +1,15 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { Bell, Search, Menu } from 'lucide-react';
 import CharacterAvatar from '../../components/rpg/CharacterAvatar';
+import { ROUTES } from '../../utils/routesRegistry';
 import styles from './Header.module.css';
 
 /**
  * Header component for RPG Robusto
+ * Atualizado via Auditoria de Rotas (ETAPA 6)
  */
 const Header = ({ onMenuClick, user = { name: 'Mestre' } }) => {
   return (
@@ -15,10 +18,10 @@ const Header = ({ onMenuClick, user = { name: 'Mestre' } }) => {
         <button className={styles.menuBtn} onClick={onMenuClick}>
           <Menu size={24} />
         </button>
-        <div className={styles.logo}>
+        <Link href={ROUTES.home} className={styles.logo}>
           <span className={styles.logoText}>RPG</span>
           <span className={styles.logoHighlight}>ROBUSTO</span>
-        </div>
+        </Link>
       </div>
 
       <div className={styles.center}>

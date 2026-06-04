@@ -20,7 +20,7 @@ class IdiomaService extends BaseService {
   validate(data) {
     return IdiomaValidation.validate(data);
   }
-...
+
   transform(data) {
     return {
       nome: data.nome,
