@@ -148,3 +148,14 @@
 **RN-081:** Jogadores não podem alterar status.\
 **RN-082:** Jogadores não podem iniciar ou encerrar combates.\
 **RN-083:** Todo personagem aprovado que sofrer alteração retorna para: **PENDENTE_APROVACAO**
+
+## 10. Regras Arquiteturais
+**RN-84:** Nenhuma página acessa Firestore.\
+**RN-85:** Nenhum componente acessa Firestore.\
+**RN-86:** Nenhum componente possui regra de negócio.\
+**RN-87:** Toda regra passa por Service.\
+**RN-88:** Repository não possui regra.\
+**RN-89:** CombatService é o único autorizado a alterar HP.\
+**RN-90:** ProgressionService é o único autorizado a alterar XP.\
+**RN-91:** ApprovalService é o único autorizado a aprovar personagens.
+**RN-92:** InventoryService é o único autorizado a alterar inventário.
