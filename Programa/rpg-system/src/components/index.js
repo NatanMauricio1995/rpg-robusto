@@ -24,3 +24,10 @@ export { default as CharacterAvatar } from './rpg/CharacterAvatar';
 export { default as ProgressBar } from './rpg/ProgressBar';
 export { default as EmptyState } from './rpg/EmptyState';
 export { default as SectionTitle } from './rpg/SectionTitle';
+
+// Personagens
+export { default as CharacterGrid } from './personagens/CharacterGrid';
+export { default as CharacterForm } from './personagens/CharacterForm';
+export { default as AttributePanel } from './personagens/AttributePanel';
+export { default as CharacterApprovalPanel } from './personagens/CharacterApprovalPanel';
+export { default as ProgressionPanel } from './personagens/ProgressionPanel';

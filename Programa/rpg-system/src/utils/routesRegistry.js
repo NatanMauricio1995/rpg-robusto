@@ -26,7 +26,8 @@ export const ROUTES = {
   inimigos: '/admin/inimigos',
 
   // Personagens
-  criarPersonagem: '/personagens/criar',
+  personagens: '/personagens',
+  criarPersonagem: '/personagens/novo',
   adminPersonagens: null, // Inexistente (usar admin/campanhas/personagens se for o caso)
   fichasCampanha: '/admin/campanhas/personagens',
 
