@@ -35,9 +35,7 @@ class EquipmentService {
    * Valida requisitos para equipar o item (RN-096 adaptada para equipamentos)
    */
   async validateRequirements(personagemId, itemId) {
-    // TODO: CONTEXTO_INSUFICIENTE_PARA_REQUISITOS_DE_EQUIPAMENTO
-    // RN-096 foca em Crafting, mas equipamentos podem ter requisitos de força/classe.
-    return { isValid: true };
+    return "CONTEXTO_INSUFICIENTE_NA_DOCUMENTACAO";
   }
 }
 
