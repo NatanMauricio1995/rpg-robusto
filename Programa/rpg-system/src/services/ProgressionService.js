@@ -1,5 +1,6 @@
 import campanhaPersonagemRepository from '../repositories/CampanhaPersonagemRepository';
 import unlockService from './UnlockService';
+import inventoryService from './InventoryService';
 
 /**
  * ProgressionService - Responsável pela orquestração do Level Up.
@@ -47,6 +48,9 @@ class ProgressionService {
           hpAtual: novoHpMax, // Cura total no Level Up (RN-022)
           updatedAt: new Date().toISOString()
         });
+
+        // RN-094 / RN-095: Validar requisitos de equipamentos após subida de nível
+        await inventoryService.checkEquippedRequirements(campanhaPersonagemId);
 
         // 2. Disparar desbloqueio de conteúdo dinâmico (RN-023, RN-024)
         const unlockRes = await unlockService.unlockLevelContent(campanhaPersonagemId, novoNivel);

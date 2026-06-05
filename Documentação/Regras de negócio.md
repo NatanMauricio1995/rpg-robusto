@@ -197,3 +197,18 @@
 **RN-096:** Crafting — validação de requisitos: antes de executar uma receita, o sistema valida se o personagem possui a classe exigida (`classeId`) e a proficiência de ferramenta exigida (`ferramentaId`). Se algum requisito não for atendido, o crafting é bloqueado com mensagem de erro.
 
 **RN-097:** Dado de vida permitidos para classes: d4, d6, d8, d10, d12. O valor d20 listado anteriormente em elementos fixos é um erro — d20 é exclusivamente dado de verificação, não dado de vida.
+
+**RN-098:** Um equipamento pode exigir:
+- Proficiências
+- Classes
+- Nível mínimo
+- Atributos mínimos
+- Raças
+
+**RN-099**
+A validação ocorre:
+- Ao equipar
+- Ao criar personagem
+- Ao subir de nível
+
+**RN-100:** Caso o personagem deixe de atender um requisito, o equipamento deve ser desequipado automaticamente.

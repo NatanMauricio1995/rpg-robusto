@@ -24,7 +24,21 @@ class ArmaService extends BaseService {
       peso: Number(data.peso) || 0,
       valor: Number(data.valor) || 0,
       habilidadesIds: data.habilidadesIds || [],
-      encantamentosIds: data.encantamentosIds || []
+      encantamentosIds: data.encantamentosIds || [],
+      requisitos: {
+        proficienciasIds: data.requisitos?.proficienciasIds || [],
+        classesIds: data.requisitos?.classesIds || [],
+        atributos: {
+          forca: data.requisitos?.atributos?.forca || null,
+          destreza: data.requisitos?.atributos?.destreza || null,
+          constituicao: data.requisitos?.atributos?.constituicao || null,
+          inteligencia: data.requisitos?.atributos?.inteligencia || null,
+          sabedoria: data.requisitos?.atributos?.sabedoria || null,
+          carisma: data.requisitos?.atributos?.carisma || null
+        },
+        nivelMinimo: data.requisitos?.nivelMinimo || 1,
+        racasIds: data.requisitos?.racasIds || []
+      }
     };
   }
 }

@@ -1,6 +1,10 @@
 import BaseService from './BaseService';
 import fichaInventarioRepository from '../repositories/FichaInventarioRepository';
 import equipmentService from './EquipmentService';
+import personagemRepository from '../repositories/PersonagemRepository';
+import campanhaPersonagemRepository from '../repositories/CampanhaPersonagemRepository';
+import armaRepository from '../repositories/ArmaRepository';
+import armaduraRepository from '../repositories/ArmaduraRepository';
 
 /**
  * InventoryService - Responsável por gerenciar inventário e carga
@@ -41,7 +45,49 @@ class InventoryService extends BaseService {
    * Equipar um item do inventário (FI-002 / DD-223)
    */
   async equipItem(id, equipado = true) {
+    if (equipado) {
+      const registro = await fichaInventarioRepository.findById(id);
+      if (!registro) throw new Error('Item não encontrado no inventário.');
+
+      const ficha = await campanhaPersonagemRepository.findById(registro.fichaCampanhaId);
+      const personagem = await personagemRepository.findById(ficha.personagemId);
+      
+      const equipamento = await armaRepository.findById(registro.itemId) || 
+                          await armaduraRepository.findById(registro.itemId);
+
+      if (equipamento) {
+        const validation = equipmentService.validateRequirements(personagem, equipamento, ficha.nivel);
+        if (!validation.isValid) {
+          throw new Error(`Não atende aos requisitos: ${validation.errors.join(', ')}`);
+        }
+      }
+    }
     return await fichaInventarioRepository.update(id, { equipado });
+  }
+
+  /**
+   * RN-095: Gatilho pós-alteração de nível/atributos -> Desequipar automático
+   */
+  async checkEquippedRequirements(fichaCampanhaId) {
+    const items = await fichaInventarioRepository.findAll(); // Idealmente filtrar por fichaCampanhaId
+    const fichaItems = items.filter(i => i.fichaCampanhaId === fichaCampanhaId && i.equipado);
+    
+    if (fichaItems.length === 0) return;
+
+    const ficha = await campanhaPersonagemRepository.findById(fichaCampanhaId);
+    const personagem = await personagemRepository.findById(ficha.personagemId);
+
+    for (const item of fichaItems) {
+      const equipamento = await armaRepository.findById(item.itemId) || 
+                          await armaduraRepository.findById(item.itemId);
+      
+      if (equipamento) {
+        const validation = equipmentService.validateRequirements(personagem, equipamento, ficha.nivel);
+        if (!validation.isValid) {
+          await this.equipItem(item.id, false);
+        }
+      }
+    }
   }
 
   /**
