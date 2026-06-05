@@ -1,6 +1,7 @@
 import efeitosRepo from '../repositories/EfeitosCombateRepository';
 import ativosRepo from '../repositories/CombateEfeitosAtivosRepository';
 import combatRepo from '../repositories/CombatRepository';
+import attributeService from './AttributeService';
 
 /**
  * ConditionService - Gerenciamento de Condições e Efeitos de Combate (FCB-004)
@@ -16,11 +17,9 @@ class ConditionService {
    * @param {string} combatId - ID do combate atual (necessário para contexto)
    */
   async applyCondition(effectId, targetId, duration, originId, combatId) {
-    // Validar se o efeito existe
     const efeitoBase = await efeitosRepo.findById(effectId);
     if (!efeitoBase) throw new Error("Definição de efeito não encontrada.");
 
-    // Validar se o combate existe e o alvo está nele
     const combate = await combatRepo.findById(combatId);
     if (!combate) throw new Error("Combate não encontrado.");
 
@@ -28,7 +27,6 @@ class ConditionService {
     const isInimigo = combate.inimigos.some(e => e.snapshotId === targetId);
     if (!isParticipante && !isInimigo) throw new Error("Alvo não encontrado no combate.");
 
-    // Registrar o efeito ativo
     const resId = await ativosRepo.create({
       efeitoId: effectId,
       targetId,
@@ -37,11 +35,14 @@ class ConditionService {
       duracaoRestante: duration,
       nome: efeitoBase.nome,
       tipoDano: efeitoBase.tipoDano || null,
-      valorEfeito: efeitoBase.valorEfeito || 0, // Dano/Cura por turno
-      tipoEfeito: efeitoBase.tipoEfeito || 'STATUS', // STATUS, DANO_TURNO, CURA_TURNO
+      valorEfeito: efeitoBase.valorEfeito || 0,
+      tipoEfeito: efeitoBase.tipoEfeito || 'STATUS',
       ativo: true,
       createdAt: new Date().toISOString()
     });
+
+    // Gatilho: Recalcular CA (RN-068)
+    if (isParticipante) await attributeService.calculateArmorClass(targetId);
 
     return { success: true, data: { id: resId } };
   }
@@ -54,14 +55,13 @@ class ConditionService {
     const ativo = await ativosRepo.findById(activeEffectId);
     if (!ativo) throw new Error("Efeito ativo não encontrado.");
 
-    // Inativar o efeito (RN-063: Status são controlados pelo mestre)
     await ativosRepo.update(activeEffectId, { 
       ativo: false, 
       inativadoEm: new Date().toISOString() 
     });
 
-    // GANCHO_FUTURO: Reversão de modificadores de AttributeService (RN-070, RN-071)
-    // TODO: Implementar reversão quando AttributeService for integrado
+    // Gatilho: Recalcular CA (RN-068)
+    await attributeService.calculateArmorClass(ativo.targetId);
 
     return { success: true };
   }
@@ -92,12 +92,15 @@ class ConditionService {
         });
       }
 
-      // Decrementar duração (RN-063: Status persistem conforme duração ou mestre)
       const novaDuracao = efeito.duracaoRestante - 1;
       await ativosRepo.update(efeito.id, { 
         duracaoRestante: novaDuracao,
         ativo: novaDuracao > 0
       });
+      
+      if (novaDuracao <= 0) {
+        await attributeService.calculateArmorClass(targetId);
+      }
     }
   }
 
@@ -110,10 +113,9 @@ class ConditionService {
     const expirados = efeitos.filter(e => e.ativo && e.duracaoRestante <= 0);
 
     for (const efeito of expirados) {
-      // Encerramento automático de efeitos expirados
       await ativosRepo.update(efeito.id, { ativo: false });
-      
-      // GANCHO_FUTURO: Notificar UI ou reverter modificadores
+      // Gatilho: Recalcular CA (RN-068)
+      await attributeService.calculateArmorClass(efeito.targetId);
     }
   }
 }

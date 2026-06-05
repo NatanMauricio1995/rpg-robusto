@@ -1,6 +1,7 @@
 import campanhaPersonagemRepository from '../repositories/CampanhaPersonagemRepository';
 import unlockService from './UnlockService';
 import inventoryService from './InventoryService';
+import attributeService from './AttributeService';
 
 /**
  * ProgressionService - Responsável pela orquestração do Level Up.
@@ -51,6 +52,9 @@ class ProgressionService {
 
         // RN-094 / RN-095: Validar requisitos de equipamentos após subida de nível
         await inventoryService.checkEquippedRequirements(campanhaPersonagemId);
+
+        // Gatilho: Recalcular CA (RN-068) após nível e possíveis alterações de equipamentos
+        await attributeService.calculateArmorClass(campanhaPersonagemId);
 
         // 2. Disparar desbloqueio de conteúdo dinâmico (RN-023, RN-024)
         const unlockRes = await unlockService.unlockLevelContent(campanhaPersonagemId, novoNivel);

@@ -5,6 +5,7 @@ import personagemRepository from '../repositories/PersonagemRepository';
 import campanhaPersonagemRepository from '../repositories/CampanhaPersonagemRepository';
 import armaRepository from '../repositories/ArmaRepository';
 import armaduraRepository from '../repositories/ArmaduraRepository';
+import attributeService from './AttributeService';
 
 /**
  * InventoryService - Responsável por gerenciar inventário e carga
@@ -20,10 +21,6 @@ class InventoryService extends BaseService {
    */
   async addItem(fichaCampanhaId, itemData) {
     const { itemId, itemTipo, quantidade = 1 } = itemData;
-    
-    // Verifica se já existe o item (se for empilhável - DD-122)
-    // TODO: CONTEXTO_INSUFICIENTE_PARA_VERIFICAR_EMPILHAVEL
-    
     return await fichaInventarioRepository.create({
       fichaCampanhaId,
       itemId,
@@ -45,10 +42,10 @@ class InventoryService extends BaseService {
    * Equipar um item do inventário (FI-002 / DD-223)
    */
   async equipItem(id, equipado = true) {
-    if (equipado) {
-      const registro = await fichaInventarioRepository.findById(id);
-      if (!registro) throw new Error('Item não encontrado no inventário.');
+    const registro = await fichaInventarioRepository.findById(id);
+    if (!registro) throw new Error('Item não encontrado no inventário.');
 
+    if (equipado) {
       const ficha = await campanhaPersonagemRepository.findById(registro.fichaCampanhaId);
       const personagem = await personagemRepository.findById(ficha.personagemId);
       
@@ -62,17 +59,26 @@ class InventoryService extends BaseService {
         }
       }
     }
-    return await fichaInventarioRepository.update(id, { equipado });
+
+    const res = await fichaInventarioRepository.update(id, { equipado });
+    
+    // Gatilho: Recalcular CA (RN-068)
+    await attributeService.calculateArmorClass(registro.fichaCampanhaId);
+    
+    return res;
   }
 
   /**
    * RN-095: Gatilho pós-alteração de nível/atributos -> Desequipar automático
    */
   async checkEquippedRequirements(fichaCampanhaId) {
-    const items = await fichaInventarioRepository.findAll(); // Idealmente filtrar por fichaCampanhaId
+    const items = await fichaInventarioRepository.findAll();
     const fichaItems = items.filter(i => i.fichaCampanhaId === fichaCampanhaId && i.equipado);
     
-    if (fichaItems.length === 0) return;
+    if (fichaItems.length === 0) {
+      await attributeService.calculateArmorClass(fichaCampanhaId);
+      return;
+    }
 
     const ficha = await campanhaPersonagemRepository.findById(fichaCampanhaId);
     const personagem = await personagemRepository.findById(ficha.personagemId);
@@ -88,6 +94,8 @@ class InventoryService extends BaseService {
         }
       }
     }
+    
+    await attributeService.calculateArmorClass(fichaCampanhaId);
   }
 
   /**
@@ -102,11 +110,10 @@ class InventoryService extends BaseService {
    */
   async initializeInitialEquipment(fichaCampanhaId, classeId) {
     const equipamentosIniciais = await equipmentService.getInitialEquipment(classeId);
-    
     for (const eq of equipamentosIniciais) {
       await this.addItem(fichaCampanhaId, {
         itemId: eq.id,
-        itemTipo: eq.tipoDanoId ? 'ARMA' : (eq.caBase ? 'ARMADURA' : 'ITEM'), // Simplificação
+        itemTipo: eq.tipoDanoId ? 'ARMA' : (eq.caBase ? 'ARMADURA' : 'ITEM'),
         quantidade: 1
       });
     }

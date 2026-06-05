@@ -7,9 +7,14 @@ import armaRepository from '../repositories/ArmaRepository';
 import armaduraRepository from '../repositories/ArmaduraRepository';
 import magiaRepository from '../repositories/MagiaRepository';
 import encantamentoRepository from '../repositories/EncantamentoRepository';
+import fichaRepo from '../repositories/CampanhaPersonagemRepository';
+import inventoryRepo from '../repositories/FichaInventarioRepository';
+import activeEffectsRepo from '../repositories/CombateEfeitosAtivosRepository';
+import combatRepo from '../repositories/CombatRepository';
+import personagemRepo from '../repositories/PersonagemRepository';
 
 /**
- * AttributeService - Responsável por calcular atributos
+ * AttributeService - Responsável por calcular atributos e CA
  * Conforme Capítulo 8 da Arquitetura BackEnd
  */
 class AttributeService extends BaseService {
@@ -33,13 +38,12 @@ class AttributeService extends BaseService {
     }
 
     // RN-015: Modificadores de Sub-Raça
-    // Corrigido: SubRaca possui atributos aninhados conforme SubRacaService.transform
     const subRacialBonus = subRaca?.atributos ? (subRaca.atributos[attributeName] || 0) : 0;
     if (subRacialBonus !== 0) {
       modificadores.push({ origem: 'SubRacial', valor: subRacialBonus });
     }
 
-    // Modificadores de Classe (Se existirem no modelo de classe, embora DD-018 cite, o modelo core foca em Raças)
+    // Modificadores de Classe
     const classeBonus = classe ? (classe[attributeName] || 0) : 0;
     if (classeBonus !== 0) {
       modificadores.push({ origem: 'Classe', valor: classeBonus });
@@ -93,14 +97,12 @@ class AttributeService extends BaseService {
       temporarios = {} 
     } = characterData;
 
-    // Busca dados das fontes (RN-087: Toda regra passa por Service, mas aqui usamos Repositories para eficiência de cálculo)
     const [raca, subRaca, classe] = await Promise.all([
       racaId ? racaRepository.findById(racaId) : null,
       subRacaId ? subRacaRepository.findById(subRacaId) : null,
       classeId ? classeRepository.findById(classeId) : null
     ]);
     
-    // Carregamento real de equipamentos e seus encantamentos
     const equipamentos = await Promise.all(equipamentosIds.map(async (id) => {
       let item = null;
       if (id.startsWith('ARM')) item = await armaRepository.findById(id);
@@ -108,7 +110,6 @@ class AttributeService extends BaseService {
       else if (id.startsWith('ITM')) item = await itemRepository.findById(id);
 
       if (item) {
-        // Agrega modificadores de encantamentos ao item para cálculo simplificado
         const encModificadores = {};
         if (item.encantamentosIds && item.encantamentosIds.length > 0) {
           const encantamentos = await Promise.all(
@@ -128,7 +129,6 @@ class AttributeService extends BaseService {
       return null;
     })).then(list => list.filter(item => item !== null));
 
-    // Carregamento real de magias
     const magias = await Promise.all(
       magiasIds.map(id => magiaRepository.findById(id))
     ).then(list => list.filter(mg => mg !== null));
@@ -145,6 +145,106 @@ class AttributeService extends BaseService {
     });
 
     return resultado;
+  }
+
+  /**
+   * Recalcula a Classe de Armadura (CA) automaticamente (RN-068)
+   * Estrutura Composta conforme DD-023 / DD-024
+   * @param {string} fichaCampanhaId 
+   */
+  async calculateArmorClass(fichaCampanhaId) {
+    try {
+      const ficha = await fichaRepo.findById(fichaCampanhaId);
+      if (!ficha) throw new Error("Ficha de campanha não encontrada.");
+
+      const personagem = await personagemRepo.findById(ficha.personagemId);
+      if (!personagem) throw new Error("Personagem base não encontrado.");
+
+      // 1. Calcular atributos atuais para obter Destreza real
+      const inventoryItems = await inventoryRepo.findByFichaId(fichaCampanhaId);
+      const fullAttrData = {
+        atributosBase: {
+          forca: personagem.forca?.base || 10,
+          destreza: personagem.destreza?.base || 10,
+          constituicao: personagem.constituicao?.base || 10,
+          inteligencia: personagem.inteligencia?.base || 10,
+          sabedoria: personagem.sabedoria?.base || 10,
+          carisma: personagem.carisma?.base || 10
+        },
+        racaId: personagem.racaId,
+        subRacaId: personagem.subRacaId,
+        classeId: personagem.classeId,
+        equipamentosIds: inventoryItems
+          .filter(i => i.equipado)
+          .map(i => i.itemId)
+      };
+      
+      const attrs = await this.calculateAllAttributes(fullAttrData);
+      const modDestreza = this.calculateModifier(attrs.destreza.total);
+
+      // 2. Coletar Bônus de Equipamentos (Armadura e Escudo)
+      const equippedItems = inventoryItems.filter(i => i.equipado);
+      
+      let bonusArmadura = 0;
+      let bonusEscudo = 0;
+
+      for (const item of equippedItems) {
+        const detail = await armaduraRepository.findById(item.itemId);
+        if (detail) {
+          if (detail.nome?.toLowerCase().includes('escudo')) {
+            bonusEscudo += detail.caBase || 0;
+          } else {
+            bonusArmadura += detail.caBase || 0;
+          }
+        }
+      }
+
+      // 3. Coletar Efeitos Temporários / Magia (RN-068)
+      const activeEffects = await activeEffectsRepo.findByTarget(fichaCampanhaId);
+      const activeOnly = activeEffects.filter(e => e.ativo);
+      
+      const bonusMagia = activeOnly
+        .filter(e => e.tipoEfeito === 'MAGIA_CA')
+        .reduce((acc, e) => acc + (e.valorEfeito || 0), 0);
+        
+      const bonusTemp = activeOnly
+        .filter(e => e.tipoEfeito === 'STATUS_CA')
+        .reduce((acc, e) => acc + (e.valorEfeito || 0), 0);
+
+      // 4. Aplicar Fórmula Obrigatória (DD-024): 
+      // Total = Base (10) + Armadura + Escudo + Destreza + Magia + Temporário
+      const caData = {
+        base: 10,
+        armadura: bonusArmadura,
+        escudo: bonusEscudo,
+        destreza: modDestreza,
+        magia: bonusMagia,
+        temporario: bonusTemp,
+        total: 10 + bonusArmadura + bonusEscudo + modDestreza + bonusMagia + bonusTemp
+      };
+
+      // 5. Persistência de Estado (RN-069)
+      await fichaRepo.update(fichaCampanhaId, { 
+        caAtual: caData.total,
+        caComposta: caData 
+      });
+
+      const activeCombat = await combatRepo.findActiveCombat(ficha.campanhaId);
+      if (activeCombat) {
+        const updatedParticipants = activeCombat.participantes.map(p => {
+          if (p.id === fichaCampanhaId) {
+            return { ...p, ca: caData.total };
+          }
+          return p;
+        });
+        await combatRepo.update(activeCombat.id, { participantes: updatedParticipants });
+      }
+
+      return { success: true, data: caData };
+    } catch (e) {
+      console.error("Erro ao recalcular CA:", e);
+      return { success: false, error: { message: e.message } };
+    }
   }
 }
 
