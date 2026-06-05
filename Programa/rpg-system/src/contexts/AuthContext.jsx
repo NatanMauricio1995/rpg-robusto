@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import app from '../firebase/firebaseConfig';
 import authService from '../services/AuthService';
+import userRepository from '../repositories/UserRepository';
 
 const auth = getAuth(app);
 const AuthContext = createContext(null);
@@ -22,12 +23,19 @@ export function AuthProvider({ children }) {
         setUser(firebaseUser);
         
         /**
-         * Nota Arquitetural: O userType (Papel) deve ser recuperado do Firestore.
-         * Para manter a regra de não acessar o Firestore diretamente no Contexto,
-         * em uma fase posterior, um Service específico deve ser chamado aqui.
-         * Por ora, mantemos o estado reativo ao usuário logado.
+         * RN-072 / RN-073: Recupera o papel (MESTRE/JOGADOR) da coleção 'usuarios'
          */
-        setUserType(null); 
+        try {
+          const userData = await userRepository.findById(firebaseUser.uid);
+          if (userData && userData.tipo) {
+            setUserType(userData.tipo);
+          } else {
+            setUserType('JOGADOR'); // Default seguro conforme DENY ALL
+          }
+        } catch (error) {
+          console.error("Erro ao recuperar tipo de usuário:", error);
+          setUserType('JOGADOR');
+        }
       } else {
         setUser(null);
         setUserType(null);
@@ -43,6 +51,8 @@ export function AuthProvider({ children }) {
     userType,
     loading,
     isAuthenticated: !!user,
+    isMestre: userType === 'MESTRE',
+    isJogador: userType === 'JOGADOR',
     
     /**
      * Consome o AuthService para ações de login

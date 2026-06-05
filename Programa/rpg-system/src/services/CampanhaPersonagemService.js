@@ -1,5 +1,7 @@
 import repo from '../repositories/CampanhaPersonagemRepository';
 import val from '../validations/CampanhaPersonagemValidation';
+import personagemRepository from '../repositories/PersonagemRepository';
+import inventoryService from './InventoryService';
 
 /**
  * CampanhaPersonagemService - Regras de negócio para fichas em campanhas
@@ -15,6 +17,13 @@ class CampanhaPersonagemService {
       if (!v.isValid) return { success: false, data: null, error: { message: "Dados inválidos", details: v.errors } };
 
       const res = await repo.create(d);
+
+      // RN-016: Injetar equipamentos iniciais da classe
+      const personagem = await personagemRepository.findById(d.personagemId);
+      if (personagem && personagem.classeId) {
+        await inventoryService.initializeInitialEquipment(res, personagem.classeId);
+      }
+
       return { success: true, data: res, error: null };
     } catch (e) {
       return { success: false, data: null, error: { message: e.message } };

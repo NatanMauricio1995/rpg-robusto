@@ -1,5 +1,6 @@
 import personagemRepository from '../repositories/PersonagemRepository';
 import personagemValidation from '../validations/PersonagemValidation';
+import classeRepository from '../repositories/ClasseRepository';
 
 /**
  * PersonagemService - Responsável por regras de negócio de personagens
@@ -17,10 +18,15 @@ class PersonagemService {
       throw { message: 'Dados inválidos', errors: validation.errors };
     }
 
+    // RN-017: Validação de nível mínimo para Subclasse
+    if (data.subclasseId) {
+      await this.validateSubclassLevel(data.classeId, data.nivel || 1);
+    }
+
     const finalData = {
       ...data,
-      userId,
-      status: 'Pendente', // RN-031: Todo personagem criado inicia como Pendente
+      usuarioId: userId, // Corrigido de userId para usuarioId conforme DD-170
+      status: 'PENDENTE', // DD-180: Corrigido para uppercase
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -44,76 +50,39 @@ class PersonagemService {
       throw new Error('Personagem não encontrado.');
     }
 
+    // RN-017: Validação de nível mínimo para Subclasse
+    if (data.subclasseId) {
+      await this.validateSubclassLevel(data.classeId, data.nivel || currentCharacter.nivel || 1);
+    }
+
     const finalData = {
       ...data,
       updatedAt: new Date()
     };
 
     /**
-     * RN-031: Se um personagem aprovado for editado, volta para status Pendente.
-     * Exceto se a edição for apenas de campos não-estruturais (conforme Arq. BackEnd).
+     * RN-074: Se um personagem aprovado for editado, volta para status PENDENTE.
      */
-    if (currentCharacter.status === 'Aprovado') {
-      finalData.status = 'Pendente';
+    if (currentCharacter.status === 'APROVADO') {
+      finalData.status = 'PENDENTE';
     }
 
     return await personagemRepository.update(id, finalData);
   }
 
   /**
-   * Aprova um personagem (Fluxo FP-002)
-   * @param {string} id 
+   * RN-017: Valida se o nível permite escolha de subclasse
    */
-  async approveCharacter(id) {
-    const character = await personagemRepository.findById(id);
-    if (!character) {
-      throw new Error('Personagem não encontrado.');
+  async validateSubclassLevel(classeId, nivel) {
+    const classe = await classeRepository.findById(classeId);
+    if (!classe) throw new Error('Classe não encontrada.');
+
+    // TODO: CONTEXTO_INSUFICIENTE_PARA_NIVEL_DESBLOQUEIO_SUBCLASSE
+    // Assume-se nivelMinimoSubclasse no objeto classe ou padrão nível 3
+    const nivelMinimo = classe.nivelMinimoSubclasse || 3;
+    if (nivel < nivelMinimo) {
+      throw new Error(`A subclasse só pode ser escolhida a partir do nível ${nivelMinimo}.`);
     }
-
-    if (character.status === 'Aprovado') {
-      throw new Error('Personagem já está aprovado.');
-    }
-
-    return await personagemRepository.update(id, {
-      status: 'Aprovado',
-      approvedAt: new Date(),
-      rejectionReason: null
-    });
-  }
-
-  /**
-   * Rejeita um personagem (Fluxo FP-003)
-   * @param {string} id 
-   * @param {string} motivo 
-   */
-  async rejectCharacter(id, motivo) {
-    if (!motivo || motivo.trim() === '') {
-      throw new Error('É necessário informar um motivo para a rejeição.');
-    }
-
-    const character = await personagemRepository.findById(id);
-    if (!character) {
-      throw new Error('Personagem não encontrado.');
-    }
-
-    return await personagemRepository.update(id, {
-      status: 'Reprovado',
-      rejectionReason: motivo,
-      rejectedAt: new Date()
-    });
-  }
-
-  /**
-   * Solicita ajustes em um personagem
-   * @param {string} id 
-   * @param {string} observacao 
-   */
-  async requestAdjustments(id, observacao) {
-    return await personagemRepository.update(id, {
-      status: 'Em Ajuste',
-      rejectionReason: observacao,
-      updatedAt: new Date()
-    });
   }
 
   /**

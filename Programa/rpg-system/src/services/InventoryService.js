@@ -1,48 +1,69 @@
 import BaseService from './BaseService';
+import fichaInventarioRepository from '../repositories/FichaInventarioRepository';
+import equipmentService from './EquipmentService';
 
 /**
  * InventoryService - Responsável por gerenciar inventário e carga
- * Conforme Capítulo 10 da Arquitetura BackEnd
+ * Conforme Capítulo 10 da Arquitetura BackEnd, RN-092 e DD-220 a DD-229
  */
 class InventoryService extends BaseService {
   constructor() {
-    super(null);
+    super(fichaInventarioRepository);
   }
 
   /**
-   * Adiciona um item ao inventário
+   * Adiciona um item ao inventário (DD-229)
    */
-  async addItem(characterId, itemData) {
-    // Implementação pendente
+  async addItem(fichaCampanhaId, itemData) {
+    const { itemId, itemTipo, quantidade = 1 } = itemData;
+    
+    // Verifica se já existe o item (se for empilhável - DD-122)
+    // TODO: CONTEXTO_INSUFICIENTE_PARA_VERIFICAR_EMPILHAVEL
+    
+    return await fichaInventarioRepository.create({
+      fichaCampanhaId,
+      itemId,
+      itemTipo,
+      quantidade,
+      equipado: false,
+      quebrado: false
+    });
   }
 
   /**
    * Remove um item do inventário
    */
-  async removeItem(characterId, itemId) {
-    // Implementação pendente
+  async removeItem(id) {
+    return await fichaInventarioRepository.delete(id);
   }
 
   /**
-   * Equipar um item do inventário
+   * Equipar um item do inventário (FI-002 / DD-223)
    */
-  async equipItem(characterId, itemId) {
-    // Implementação pendente
+  async equipItem(id, equipado = true) {
+    return await fichaInventarioRepository.update(id, { equipado });
   }
 
   /**
-   * Desequipar um item
-   */
-  async unequipItem(characterId, itemId) {
-    // Implementação pendente
-  }
-
-  /**
-   * Calcula o peso total e capacidade de carga
+   * Calcula o peso total (DD-225)
    */
   calculateWeight(items = []) {
-    // Implementação pendente
-    return 0;
+    return items.reduce((total, item) => total + (item.peso * item.quantidade), 0);
+  }
+
+  /**
+   * Injeta equipamentos iniciais na ficha de campanha (RN-016)
+   */
+  async initializeInitialEquipment(fichaCampanhaId, classeId) {
+    const equipamentosIniciais = await equipmentService.getInitialEquipment(classeId);
+    
+    for (const eq of equipamentosIniciais) {
+      await this.addItem(fichaCampanhaId, {
+        itemId: eq.id,
+        itemTipo: eq.tipoDanoId ? 'ARMA' : (eq.caBase ? 'ARMADURA' : 'ITEM'), // Simplificação
+        quantidade: 1
+      });
+    }
   }
 }
 
