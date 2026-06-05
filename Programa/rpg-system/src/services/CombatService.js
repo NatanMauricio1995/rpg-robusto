@@ -1,6 +1,7 @@
 import combatRepository from '../repositories/CombatRepository';
 import campanhaPersonagemRepository from '../repositories/CampanhaPersonagemRepository';
 import inimigoRepository from '../repositories/InimigoRepository';
+import conditionService from './ConditionService';
 
 /**
  * CombatService - Gerenciamento de combates táticos.
@@ -145,6 +146,21 @@ class CombatService {
 
   async getCombat(id) { const d = await combatRepository.findById(id); return { success: !!d, data: d, error: null }; }
   async listCombats(campanhaId) { return { success: true, data: await combatRepository.findByCampaign(campanhaId), error: null }; }
+
+  /**
+   * Aplica um status/condição ao alvo (FCB-004)
+   * Delega para o ConditionService para gestão de efeitos
+   */
+  async applyStatus(combatId, effectId, targetId, duration, originId) {
+    return await conditionService.applyCondition(effectId, targetId, duration, originId, combatId);
+  }
+
+  /**
+   * Remove um status/condição ativo (FCB-004)
+   */
+  async removeStatus(activeEffectId) {
+    return await conditionService.removeCondition(activeEffectId);
+  }
 }
 
 export default new CombatService();
