@@ -11,31 +11,54 @@ import {
   Settings,
   ChevronLeft,
   LogOut,
-  Sword
+  Sword,
+  BarChart
 } from 'lucide-react';
 import clsx from 'clsx';
 import { ROUTES } from '../../utils/routesRegistry';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from './Sidebar.module.css';
 
 /**
  * Sidebar component for RPG Robusto
- * Atualizada via Auditoria de Rotas (ETAPA 5)
+ * Adaptada para perfis de Mestre e Jogador
  */
 const Sidebar = ({ activeModule = 'dashboard', collapsed = false, onToggle }) => {
-  const menuGroups = [
+  const { isMestre } = useAuth();
+
+  const mestreMenu = [
     {
       title: 'Principal',
       items: [
-        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: ROUTES.dashboard },
-        { id: 'campanhas', label: 'Campanhas', icon: Map, href: ROUTES.campanhas },
-        { id: 'personagens', label: 'Personagens', icon: Users, href: ROUTES.personagens },
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: ROUTES.home },
+        { id: 'mundo', label: 'Mundo', icon: Map, href: ROUTES.mundo },
+        { id: 'biblioteca', label: 'Biblioteca RPG', icon: BookOpen, href: ROUTES.idiomas },
       ]
     },
     {
-      title: 'Recursos',
+      title: 'Gerenciamento',
       items: [
-        { id: 'biblioteca', label: 'Biblioteca', icon: BookOpen, href: ROUTES.idiomas }, // Aponta para o primeiro item da biblioteca
-        { id: 'fichas', label: 'Fichas Campanha', icon: Shield, href: ROUTES.fichasCampanha },
+        { id: 'personagens', label: 'Personagens', icon: Users, href: ROUTES.personagens },
+        { id: 'campanhas', label: 'Campanhas', icon: Shield, href: ROUTES.campanhas },
+        { id: 'combates', label: 'Combates', icon: Sword, href: ROUTES.combates },
+        { id: 'relatorios', label: 'Relatórios', icon: BarChart, href: ROUTES.relatorios },
+      ]
+    },
+    {
+      title: 'Sistema',
+      items: [
+        { id: 'configuracoes', label: 'Configurações', icon: Settings, href: null },
+      ]
+    }
+  ];
+
+  const jogadorMenu = [
+    {
+      title: 'Principal',
+      items: [
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: ROUTES.home },
+        { id: 'personagens', label: 'Meus Personagens', icon: Users, href: ROUTES.personagens },
+        { id: 'campanhas', label: 'Minhas Campanhas', icon: Shield, href: ROUTES.campanhas },
         { id: 'combates', label: 'Combates', icon: Sword, href: ROUTES.combates },
       ]
     },
@@ -46,6 +69,8 @@ const Sidebar = ({ activeModule = 'dashboard', collapsed = false, onToggle }) =>
       ]
     }
   ];
+
+  const menuGroups = isMestre ? mestreMenu : jogadorMenu;
 
   return (
     <aside className={clsx(styles.sidebar, collapsed && styles.collapsed)}>
@@ -67,7 +92,7 @@ const Sidebar = ({ activeModule = 'dashboard', collapsed = false, onToggle }) =>
                 return (
                   <Component
                     key={item.id}
-                    href={item.href}
+                    href={item.href || '#'}
                     className={clsx(
                       styles.item,
                       activeModule === item.id && styles.active,
