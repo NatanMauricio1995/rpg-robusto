@@ -1,78 +1,99 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import LibraryTabs from "@/components/Library/LibraryTabs/LibraryTabs";
-import LibraryCard from "@/components/Library/LibraryCard/LibraryCard";
+import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
+import CrudToolbar from "@/components/Common/CrudToolbar/CrudToolbar";
+import DataGrid, { DataGridColumn } from "@/components/Common/DataGrid/DataGrid";
 import { useLibrary } from "@/hooks/useLibrary";
-import { LibraryItem, Spell, Creature } from "@/types/library";
+import { LibraryCategory, BaseEntity } from "@/types/library";
 import styles from "./page.module.css";
 
 export default function LibraryPage() {
-  const { activeTab, setActiveTab, search, setSearch, loading, filteredData } = useLibrary();
+  const router = useRouter();
+  const { 
+    activeCategory, 
+    setActiveCategory, 
+    data, 
+    loading, 
+    searchQuery, 
+    setSearchQuery, 
+    deleteItem 
+  } = useLibrary();
 
-  const renderContent = () => {
-    if (loading) return <div className={styles.loading}>Consultando os tomos...</div>;
+  const categories: LibraryCategory[] = [
+    'Idiomas', 'Escolas de Magia', 'Raças', 'Sub-Raças', 'Classes', 'Subclasses', 
+    'Habilidades', 'Magias', 'Armas', 'Armaduras', 'Itens', 'Encantamentos', 
+    'Receitas', 'NPCs', 'Inimigos'
+  ];
 
-    return (
-      <div className={styles.grid}>
-        {activeTab === 'Itens' && (filteredData as LibraryItem[]).map(item => (
-          <LibraryCard 
-            key={item.id}
-            title={item.name}
-            subtitle={item.type}
-            description={item.description}
-            rarity={item.rarity}
-            meta={`${item.cost || '-'} | ${item.weight || '-'}`}
-          />
-        ))}
-        {activeTab === 'Magias' && (filteredData as Spell[]).map(spell => (
-          <LibraryCard 
-            key={spell.id}
-            title={spell.name}
-            subtitle={`Nível ${spell.level} - ${spell.school}`}
-            description={spell.description}
-            meta={`${spell.castingTime} | ${spell.range} | ${spell.duration}`}
-          />
-        ))}
-        {activeTab === 'Bestiário' && (filteredData as Creature[]).map(creature => (
-          <LibraryCard 
-            key={creature.id}
-            title={creature.name}
-            subtitle={`${creature.size} ${creature.type}`}
-            description={creature.description}
-            meta={`ND: ${creature.challengeRating} | ${creature.alignment}`}
-          />
-        ))}
-      </div>
-    );
-  };
+  const columns: DataGridColumn<any>[] = [
+    { header: "Nome", accessor: "name" },
+    { 
+      header: "Status", 
+      accessor: (item) => (
+        <span className={`badge ${item.status === 'Ativo' ? 'badge-success' : 'badge-secondary'}`}>
+          {item.status}
+        </span>
+      ) 
+    },
+    { header: "Criado em", accessor: "createdAt" },
+    { header: "Atualizado em", accessor: "updatedAt" },
+  ];
 
   return (
     <MainLayout>
       <div className={styles.container}>
+        <Breadcrumb items={[{ label: "Home", href: "/dashboard" }, { label: "Biblioteca RPG" }]} />
+        
         <header className={styles.header}>
-          <div className={styles.titleArea}>
-            <h1 className={styles.title}>Biblioteca RPG</h1>
-            <p className={styles.subtitle}>Consulte regras, grimórios e compêndios de criaturas.</p>
-          </div>
-          <div className={styles.actions}>
-            <input 
-              type="text" 
-              placeholder={`Buscar em ${activeTab}...`} 
-              className={styles.search}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button className="btn btn-primary">
-              <span>📚</span> Novo Registro
-            </button>
-          </div>
+          <h1 className={styles.title}>Biblioteca RPG</h1>
         </header>
 
-        <section className={styles.content}>
-          <LibraryTabs activeTab={activeTab} onTabChange={setActiveTab} />
-          {renderContent()}
+        <nav className={styles.tabs}>
+          <div className={styles.tabsInner}>
+            {categories.map(cat => (
+              <button 
+                key={cat}
+                className={`${styles.tab} ${activeCategory === cat ? styles.activeTab : ''}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        <CrudToolbar 
+          newLabel={`Novo(a) ${activeCategory.slice(0, -1)}`} 
+          onNew={() => router.push(`/biblioteca/${activeCategory.toLowerCase().replace(/ /g, '-')}/novo`)}
+          onExport={() => alert("Exportando...")}
+        />
+
+        <section className={styles.filters}>
+          <input 
+            type="text" 
+            placeholder={`Filtrar ${activeCategory.toLowerCase()}...`} 
+            className={styles.searchInput}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </section>
+
+        <main className={styles.main}>
+          <DataGrid 
+            data={data} 
+            columns={columns} 
+            loading={loading}
+            onView={(item) => router.push(`/biblioteca/${activeCategory.toLowerCase()}/${item.id}`)}
+            onEdit={(item) => router.push(`/biblioteca/${activeCategory.toLowerCase()}/${item.id}/editar`)}
+            onDelete={(item) => deleteItem(item.id)}
+          />
+        </main>
+
+        <footer className={styles.footer}>
+          <span>Exibindo {data.length} registros em {activeCategory}</span>
+        </footer>
       </div>
     </MainLayout>
   );

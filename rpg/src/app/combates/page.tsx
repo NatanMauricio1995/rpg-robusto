@@ -1,61 +1,88 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import CombatantRow from "@/components/Combat/CombatantRow/CombatantRow";
-import { useCombat } from "@/hooks/useCombat";
+import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
+import CrudToolbar from "@/components/Common/CrudToolbar/CrudToolbar";
+import DataGrid, { DataGridColumn } from "@/components/Common/DataGrid/DataGrid";
+import { useCombatList } from "@/hooks/useCombatList";
+import { Combat } from "@/types/combat";
 import styles from "./page.module.css";
 
-export default function CombatPage() {
-  const { state, nextTurn, updateHP, removeCombatant, startCombat } = useCombat();
-  const currentCombatant = state.combatants[state.currentTurnIndex];
+export default function CombatListPage() {
+  const router = useRouter();
+  const { combats, loading, filters, setFilters, deleteCombat } = useCombatList();
+
+  const columns: DataGridColumn<Combat>[] = [
+    { header: "Encontro", accessor: "name" },
+    { header: "Campanha", accessor: "campaignName" },
+    { header: "Local", accessor: "location" },
+    { header: "XP Total", accessor: (item) => `${item.totalXP} XP` },
+    { 
+      header: "Status", 
+      accessor: (item) => (
+        <span className={`badge ${item.status === 'Ativo' ? 'badge-success' : 'badge-secondary'}`}>
+          {item.status}
+        </span>
+      ) 
+    },
+    { header: "Criado em", accessor: "createdAt" },
+    { header: "Atualizado em", accessor: "updatedAt" },
+  ];
 
   return (
     <MainLayout>
       <div className={styles.container}>
+        <Breadcrumb items={[{ label: "Home", href: "/dashboard" }, { label: "Combates" }]} />
+        
         <header className={styles.header}>
-          <div className={styles.titleArea}>
-            <h1 className={styles.title}>Rastreador de Combate</h1>
-            <p className={styles.subtitle}>Gerencie a iniciativa e o status vital dos combatentes.</p>
-          </div>
-          <div className={styles.controls}>
-            <div className={styles.roundBadge}>Rodada {state.round}</div>
-            <button className="btn btn-secondary"><span>⚔️</span> Adicionar Combatente</button>
-            <button className="btn btn-primary" onClick={nextTurn}>Próximo Turno ➔</button>
-          </div>
+          <h1 className={styles.title}>Gerenciamento de Combates</h1>
         </header>
 
-        <div className={styles.mainContent}>
-          <div className={styles.list}>
-            {state.combatants.map((combatant, index) => (
-              <CombatantRow 
-                key={combatant.id}
-                combatant={combatant}
-                isCurrentTurn={index === state.currentTurnIndex}
-                onUpdateHP={updateHP}
-                onRemove={removeCombatant}
-              />
-            ))}
-          </div>
+        <CrudToolbar 
+          newLabel="Novo Combate" 
+          onNew={() => router.push("/combates/novo")}
+          onExport={() => alert("Exportando log de combates...")}
+        />
 
-          <aside className={styles.turnInfo}>
-            <div className="card">
-              <h3 className={styles.asideTitle}>Turno Atual</h3>
-              {currentCombatant && (
-                <div className={styles.activeFocus}>
-                  <div className={styles.activeName}>{currentCombatant.name}</div>
-                  <div className={styles.activeMeta}>{currentCombatant.type} • AC {currentCombatant.ac}</div>
-                  <div className={styles.activeHP}>
-                    {currentCombatant.hp.current} / {currentCombatant.hp.max} HP
-                  </div>
-                </div>
-              )}
-              <div className={styles.actionsGrid}>
-                <button className="btn btn-secondary btn-sm">Dano em Área</button>
-                <button className="btn btn-secondary btn-sm">Finalizar Combate</button>
-              </div>
+        <section className={styles.filters}>
+          <div className={styles.filterGrid}>
+            <input 
+              type="text" 
+              placeholder="Buscar por encontro ou campanha..." 
+              className={styles.searchInput}
+              value={filters.search}
+              onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+            />
+            
+            <div className={styles.tabsFilter}>
+              {['Todos', 'Ativo', 'Encerrado', 'Pausado'].map(status => (
+                <button 
+                  key={status}
+                  className={`${styles.tabBtn} ${filters.status === status ? styles.activeTab : ''}`}
+                  onClick={() => setFilters({ ...filters, status: status as any })}
+                >
+                  {status}
+                </button>
+              ))}
             </div>
-          </aside>
-        </div>
+          </div>
+        </section>
+
+        <main className={styles.main}>
+          <DataGrid 
+            data={combats} 
+            columns={columns} 
+            loading={loading}
+            onView={(item) => router.push(`/combates/${item.id}`)}
+            onEdit={(item) => router.push(`/combates/${item.id}/editar`)}
+            onDelete={(item) => deleteCombat(item.id)}
+          />
+        </main>
+
+        <footer className={styles.footer}>
+          <span>Histórico de {combats.length} combates registrados</span>
+        </footer>
       </div>
     </MainLayout>
   );

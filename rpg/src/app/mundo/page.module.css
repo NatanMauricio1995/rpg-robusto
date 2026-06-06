@@ -1,116 +1,48 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  height: 100%;
+  gap: 8px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--parchment-300);
-}
-
-.titleArea {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  margin-bottom: 8px;
 }
 
 .title {
-  font-size: 28px;
+  font-family: var(--font-cinzel), serif;
+  font-size: 24px;
+  color: var(--stone-900);
   margin: 0;
 }
 
-.subtitle {
-  font-size: 14px;
-  color: var(--text-light);
-  margin: 0;
+.filters {
+  margin-bottom: 16px;
 }
 
-.actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.search {
-  width: 260px;
+.searchInput {
+  width: 100%;
+  max-width: 400px;
   padding: 10px 16px;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid var(--parchment-300);
   border-radius: var(--radius-sm);
   font-size: 14px;
 }
 
-.search:focus {
+.searchInput:focus {
   outline: none;
   border-color: var(--gold-500);
-}
-
-.content {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 24px;
-  flex: 1;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 0 0 2px rgba(160, 120, 42, 0.1);
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex: 1;
 }
 
-.info {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-  font-family: var(--font-cinzel), serif;
-  font-size: 18px;
-  color: var(--gold-500);
-}
-
-.empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 40px;
+.footer {
+  margin-top: 16px;
+  font-size: 12px;
   color: var(--text-light);
-  background: rgba(0,0,0,0.02);
-  border-radius: var(--radius-sm);
-  border: 1px dashed var(--parchment-300);
-}
-
-@media (max-width: 1024px) {
-  .content {
-    grid-template-columns: 1fr;
-  }
-  
-  .header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .search {
-    width: 100%;
-  }
+  display: flex;
+  justify-content: flex-end;
 }

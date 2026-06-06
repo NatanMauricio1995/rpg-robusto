@@ -1,15 +1,17 @@
-export type CharacterStatus = 'Ativo' | 'Inativo' | 'Morto' | 'Arquivado';
+import { BaseEntity } from "./common";
 
-export interface Character {
-  id: string;
-  name: string;
+export type CharacterStatus = 'Pendente' | 'Aprovado' | 'Reprovado' | 'Morto' | 'Arquivado';
+
+export interface Character extends BaseEntity {
   race: string;
   class: string;
   level: number;
-  campaign: string;
+  campaignId?: string;
+  campaignName?: string;
+  userId: string;
+  userName: string;
   status: CharacterStatus;
   avatarUrl?: string;
-  lastUpdated: string;
 }
 
 export interface CharacterFilters {

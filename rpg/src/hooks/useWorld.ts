@@ -1,83 +1,83 @@
-import { useState, useMemo, useEffect } from 'react';
-import { WorldEntry, WorldCategory } from '@/types/world';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { World } from '@/types/world';
 
-const MOCK_ENTRIES: WorldEntry[] = [
+const MOCK_WORLDS: World[] = [
   {
     id: '1',
-    title: 'A Capital de Aethelgard',
-    category: 'Geografia',
-    summary: 'A majestosa cidade dourada, sede do Império e coração político do mundo conhecido.',
-    content: '...',
-    tags: ['cidade', 'imperio', 'politica'],
-    lastUpdated: '2026-06-01'
+    name: 'Aethelgard',
+    status: 'Ativo',
+    system: 'D&D 5e',
+    createdAt: '2026-01-10',
+    updatedAt: '2026-06-01',
+    description: 'Um mundo de alta fantasia com foco em exploração de ruínas e política imperial.'
   },
   {
     id: '2',
-    title: 'A Era do Fogo',
-    category: 'História',
-    summary: 'Um período de 500 anos onde dragões dominavam os céus e as civilizações mortais viviam em cavernas.',
-    content: '...',
-    tags: ['dragoes', 'antiguidade'],
-    lastUpdated: '2026-05-20'
+    name: 'Ravnica',
+    status: 'Ativo',
+    system: 'D&D 5e',
+    createdAt: '2026-02-15',
+    updatedAt: '2026-05-20',
+    description: 'Uma cidade-mundo dividida por dez guildas em constante disputa.'
   },
   {
     id: '3',
-    title: 'Solarius, o Lorde da Luz',
-    category: 'Divindades',
-    summary: 'Divindade suprema da justiça e do sol, adorada pela maioria dos paladinos e clérigos.',
-    content: '...',
-    tags: ['deuses', 'justiça', 'sol'],
-    lastUpdated: '2026-06-05'
-  },
-  {
-    id: '4',
-    title: 'A Ordem dos Sentinelas',
-    category: 'Organizações',
-    summary: 'Um grupo de elite dedicado a proteger as fronteiras do mundo contra incursões abissais.',
-    content: '...',
-    tags: ['militar', 'proteção'],
-    lastUpdated: '2026-05-15'
-  },
-  {
-    id: '5',
-    title: 'O Vale dos Sussurros',
-    category: 'Geografia',
-    summary: 'Um desfiladeiro amaldiçoado onde dizem que o vento carrega as vozes dos que partiram.',
-    content: '...',
-    tags: ['maldição', 'vale'],
-    lastUpdated: '2026-04-10'
+    name: 'Golarion',
+    status: 'Rascunho',
+    system: 'Pathfinder 2e',
+    createdAt: '2026-03-20',
+    updatedAt: '2026-04-10',
+    description: 'O cenário principal de Pathfinder, repleto de mistérios e divindades ativas.'
   }
 ];
 
 export function useWorld() {
-  const [entries, setEntries] = useState<WorldEntry[]>([]);
+  const [worlds, setWorlds] = useState<World[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<WorldCategory | 'Todas'>('Todas');
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
+    // Simulação de Fetch
     const timer = setTimeout(() => {
-      setEntries(MOCK_ENTRIES);
+      setWorlds(MOCK_WORLDS);
       setLoading(false);
     }, 600);
     return () => clearTimeout(timer);
   }, []);
 
-  const filteredEntries = useMemo(() => {
-    return entries.filter(entry => {
-      const matchSearch = entry.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          entry.summary.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchCategory = selectedCategory === 'Todas' || entry.category === selectedCategory;
-      return matchSearch && matchCategory;
-    });
-  }, [entries, searchQuery, selectedCategory]);
+  const filteredWorlds = useMemo(() => {
+    return worlds.filter(world => 
+      world.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      world.system.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [worlds, searchQuery]);
+
+  const deleteWorld = useCallback((id: string) => {
+    if (confirm('Tem certeza que deseja excluir este mundo?')) {
+      setWorlds(prev => prev.filter(w => w.id !== id));
+    }
+  }, []);
+
+  const duplicateWorld = useCallback((id: string) => {
+    const original = worlds.find(w => w.id === id);
+    if (original) {
+      const copy: World = {
+        ...original,
+        id: Math.random().toString(36).substr(2, 9),
+        name: `${original.name} (Cópia)`,
+        createdAt: new Date().toISOString().split('T')[0],
+        updatedAt: new Date().toISOString().split('T')[0],
+      };
+      setWorlds(prev => [...prev, copy]);
+    }
+  }, [worlds]);
 
   return {
-    entries: filteredEntries,
+    worlds: filteredWorlds,
     loading,
-    selectedCategory,
-    setSelectedCategory,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    deleteWorld,
+    duplicateWorld
   };
 }

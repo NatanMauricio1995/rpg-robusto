@@ -1,32 +1,51 @@
-import { useState, useEffect } from 'react';
-import { ReportData } from '@/types/report';
+import { useState, useMemo, useEffect } from 'react';
+import { ReportCategory, ReportFilters } from '@/types/report';
 
 export function useReports() {
-  const [data, setData] = useState<ReportData | null>(null);
+  const [activeCategory, setActiveCategory] = useState<ReportCategory>('Campanhas');
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState<ReportFilters>({ search: '' });
 
   useEffect(() => {
-    const mockData: ReportData = {
-      metrics: {
-        totalSessions: 24,
-        totalHours: 120,
-        combatsWon: 42,
-        goldEarned: 15400
-      },
-      playerStats: [
-        { id: '1', name: 'Eldrin Valerius', level: 12, exp: { current: 12500, next: 15000 }, kills: 15, assists: 34 },
-        { id: '2', name: 'Korg o Destruidor', level: 12, exp: { current: 8900, next: 15000 }, kills: 48, assists: 12 },
-        { id: '3', name: 'Lira Silverfoot', level: 11, exp: { current: 14200, next: 14500 }, kills: 8, assists: 56 }
-      ]
-    };
-
+    setLoading(true);
     const timer = setTimeout(() => {
+      // Mock dinâmico de relatórios
+      const mockData = Array.from({ length: 5 }).map((_, i) => ({
+        id: `rep-${activeCategory}-${i}`,
+        name: `${activeCategory} Relatório ${i + 1}`,
+        status: 'Ativo',
+        createdAt: '2026-06-01',
+        updatedAt: '2026-06-05',
+        // Campos específicos por categoria para o DataGrid
+        ...(activeCategory === 'Campanhas' && { system: 'D&D 5e', totalSessions: 12 + i, totalXP: 5000 * (i+1) }),
+        ...(activeCategory === 'Personagens' && { playerName: `Jogador ${i+1}`, level: 10 + i, sessionsPlayed: 20 }),
+        ...(activeCategory === 'Combates' && { campaignName: 'Crônicas de Aethelgard', totalRounds: 5 + i, difficulty: 'Médio' }),
+        ...(activeCategory === 'Inimigos' && { type: 'Morto-Vivo', challengeRating: '5', timesEncountered: 3 }),
+      }));
       setData(mockData);
       setLoading(false);
-    }, 600);
-
+    }, 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [activeCategory]);
 
-  return { data, loading };
+  const filteredData = useMemo(() => {
+    return data.filter(item => 
+      item.name.toLowerCase().includes(filters.search.toLowerCase())
+    );
+  }, [data, filters.search]);
+
+  const exportReport = (format: 'PDF' | 'CSV') => {
+    alert(`Exportando Relatório de ${activeCategory} em ${format}...`);
+  };
+
+  return {
+    activeCategory,
+    setActiveCategory,
+    data: filteredData,
+    loading,
+    filters,
+    setFilters,
+    exportReport
+  };
 }

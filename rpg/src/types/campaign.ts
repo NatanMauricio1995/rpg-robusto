@@ -1,27 +1,52 @@
-export type CampaignStatus = 'Ativa' | 'Pausada' | 'Finalizada' | 'Recrutando';
+import { BaseEntity } from "./common";
 
-export interface Campaign {
-  id: string;
-  name: string;
+export type CampaignStatus = 'Recrutando' | 'Ativa' | 'Pausada' | 'Finalizada';
+export type InvitationStatus = 'Pendente' | 'Aceito' | 'Recusado';
+
+export interface Campaign extends BaseEntity {
   system: string;
-  world: string;
-  dm: string;
-  playerCount: number;
+  worldId: string;
+  worldName: string;
+  dmId: string;
+  dmName: string;
   maxPlayers: number;
+  playerCount: number;
   status: CampaignStatus;
-  nextSession: string | null;
-  frequency: string;
-  description: string;
-  imageUrl?: string;
 }
 
-export interface Session {
-  id: string;
+export interface Participant extends BaseEntity {
+  campaignId: string;
+  userId: string;
+  userName: string;
+  role: 'Mestre' | 'Jogador';
+  characterId?: string;
+}
+
+export interface Invitation extends BaseEntity {
+  campaignId: string;
+  senderId: string;
+  receiverId: string;
+  receiverEmail: string;
+  status: InvitationStatus;
+}
+
+export interface Session extends BaseEntity {
   campaignId: string;
   number: number;
-  title: string;
   date: string;
   notes?: string;
+  summary?: string;
+}
+
+export interface Quest extends BaseEntity {
+  campaignId: string;
+  isCompleted: boolean;
+  reward?: string;
+}
+
+export interface Chapter extends BaseEntity {
+  campaignId: string;
+  order: number;
 }
 
 export interface CampaignFilters {

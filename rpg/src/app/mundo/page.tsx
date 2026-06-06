@@ -1,63 +1,81 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import CategoryNav from "@/components/World/CategoryNav/CategoryNav";
-import EntryCard from "@/components/World/EntryCard/EntryCard";
+import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
+import CrudToolbar from "@/components/Common/CrudToolbar/CrudToolbar";
+import DataGrid, { DataGridColumn } from "@/components/Common/DataGrid/DataGrid";
 import { useWorld } from "@/hooks/useWorld";
+import { World } from "@/types/world";
 import styles from "./page.module.css";
 
-export default function WorldPage() {
-  const { entries, loading, selectedCategory, setSelectedCategory, searchQuery, setSearchQuery } = useWorld();
+export default function WorldListPage() {
+  const router = useRouter();
+  const { worlds, loading, searchQuery, setSearchQuery, deleteWorld, duplicateWorld } = useWorld();
+
+  const columns: DataGridColumn<World>[] = [
+    { header: "Nome", accessor: "name" },
+    { header: "Sistema", accessor: "system" },
+    { 
+      header: "Status", 
+      accessor: (item) => (
+        <span className={`badge ${getStatusClass(item.status)}`}>
+          {item.status}
+        </span>
+      ) 
+    },
+    { header: "Criado em", accessor: "createdAt" },
+    { header: "Atualizado em", accessor: "updatedAt" },
+  ];
+
+  const getStatusClass = (status: string) => {
+    switch (status) {
+      case 'Ativo': return 'badge-success';
+      case 'Inativo': return 'badge-warning';
+      case 'Rascunho': return 'badge-secondary';
+      default: return '';
+    }
+  };
 
   return (
     <MainLayout>
       <div className={styles.container}>
+        <Breadcrumb items={[{ label: "Home", href: "/dashboard" }, { label: "Mundos" }]} />
+        
         <header className={styles.header}>
-          <div className={styles.titleArea}>
-            <h1 className={styles.title}>Mundo / Codex</h1>
-            <p className={styles.subtitle}>Explore o conhecimento acumulado sobre as terras, povos e mitos.</p>
-          </div>
-          <div className={styles.actions}>
-            <input 
-              type="text" 
-              placeholder="Pesquisar no Codex..." 
-              className={styles.search}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="btn btn-primary">
-              <span>✍️</span> Novo Verbete
-            </button>
-          </div>
+          <h1 className={styles.title}>Mundos</h1>
         </header>
 
-        <div className={styles.content}>
-          <aside className={styles.sidebar}>
-            <CategoryNav selected={selectedCategory} onSelect={setSelectedCategory} />
-          </aside>
+        <CrudToolbar 
+          newLabel="Novo Mundo" 
+          onNew={() => router.push("/mundo/novo")}
+          onExport={() => alert("Exportando dados...")}
+        />
 
-          <main className={styles.main}>
-            {loading ? (
-              <div className={styles.loading}>Abrindo os antigos pergaminhos...</div>
-            ) : (
-              <>
-                <div className={styles.info}>
-                  Mostrando {entries.length} verbetes em <strong>{selectedCategory}</strong>
-                </div>
-                <div className={styles.grid}>
-                  {entries.map(entry => (
-                    <EntryCard key={entry.id} entry={entry} />
-                  ))}
-                  {entries.length === 0 && (
-                    <div className={styles.empty}>
-                      Nenhum conhecimento encontrado para esta busca.
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
-          </main>
-        </div>
+        <section className={styles.filters}>
+          <input 
+            type="text" 
+            placeholder="Filtrar por nome ou sistema..." 
+            className={styles.searchInput}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </section>
+
+        <main className={styles.main}>
+          <DataGrid 
+            data={worlds} 
+            columns={columns} 
+            loading={loading}
+            onView={(item) => router.push(`/mundo/${item.id}`)}
+            onEdit={(item) => router.push(`/mundo/${item.id}/editar`)}
+            onDelete={(item) => deleteWorld(item.id)}
+          />
+        </main>
+
+        <footer className={styles.footer}>
+          <span>Exibindo {worlds.length} registros</span>
+        </footer>
       </div>
     </MainLayout>
   );

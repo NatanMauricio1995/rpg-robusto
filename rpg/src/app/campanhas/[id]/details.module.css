@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--font-cinzel), serif;
+  font-size: 28px;
+  margin: 0;
+  color: var(--stone-900);
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.tabs {
+  width: 100%;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--parchment-300);
+  margin-top: 16px;
+}
+
+.tabsInner {
+  display: flex;
+  gap: 4px;
+  min-width: max-content;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  padding: 12px 24px;
+  font-family: var(--font-cinzel), serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  bottom: -2px;
+  text-transform: uppercase;
+}
+
+.tab:hover {
+  color: var(--gold-500);
+}
+
+.activeTab {
+  color: var(--gold-500);
+  border-bottom: 3px solid var(--gold-500);
+}
+
+.main {
+  padding: 24px 0;
+}
+
+.card {
+  background: #fff;
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--gold-500);
+}
+
+.sectionTitle {
+  font-family: var(--font-cinzel), serif;
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: var(--stone-900);
+  border-bottom: 1px solid var(--parchment-200);
+  padding-bottom: 8px;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-light);
+  font-style: italic;
+  background: #fff;
+  border-radius: var(--radius-sm);
+}
+
+.subModule {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}

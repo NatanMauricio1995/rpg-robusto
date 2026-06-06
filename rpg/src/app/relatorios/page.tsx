@@ -1,82 +1,120 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import MetricCard from "@/components/Reports/MetricCard/MetricCard";
-import ProgressCard from "@/components/Reports/ProgressCard/ProgressCard";
+import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
+import CrudToolbar from "@/components/Common/CrudToolbar/CrudToolbar";
+import DataGrid, { DataGridColumn } from "@/components/Common/DataGrid/DataGrid";
 import { useReports } from "@/hooks/useReports";
+import { ReportCategory } from "@/types/report";
 import styles from "./page.module.css";
 
 export default function ReportsPage() {
-  const { data, loading } = useReports();
+  const router = useRouter();
+  const { 
+    activeCategory, 
+    setActiveCategory, 
+    data, 
+    loading, 
+    filters, 
+    setFilters, 
+    exportReport 
+  } = useReports();
+
+  const categories: ReportCategory[] = ['Campanhas', 'Personagens', 'Combates', 'Inimigos'];
+
+  const getColumns = (): DataGridColumn<any>[] => {
+    const baseColumns: DataGridColumn<any>[] = [
+      { header: "Relatório", accessor: "name" },
+    ];
+
+    const categoryColumns: Record<ReportCategory, DataGridColumn<any>[]> = {
+      Campanhas: [
+        { header: "Sistema", accessor: "system" },
+        { header: "Sessões", accessor: "totalSessions" },
+        { header: "XP Total", accessor: (item) => `${item.totalXP} XP` },
+      ],
+      Personagens: [
+        { header: "Jogador", accessor: "playerName" },
+        { header: "Nível", accessor: "level" },
+        { header: "Presença", accessor: (item) => `${item.sessionsPlayed} sessões` },
+      ],
+      Combates: [
+        { header: "Campanha", accessor: "campaignName" },
+        { header: "Rodadas", accessor: "totalRounds" },
+        { header: "Dificuldade", accessor: "difficulty" },
+      ],
+      Inimigos: [
+        { header: "Tipo", accessor: "type" },
+        { header: "ND", accessor: "challengeRating" },
+        { header: "Encontros", accessor: "timesEncountered" },
+      ]
+    };
+
+    return [...baseColumns, ...categoryColumns[activeCategory], { header: "Atualizado em", accessor: "updatedAt" }];
+  };
 
   return (
     <MainLayout>
       <div className={styles.container}>
+        <Breadcrumb items={[{ label: "Home", href: "/dashboard" }, { label: "Relatórios" }]} />
+        
         <header className={styles.header}>
-          <div className={styles.titleArea}>
-            <h1 className={styles.title}>Crônicas & Estatísticas</h1>
-            <p className={styles.subtitle}>Analise o progresso da campanha e as conquistas dos heróis.</p>
-          </div>
-          <button className="btn btn-secondary">
-            <span>📜</span> Exportar Pergaminho
-          </button>
+          <h1 className={styles.title}>Centro de Analytics</h1>
         </header>
 
-        {loading ? (
-          <div className={styles.loading}>Tecendo os fios do destino...</div>
-        ) : (
-          <>
-            <section className={styles.metricsGrid}>
-              <MetricCard 
-                label="Sessões Realizadas" 
-                value={data?.metrics.totalSessions || 0} 
-                subValue="+2 esta semana"
-                icon="📜"
-              />
-              <MetricCard 
-                label="Horas de Jogo" 
-                value={`${data?.metrics.totalHours || 0}h`} 
-                icon="⏳"
-              />
-              <MetricCard 
-                label="Batalhas Vencidas" 
-                value={data?.metrics.combatsWon || 0} 
-                subValue="95% Taxa de Vitória"
-                icon="⚔️"
-              />
-              <MetricCard 
-                label="Ouro Acumulado" 
-                value={`${(data?.metrics.goldEarned || 0).toLocaleString()} po`} 
-                icon="💰"
-              />
-            </section>
+        <nav className={styles.tabs}>
+          <div className={styles.tabsInner}>
+            {categories.map(cat => (
+              <button 
+                key={cat}
+                className={`${styles.tab} ${activeCategory === cat ? styles.activeTab : ''}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </nav>
 
-            <div className={styles.mainContent}>
-              <section className={styles.progressSection}>
-                <h2 className={styles.sectionTitle}>Evolução dos Heróis</h2>
-                <div className={styles.progressGrid}>
-                  {data?.playerStats.map(player => (
-                    <ProgressCard key={player.id} player={player} />
-                  ))}
-                </div>
-              </section>
+        <CrudToolbar 
+          newLabel="Gerar Novo Relatório" 
+          onNew={() => alert("Configurando parâmetros do relatório...")}
+          onExport={() => exportReport('PDF')}
+        />
 
-              <aside className={styles.summaryAside}>
-                <div className="card">
-                  <h3 className={styles.summaryTitle}>Marco Histórico</h3>
-                  <div className={styles.milestone}>
-                    <div className={styles.milestoneIcon}>🏆</div>
-                    <div className={styles.milestoneInfo}>
-                      <div className={styles.milestoneName}>Matadores de Dragão</div>
-                      <div className={styles.milestoneDesc}>Derrotaram o Dragão Vermelho de Aethelgard.</div>
-                    </div>
-                  </div>
-                  <button className="btn btn-primary btn-sm" style={{ width: '100%' }}>Ver Todos os Marcos</button>
-                </div>
-              </aside>
+        <section className={styles.filters}>
+          <div className={styles.filterGrid}>
+            <input 
+              type="text" 
+              placeholder={`Pesquisar nos relatórios de ${activeCategory.toLowerCase()}...`} 
+              className={styles.searchInput}
+              value={filters.search}
+              onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+            />
+            
+            <div className={styles.dateFilters}>
+              <input type="date" className={styles.dateInput} title="Data Início" />
+              <span className={styles.separator}>até</span>
+              <input type="date" className={styles.dateInput} title="Data Fim" />
             </div>
-          </>
-        )}
+          </div>
+        </section>
+
+        <main className={styles.main}>
+          <DataGrid 
+            data={data} 
+            columns={getColumns()} 
+            loading={loading}
+            onView={(item) => alert(`Visualizando ${item.name}`)}
+            onEdit={(item) => alert(`Ajustando filtros de ${item.name}`)}
+            onDelete={(item) => alert("Relatórios históricos não podem ser excluídos via UI.")}
+          />
+        </main>
+
+        <footer className={styles.footer}>
+          <span>Exibindo métricas consolidadas de {activeCategory}</span>
+        </footer>
       </div>
     </MainLayout>
   );

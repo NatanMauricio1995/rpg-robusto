@@ -1,23 +1,40 @@
-export interface CampaignMetrics {
+import { BaseEntity } from "./common";
+
+export type ReportCategory = 'Campanhas' | 'Personagens' | 'Combates' | 'Inimigos';
+
+export interface CampaignReport extends BaseEntity {
+  system: string;
   totalSessions: number;
-  totalHours: number;
-  combatsWon: number;
-  goldEarned: number;
+  totalXP: number;
+  totalLootGold: number;
+  completionRate: number;
 }
 
-export interface PlayerStats {
-  id: string;
-  name: string;
+export interface CharacterReport extends BaseEntity {
+  playerName: string;
   level: number;
-  exp: {
-    current: number;
-    next: number;
-  };
-  kills: number;
-  assists: number;
+  sessionsPlayed: number;
+  totalDamageDealt: number;
+  totalHealingDone: number;
 }
 
-export interface ReportData {
-  metrics: CampaignMetrics;
-  playerStats: PlayerStats[];
+export interface CombatReport extends BaseEntity {
+  campaignName: string;
+  location: string;
+  totalRounds: number;
+  difficulty: 'Fácil' | 'Médio' | 'Difícil' | 'Mortal';
+}
+
+export interface EnemyReport extends BaseEntity {
+  type: string;
+  challengeRating: string;
+  timesEncountered: number;
+  lethalityRate: number; // Porcentagem de vezes que causou queda de jogador
+}
+
+export interface ReportFilters {
+  search: string;
+  startDate?: string;
+  endDate?: string;
+  campaignId?: string;
 }

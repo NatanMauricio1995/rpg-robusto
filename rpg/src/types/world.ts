@@ -1,18 +1,42 @@
-export type WorldCategory = 'Geografia' | 'História' | 'Divindades' | 'Organizações' | 'Lendas' | 'Outros';
+import { BaseEntity } from "./common";
 
-export interface WorldEntry {
-  id: string;
-  title: string;
-  category: WorldCategory;
-  summary: string;
-  content: string;
+export interface World extends BaseEntity {
+  system: string;
   imageUrl?: string;
-  tags: string[];
-  lastUpdated: string;
 }
 
-export interface WorldState {
-  entries: WorldEntry[];
-  selectedCategory: WorldCategory | 'Todas';
-  searchQuery: string;
+export interface Continent extends BaseEntity {
+  worldId: string;
+}
+
+export interface Kingdom extends BaseEntity {
+  continentId: string;
+}
+
+export interface City extends BaseEntity {
+  kingdomId: string;
+}
+
+export interface Environment extends BaseEntity {
+  cityId: string;
+}
+
+export interface Location extends BaseEntity {
+  environmentId: string;
+}
+
+export interface Religion extends BaseEntity {
+  worldId: string;
+  alignment?: string;
+  deity?: string;
+}
+
+export interface Faction extends BaseEntity {
+  worldId: string;
+  leader?: string;
+}
+
+export interface Organization extends BaseEntity {
+  worldId: string;
+  type: string;
 }

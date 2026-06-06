@@ -1,102 +1,119 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 8px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-}
-
-.titleArea {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  margin-bottom: 8px;
 }
 
 .title {
-  font-size: 28px;
-  margin: 0;
-}
-
-.subtitle {
-  font-size: 14px;
-  color: var(--text-light);
-  margin: 0;
-}
-
-.metricsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-.mainContent {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 24px;
-}
-
-.sectionTitle {
   font-family: var(--font-cinzel), serif;
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: var(--stone-900);
-}
-
-.progressGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.summaryTitle {
-  font-size: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--parchment-300);
-  padding-bottom: 8px;
-}
-
-.milestone {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  background: var(--parchment-100);
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  margin-bottom: 16px;
-}
-
-.milestoneIcon {
   font-size: 24px;
-}
-
-.milestoneName {
-  font-weight: 700;
-  font-size: 14px;
   color: var(--stone-900);
+  margin: 0;
 }
 
-.milestoneDesc {
-  font-size: 12px;
-  color: var(--text-light);
+.tabs {
+  width: 100%;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--parchment-300);
+  margin-bottom: 16px;
 }
 
-.loading {
+.tabsInner {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
+  gap: 4px;
+  min-width: max-content;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  padding: 10px 16px;
   font-family: var(--font-cinzel), serif;
-  font-size: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  bottom: -2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tab:hover {
   color: var(--gold-500);
 }
 
-@media (max-width: 1024px) {
-  .mainContent {
-    grid-template-columns: 1fr;
+.activeTab {
+  color: var(--gold-500);
+  border-bottom: 3px solid var(--gold-500);
+}
+
+.filters {
+  margin-bottom: 16px;
+}
+
+.filterGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.searchInput {
+  flex: 1;
+  max-width: 400px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid var(--parchment-300);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--gold-500);
+}
+
+.dateFilters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dateInput {
+  padding: 8px 12px;
+  border: 1px solid var(--parchment-300);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.separator {
+  font-size: 12px;
+  color: var(--text-light);
+  text-transform: lowercase;
+}
+
+.main {
+  flex: 1;
+}
+
+.footer {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text-light);
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .filterGrid {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
