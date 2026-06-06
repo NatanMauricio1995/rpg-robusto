@@ -1,0 +1,89 @@
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.table thead tr {
+  background: var(--stone-800);
+  border-bottom: 2px solid var(--gold-500);
+}
+
+.table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-family: var(--font-cinzel), serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-300);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--parchment-200);
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.row:hover {
+  background: rgba(160, 120, 42, 0.05);
+}
+
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatarPlaceholder {
+  width: 32px;
+  height: 32px;
+  background: var(--parchment-200);
+  border: 1px solid var(--parchment-300);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--stone-600);
+}
+
+.name {
+  font-weight: 600;
+  color: var(--stone-900);
+}
+
+.subtext {
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+.level {
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  transition: background 0.2s;
+}
+
+.actionBtn:hover {
+  background: var(--parchment-200);
+}

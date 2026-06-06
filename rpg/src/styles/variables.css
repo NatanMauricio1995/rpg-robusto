@@ -1,0 +1,47 @@
+:root {
+  /* Pedra (Stone) */
+  --stone-900: #1A1510;
+  --stone-800: #2C2820;
+  --stone-700: #3A3228;
+  --stone-600: #4A4035;
+  --stone-500: #7A6E5F;
+
+  /* Pergaminho (Parchment) */
+  --parchment-100: #F5EDD8;
+  --parchment-200: #E8D9B5;
+  --parchment-300: #C9B68A;
+
+  /* Ouro (Gold) */
+  --gold-500: #A0782A;
+  --gold-400: #C49A3C;
+  --gold-300: #F0DFA0;
+
+  /* Sangue (Blood) */
+  --blood-700: #8B2020;
+  --blood-600: #B02828;
+
+  /* Floresta & Magia (Forest & Magic) */
+  --forest-700: #2E5028;
+  --forest-600: #3D6B35;
+  --magic-blue: #1A3A5C;
+  --magic-purple: #2D1A4A;
+
+  /* Texto (Text) */
+  --text-primary: #1E1A14;
+  --text-secondary: #3A3228;
+  --text-light: #7A6E5F;
+
+  /* Bordas e Sombras (Radii & Shadows) */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  /* Dimensões Layout */
+  --header-height: 56px;
+  --sidebar-width: 240px;
+}

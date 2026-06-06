@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.searchField {
+  flex: 1;
+  min-width: 300px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 16px;
+  background: #ffffff;
+  border: 1px solid var(--parchment-300);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 2px rgba(160, 120, 42, 0.1);
+}
+
+.selects {
+  display: flex;
+  gap: 12px;
+}
+
+.select {
+  padding: 10px 16px;
+  background: #ffffff;
+  border: 1px solid var(--parchment-300);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--gold-500);
+}

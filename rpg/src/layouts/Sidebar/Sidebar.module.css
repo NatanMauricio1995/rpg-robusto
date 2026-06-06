@@ -1,56 +1,53 @@
 .sidebar {
-  width: 220px;
-
+  width: var(--sidebar-width);
   display: flex;
   flex-direction: column;
-
-  padding: 8px 0;
-
-  background: var(--stone);
-
-  border-right: 2px solid var(--gold);
+  padding: 16px 0;
+  background: var(--stone-800);
+  border-right: 1px solid var(--gold-500);
+  overflow-y: auto;
 }
 
 .navGroup {
-  margin-bottom: 8px;
+  margin-bottom: 24px;
 }
 
 .navLabel {
-  padding: 8px 12px 4px;
-
-  color: var(--gold);
-
-  font-size: 10px;
-  font-weight: 600;
-
+  padding: 0 20px 8px;
+  color: var(--gold-500);
+  font-family: var(--font-cinzel), serif;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-
-  padding: 8px 12px;
-
-  color: var(--stone-pale);
-
-  font-size: 13px;
-
-  transition: 0.2s;
+  padding: 10px 20px;
+  color: var(--parchment-300);
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
 }
 
 .navItem:hover {
-  background: var(--stone-mid);
-  color: var(--parchment);
+  background: rgba(160, 120, 42, 0.1);
+  color: var(--gold-300);
+  padding-left: 24px;
 }
 
 .active {
-  background: var(--gold);
+  background: var(--gold-500);
+  color: var(--stone-900);
+  font-weight: 700;
+  border-left: 3px solid var(--gold-300);
+}
 
-  color: var(--ink);
-
-  font-weight: 600;
-
-  border-left: 3px solid var(--gold-light);
+.active:hover {
+  background: var(--gold-400);
+  color: var(--stone-900);
 }

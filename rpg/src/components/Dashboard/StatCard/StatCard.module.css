@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-family: var(--font-cinzel), serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--stone-900);
+}
+
+.trend {
+  font-size: 11px;
+  color: var(--forest-600);
+  margin-top: 4px;
+}
+
+.icon {
+  font-size: 32px;
+  opacity: 0.2;
+}

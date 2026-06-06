@@ -1,0 +1,65 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.nameArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 18px;
+  margin: 0;
+  color: var(--stone-900);
+}
+
+.level {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-500);
+  text-transform: uppercase;
+}
+
+.kda {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.progressArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.progressBar {
+  height: 8px;
+  background: var(--parchment-300);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--gold-500), var(--gold-300));
+  transition: width 0.5s ease;
+}
