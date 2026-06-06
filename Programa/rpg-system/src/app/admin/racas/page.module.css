@@ -1,5 +1,0 @@
-.layout { display: flex; flex-direction: column; min-height: 100vh; }
-.main { display: flex; flex: 1; }
-.viewContent { display: flex; flex-direction: column; gap: 16px; color: var(--parchment); }
-.viewContent strong { color: var(--gold); }
-.viewAtributos { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.875rem; }

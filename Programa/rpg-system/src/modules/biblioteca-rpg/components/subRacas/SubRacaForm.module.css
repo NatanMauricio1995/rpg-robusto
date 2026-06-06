@@ -1,6 +1,0 @@
-.form { display: flex; flex-direction: column; gap: 20px; }
-.row { display: flex; gap: 16px; align-items: flex-end; }
-.section { border: 1px solid var(--gray-800); padding: 16px; border-radius: var(--border-radius); background: var(--ink); }
-.sectionTitle { color: var(--gold); margin-bottom: 12px; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; }
-.gridAtributos { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-.actions { display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--gray-800); padding-top: 20px; }

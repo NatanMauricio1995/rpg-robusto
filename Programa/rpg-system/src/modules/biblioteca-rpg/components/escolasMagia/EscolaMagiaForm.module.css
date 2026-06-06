@@ -1,6 +1,0 @@
-.form { display: flex; flex-direction: column; gap: 20px; }
-.row { display: flex; gap: 16px; align-items: flex-end; }
-.colorWrapper { display: flex; flex-direction: column; gap: 6px; }
-.colorLabel { font-size: 0.875rem; font-weight: 600; color: var(--gold); }
-.colorInput { width: 100px; height: 42px; padding: 4px; background: var(--ink-soft); border: 1px solid var(--gray-700); border-radius: var(--border-radius); cursor: pointer; }
-.actions { display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--gray-800); padding-top: 20px; }
