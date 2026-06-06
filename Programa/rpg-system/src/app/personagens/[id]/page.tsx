@@ -1,68 +1,46 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { Header, Sidebar, ContentContainer, SectionTitle } from '../../../components';
-import { useCharacters } from '../../../hooks/useCharacters';
-import { Character } from '../../../models/Character';
-import AttributePanel from '../../../components/personagens/AttributePanel';
-import ProgressionPanel from '../../../components/personagens/ProgressionPanel';
-import Button from '../../../components/ui/Button';
-import { Edit, ChevronLeft } from 'lucide-react';
+import React from 'react';
+import { Sidebar } from '@/shared/components/Sidebar';
+import { CharacterForm } from '@/modules/personagens/components/CharacterForm';
+import Link from 'next/link';
 
-export default function CharacterDetailPage() {
-  const { id } = useParams();
-  const router = useRouter();
-  const { getCharacter, loading } = useCharacters();
-  const [character, setCharacter] = useState<Character | null>(null);
+export default function CharacterDetailPage({ params }: { params: { id: string } }) {
+  const isNew = params.id === 'novo';
+  
+  const mockInitialData = !isNew ? {
+    nome: 'Valerius',
+    raca: 'Humano',
+    subRaca: 'Standard',
+    classe: 'Guerreiro',
+    subclasse: 'Campeão',
+    historia: 'Um herói em busca de redenção.'
+  } : undefined;
 
-  useEffect(() => {
-    if (id) loadCharacter();
-  }, [id]);
-
-  const loadCharacter = async () => {
-    const data = await getCharacter(id as string);
-    setCharacter(data);
+  const handleSubmit = (data: any) => {
+    console.log('Dados submetidos:', data);
+    // Integração futura com CharacterService
   };
 
-  if (loading && !character) return <div>Carregando...</div>;
-  if (!character) return <div>Personagem não encontrado.</div>;
-
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Header />
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar activeModule="personagens" />
-        <ContentContainer>
-          <div className="mb-4">
-            <Button variant="ghost" icon={ChevronLeft} onClick={() => router.back()}>
-              Voltar
-            </Button>
-          </div>
+    <div className="flex min-h-screen bg-slate-50">
+      <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <header className="bg-white border-b px-8 py-4 flex items-center gap-4">
+          <Link href="/personagens" className="text-slate-400 hover:text-slate-600">
+            ← Voltar
+          </Link>
+          <h1 className="text-2xl font-bold text-slate-800">
+            {isNew ? 'Novo Personagem' : `Editando: ${mockInitialData?.nome}`}
+          </h1>
+        </header>
 
-          <div className="flex justify-between items-center mb-6">
-            <SectionTitle 
-              title={character.nome} 
-              subtitle={`${character.racaId} ${character.classeId} - Nível ${character.nivel}`} 
-            />
-            <Button variant="primary" icon={Edit} onClick={() => router.push(`/personagens/editar/${id}`)}>
-              Editar Ficha
-            </Button>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
-              <AttributePanel attributes={character.atributos} />
-              <div className="bg-surface p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold mb-4 text-primary">História</h3>
-                <p className="whitespace-pre-wrap">{(character as any).historia || 'Sem história registrada.'}</p>
-              </div>
-            </div>
-            <div>
-              <ProgressionPanel character={character} />
-            </div>
-          </div>
-        </ContentContainer>
+        <main className="p-8 flex justify-center">
+          <CharacterForm 
+            initialData={mockInitialData} 
+            onSubmit={handleSubmit} 
+          />
+        </main>
       </div>
     </div>
   );
