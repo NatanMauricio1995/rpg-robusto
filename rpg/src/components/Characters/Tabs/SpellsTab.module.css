@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  font-family: var(--font-cinzel), serif;
+  font-size: 18px;
+  color: var(--stone-900);
+  margin: 0;
+}
+
+.levelGroup {
+  margin-bottom: 24px;
+}
+
+.levelHeader {
+  font-family: var(--font-cinzel), serif;
+  font-size: 14px;
+  color: var(--gold-500);
+  border-bottom: 2px solid var(--gold-500);
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.spellCard {
+  background: #fff;
+  border: 1px solid var(--parchment-300);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.spellCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-400);
+}
+
+.spellName {
+  font-weight: 700;
+  color: var(--stone-900);
+  display: block;
+}
+
+.spellSchool {
+  font-size: 10px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.spellMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.preparedBadge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  scale: 0.8;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-light);
+  font-style: italic;
+}

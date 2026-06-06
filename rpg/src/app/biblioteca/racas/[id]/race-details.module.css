@@ -1,0 +1,141 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: var(--font-cinzel), serif;
+  font-size: 28px;
+  margin: 0;
+  color: var(--stone-900);
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid var(--parchment-300);
+  margin-top: 16px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  padding: 12px 24px;
+  font-family: var(--font-cinzel), serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  bottom: -2px;
+  text-transform: uppercase;
+}
+
+.tab:hover {
+  color: var(--gold-500);
+}
+
+.activeTab {
+  color: var(--gold-500);
+  border-bottom: 3px solid var(--gold-500);
+}
+
+.content {
+  padding: 24px 0;
+}
+
+.attrGrid {
+  display: flex;
+  gap: 16px;
+}
+
+.attrCard {
+  background: var(--stone-800);
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 100px;
+  border: 1px solid var(--gold-500);
+}
+
+.attrName {
+  font-size: 11px;
+  color: var(--gold-400);
+  font-weight: 700;
+}
+
+.attrBonus {
+  font-family: var(--font-cinzel), serif;
+  font-size: 24px;
+  color: var(--parchment-100);
+}
+
+.profSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.listGroup h4 {
+  font-family: var(--font-cinzel), serif;
+  font-size: 14px;
+  color: var(--stone-900);
+  margin-bottom: 12px;
+}
+
+.tagList {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: var(--parchment-200);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  border: 1px solid var(--parchment-300);
+}
+
+.traitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.traitCard {
+  background: #fff;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--gold-500);
+  box-shadow: var(--shadow-sm);
+}
+
+.traitName {
+  font-family: var(--font-cinzel), serif;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--stone-900);
+}
+
+.traitDesc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

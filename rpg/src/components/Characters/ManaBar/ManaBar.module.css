@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.sm { width: 120px; }
+.md { width: 200px; }
+.lg { width: 100%; }
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.barBackground {
+  height: 8px;
+  background: var(--parchment-300);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--magic-blue), var(--magic-purple));
+  transition: width 0.3s ease;
+}

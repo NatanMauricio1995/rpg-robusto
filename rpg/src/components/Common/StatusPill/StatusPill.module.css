@@ -1,0 +1,17 @@
+.pill {
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.default { background: var(--stone-700); color: var(--gold-300); }
+.success { background: var(--forest-700); color: #8cc47a; }
+.warning { background: #3a2e10; color: #e0c07a; }
+.error { background: var(--blood-700); color: #ffffff; }
+.info { background: var(--magic-blue); color: #ffffff; }

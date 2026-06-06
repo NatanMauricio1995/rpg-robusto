@@ -4,98 +4,80 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
-import styles from "./novo.module.css";
+import "@/styles/forms.css";
 
 export default function NewWorldPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    system: "D&D 5e",
-    status: "Rascunho",
-    description: ""
-  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulação de salvamento
-    setTimeout(() => {
-      alert("Mundo criado com sucesso!");
-      router.push("/mundo");
-    }, 800);
+    setTimeout(() => router.push('/mundo'), 1000);
   };
 
   return (
     <MainLayout>
-      <div className={styles.container}>
-        <Breadcrumb 
-          items={[
-            { label: "Home", href: "/dashboard" }, 
-            { label: "Mundos", href: "/mundo" },
-            { label: "Novo Mundo" }
-          ]} 
-        />
+      <div className="container">
+        <Breadcrumb items={[
+          { label: "Home", href: "/dashboard" },
+          { label: "Mundos", href: "/mundo" },
+          { label: "Novo Mundo" }
+        ]} />
 
-        <header className={styles.header}>
-          <h1 className={styles.title}>Novo Mundo</h1>
+        <header style={{ marginBottom: '24px' }}>
+          <h1 style={{ fontFamily: 'var(--font-cinzel)', fontSize: '24px', color: 'var(--stone-900)' }}>Invocação de Mundo</h1>
+          <p style={{ fontSize: '13px', color: 'var(--text-light)' }}>Estabeleça as fundações de um novo cenário épico.</p>
         </header>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.grid}>
-            <div className={styles.field}>
-              <label>Nome do Mundo</label>
-              <input 
-                type="text" 
-                required 
-                value={formData.name}
-                onChange={e => setFormData({...formData, name: e.target.value})}
-              />
-            </div>
+        <form className="form-card" onSubmit={handleSubmit}>
+          <div className="form-grid">
+            {/* Coluna 1: Identidade */}
+            <section>
+              <h3 className="section-header">Identidade do Cenário</h3>
+              <div className="field">
+                <label>Nome do Mundo</label>
+                <input type="text" placeholder="Ex: Aethelgard" required />
+              </div>
+              <div className="field">
+                <label>Sistema de Regras</label>
+                <select required>
+                  <option value="dnd5e">D&D 5e</option>
+                  <option value="pf2">Pathfinder 2e</option>
+                  <option value="t20">Tormenta20</option>
+                  <option value="custom">Sistema Customizado</option>
+                </select>
+              </div>
+              <div className="field">
+                <label>Status do Projeto</label>
+                <select required>
+                  <option value="Ativo">Ativo (Pronto para jogo)</option>
+                  <option value="Rascunho">Rascunho (Em construção)</option>
+                  <option value="Inativo">Inativo</option>
+                </select>
+              </div>
+            </section>
 
-            <div className={styles.field}>
-              <label>Sistema de Regras</label>
-              <select 
-                value={formData.system}
-                onChange={e => setFormData({...formData, system: e.target.value})}
-              >
-                <option value="D&D 5e">D&D 5e</option>
-                <option value="Pathfinder 2e">Pathfinder 2e</option>
-                <option value="Tormenta20">Tormenta20</option>
-                <option value="Outro">Outro</option>
-              </select>
-            </div>
-
-            <div className={styles.field}>
-              <label>Status Inicial</label>
-              <select 
-                value={formData.status}
-                onChange={e => setFormData({...formData, status: e.target.value as any})}
-              >
-                <option value="Rascunho">Rascunho</option>
-                <option value="Ativo">Ativo</option>
-                <option value="Inativo">Inativo</option>
-              </select>
-            </div>
+            {/* Coluna 2: Detalhes Visuais e Lore */}
+            <section>
+              <h3 className="section-header">Visual e Lore Inicial</h3>
+              <div className="field">
+                <label>URL da Imagem de Capa</label>
+                <input type="url" placeholder="https://link-da-imagem.jpg" />
+              </div>
+              <div className="field">
+                <label>Descrição / Introdução para Jogadores</label>
+                <textarea rows={6} placeholder="Descreva brevemente o clima e as regras fundamentais deste mundo..."></textarea>
+              </div>
+            </section>
           </div>
 
-          <div className={styles.field}>
-            <label>Descrição / Lore Inicial</label>
-            <textarea 
-              rows={6}
-              value={formData.description}
-              onChange={e => setFormData({...formData, description: e.target.value})}
-            />
-          </div>
-
-          <div className={styles.actions}>
-            <button type="button" className="btn btn-secondary" onClick={() => router.back()}>
-              Cancelar
-            </button>
+          <footer className="form-actions">
+            <button type="button" className="btn btn-secondary" onClick={() => router.back()}>Cancelar</button>
             <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? "Salvando..." : "Criar Mundo"}
+              {loading ? "Materializando..." : "Criar Mundo"}
             </button>
-          </div>
+          </footer>
         </form>
       </div>
     </MainLayout>

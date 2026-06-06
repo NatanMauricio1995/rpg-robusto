@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-family: var(--font-cinzel), serif;
+  font-size: 18px;
+  color: var(--stone-900);
+  margin: 0;
+}
+
+.weightBadge {
+  background: var(--stone-800);
+  color: var(--gold-400);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  border: 1px solid var(--gold-500);
+}
+
+.tableWrapper {
+  background: #fff;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--parchment-300);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: var(--stone-800);
+  color: var(--gold-300);
+  padding: 10px 16px;
+  text-align: left;
+  font-family: var(--font-cinzel), serif;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--parchment-200);
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.row:hover {
+  background: rgba(160, 120, 42, 0.05);
+}
+
+.itemName {
+  font-weight: 600;
+  color: var(--stone-900);
+}
+
+.actions {
+  text-align: right;
+}
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.actionBtn:hover {
+  opacity: 1;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-light);
+  font-style: italic;
+}

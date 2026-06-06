@@ -8,22 +8,55 @@ export interface Language extends BaseEntity {
 
 export interface SpellSchool extends BaseEntity {}
 
+// Detalhamento de Raça
+export interface RaceAttributeBonus {
+  attribute: 'FOR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
+  bonus: number;
+}
+
 export interface Race extends BaseEntity {
-  traits: string[];
+  attributeBonuses: RaceAttributeBonus[];
+  speed: number;
+  size: 'Pequeno' | 'Médio' | 'Grande';
+  languages: string[];
+  proficiencies: string[];
+  traits: { name: string; description: string }[];
 }
 
 export interface SubRace extends BaseEntity {
   parentRaceId: string;
+  attributeBonuses: RaceAttributeBonus[];
+  traits: { name: string; description: string }[];
+}
+
+// Detalhamento de Classe
+export interface ClassProgressionRow {
+  level: number;
+  proficiencyBonus: number;
+  features: string[];
+  spellsKnown?: number;
+  spellSlots?: number[]; // [1st, 2nd, 3rd...]
 }
 
 export interface Class extends BaseEntity {
   hitDie: string;
+  primaryAbility: string[];
+  saves: string[];
+  skillChoices: {
+    count: number;
+    options: string[];
+  };
+  armorProficiencies: string[];
+  weaponProficiencies: string[];
+  progression: ClassProgressionRow[];
 }
 
 export interface SubClass extends BaseEntity {
   parentClassId: string;
+  features: { level: number; name: string; description: string }[];
 }
 
+// Outras entidades (mantidas conforme auditoria anterior)
 export interface Ability extends BaseEntity {
   sourceType: 'Race' | 'Class' | 'Feat';
   sourceId: string;
@@ -59,21 +92,6 @@ export interface Item extends BaseEntity {
   rarity: ItemRarity;
   cost: string;
   weight: string;
-}
-
-export interface Enchantment extends BaseEntity {
-  rarity: ItemRarity;
-}
-
-export interface Recipe extends BaseEntity {
-  ingredients: string[];
-  resultItemId: string;
-}
-
-export interface NPC extends BaseEntity {
-  raceId: string;
-  classId?: string;
-  alignment: string;
 }
 
 export interface Enemy extends BaseEntity {

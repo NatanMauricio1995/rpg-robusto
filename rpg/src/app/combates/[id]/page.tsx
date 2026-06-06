@@ -4,52 +4,50 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
-import DataGrid, { DataGridColumn } from "@/components/Common/DataGrid/DataGrid";
+import CombatTracker from "@/components/Combat/CombatTracker/CombatTracker";
+import CombatTimeline from "@/components/Combat/CombatTimeline/CombatTimeline";
+import DataGrid from "@/components/Common/DataGrid/DataGrid";
 import CrudToolbar from "@/components/Common/CrudToolbar/CrudToolbar";
+import StatusPill from "@/components/Common/StatusPill/StatusPill";
+import { useCombatDetails } from "@/hooks/useCombat";
 import styles from "./details.module.css";
 
-type TabType = 'Iniciativa' | 'Participantes' | 'Inimigos' | 'Loot' | 'XP & Fechamento';
+type CombatTab = 'Iniciativa' | 'Loot' | 'XP' | 'Participantes';
 
 export default function CombatDetailsPage() {
   const { id } = useParams();
-  const router = useRouter();
-  const [activeTab, setActiveTab] = useState<TabType>('Iniciativa');
+  const [activeTab, setActiveTab] = useState<CombatTab>('Iniciativa');
+  const { combat, loading, nextTurn, updateHP, closeCombat, events } = useCombatDetails(id as string);
 
-  const combat = {
-    id: id,
-    name: "Emboscada na Estrada",
-    campaignName: "As Crônicas de Aethelgard",
-    status: "Ativo",
-    round: 3,
-    totalXP: 1200,
-  };
-
-  const tabs: TabType[] = ['Iniciativa', 'Participantes', 'Inimigos', 'Loot', 'XP & Fechamento'];
+  if (loading) return (
+    <MainLayout>
+      <div className={styles.loading}>Invocando as energias do combate...</div>
+    </MainLayout>
+  );
 
   return (
     <MainLayout>
       <div className={styles.container}>
-        <Breadcrumb 
-          items={[
-            { label: "Home", href: "/dashboard" }, 
-            { label: "Combates", href: "/combates" },
-            { label: combat.name }
-          ]} 
-        />
+        <Breadcrumb items={[
+          { label: "Home", href: "/dashboard" },
+          { label: "Combates", href: "/combates" },
+          { label: combat?.name || "Encontro" }
+        ]} />
 
         <header className={styles.header}>
-          <div className={styles.titleGroup}>
-            <h1 className={styles.title}>{combat.name}</h1>
-            <span className={`badge badge-success`}>{combat.status}</span>
+          <div className={styles.titleArea}>
+            <h1 className={styles.title}>{combat?.name}</h1>
+            <StatusPill status={combat?.status || 'Ativo'} type="success" />
           </div>
-          <div className={styles.meta}>
-            Campanha: <strong>{combat.campaignName}</strong> | Rodada: <strong>{combat.round}</strong>
+          <div className={styles.actions}>
+            <button className="btn btn-secondary" onClick={() => {}}>Ajustar Iniciativa</button>
+            <button className="btn btn-danger" onClick={closeCombat}>Encerrar Encontro</button>
           </div>
         </header>
 
         <nav className={styles.tabs}>
           <div className={styles.tabsInner}>
-            {tabs.map(tab => (
+            {(['Iniciativa', 'Participantes', 'Loot', 'XP'] as CombatTab[]).map(tab => (
               <button 
                 key={tab}
                 className={`${styles.tab} ${activeTab === tab ? styles.activeTab : ''}`}
@@ -61,57 +59,57 @@ export default function CombatDetailsPage() {
           </div>
         </nav>
 
-        <main className={styles.main}>
-          {activeTab === 'Iniciativa' && (
-            <div className={styles.trackerArea}>
-              <div className={styles.trackerHeader}>
-                <div className={styles.roundInfo}>Rodada {combat.round}</div>
-                <button className="btn btn-primary">Próximo Turno ➔</button>
-              </div>
-              
-              <div className={styles.combatList}>
-                {/* Aqui entra o DataGrid de Iniciativa customizado ou o antigo CombatantRow adaptado */}
-                <p className={styles.placeholder}>Rastreador de iniciativa em tempo real.</p>
-              </div>
+        <main className={styles.content}>
+          {activeTab === 'Iniciativa' && combat && (
+            <div className={styles.warRoom}>
+              <section className={styles.trackerArea}>
+                <div className={styles.trackerHeader}>
+                  <div className={styles.roundInfo}>
+                    <span className={styles.roundLabel}>RODADA</span>
+                    <span className={styles.roundValue}>{combat.round}</span>
+                  </div>
+                  <button className="btn btn-primary" onClick={nextTurn}>Próximo Turno ➔</button>
+                </div>
+                
+                <CombatTracker 
+                  combatants={combat.combatants} 
+                  currentTurnIndex={combat.currentTurnIndex}
+                  onUpdateHP={updateHP}
+                />
+              </section>
+
+              <aside className={styles.timelineArea}>
+                <CombatTimeline events={events} />
+              </aside>
             </div>
           )}
-
+          
           {activeTab === 'Participantes' && (
             <div className={styles.subModule}>
               <CrudToolbar newLabel="Adicionar Jogador" onNew={() => {}} />
               <DataGrid 
-                data={[]} // TODO: Integrar Hook
+                data={combat?.combatants.filter(c => c.type === 'Player') || []}
                 columns={[
-                  { header: "Nome", accessor: "name" as any },
-                  { header: "HP", accessor: (item: any) => `${item.hp.current}/${item.hp.max}` },
-                  { header: "Iniciativa", accessor: "initiative" as any },
+                  { header: 'Nome', accessor: 'name' },
+                  { header: 'AC', accessor: 'ac' },
+                  { header: 'HP', accessor: (c) => `${c.hp.current}/${c.hp.max}` }
                 ]}
-                onView={() => {}}
-                onEdit={() => {}}
-                onDelete={() => {}}
+                onView={() => {}} onEdit={() => {}} onDelete={() => {}}
               />
             </div>
           )}
 
           {activeTab === 'Loot' && (
             <div className={styles.subModule}>
-              <CrudToolbar newLabel="Adicionar Item de Loot" onNew={() => {}} />
+              <CrudToolbar newLabel="Adicionar Item" onNew={() => {}} />
               <DataGrid 
-                data={[]}
+                data={combat?.loot || []}
                 columns={[
-                  { header: "Item", accessor: "name" as any },
-                  { header: "Quantidade", accessor: "quantity" as any },
+                  { header: 'Item', accessor: 'name' },
+                  { header: 'Qtd', accessor: 'quantity' }
                 ]}
-                onView={() => {}}
-                onEdit={() => {}}
-                onDelete={() => {}}
+                onView={() => {}} onEdit={() => {}} onDelete={() => {}}
               />
-            </div>
-          )}
-
-          {['Inimigos', 'XP & Fechamento'].includes(activeTab) && (
-            <div className={styles.placeholder}>
-              <p>Módulo de {activeTab} integrado ao fluxo ERP.</p>
             </div>
           )}
         </main>

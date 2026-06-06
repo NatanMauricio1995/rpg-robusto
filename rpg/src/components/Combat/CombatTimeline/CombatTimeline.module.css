@@ -1,0 +1,67 @@
+.timeline {
+  background: var(--stone-900);
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  color: var(--parchment-100);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.title {
+  font-family: var(--font-cinzel), serif;
+  font-size: 14px;
+  color: var(--gold-400);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--stone-700);
+  padding-bottom: 8px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  border-left: 2px solid var(--stone-700);
+  padding-left: 12px;
+  position: relative;
+}
+
+.item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--stone-700);
+}
+
+.item[data-type="damage"]::before { background: var(--blood-600); }
+.item[data-type="heal"]::before { background: var(--forest-600); }
+.item[data-type="turn"]::before { background: var(--gold-500); }
+
+.meta {
+  display: flex;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gold-500);
+  margin-bottom: 4px;
+}
+
+.round {
+  background: var(--stone-700);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.desc {
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.4;
+  color: var(--parchment-200);
+}
