@@ -1,18 +1,15 @@
 import { ReactNode } from "react";
+import styles from "./ContentContainer.module.css";
 
-type Props = {
+type ContentContainerProps = {
   children: ReactNode;
 };
 
-export default function ContentContainer({ children }: Props) {
+export default function ContentContainer({
+  children,
+}: ContentContainerProps) {
   return (
-    <main
-      style={{
-        flex: 1,
-        padding: "24px",
-        overflow: "auto",
-      }}
-    >
+    <main className={styles.content}>
       {children}
     </main>
   );

@@ -1,0 +1,18 @@
+.footer {
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  background: var(--stone);
+
+  border-top: 2px solid var(--gold);
+
+  color: var(--stone-pale);
+
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}

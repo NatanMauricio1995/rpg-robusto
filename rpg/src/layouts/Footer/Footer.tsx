@@ -1,15 +1,13 @@
+import styles from "./Footer.module.css";
+
 export default function Footer() {
   return (
-    <footer
-      style={{
-        height: "40px",
-        borderTop: "1px solid #ddd",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      RPG Robusto
+    <footer className={styles.footer}>
+      <span>RPG Robusto v1.0</span>
+
+      <span>
+        Sistema de Gerenciamento de RPG
+      </span>
     </footer>
   );
 }

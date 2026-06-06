@@ -1,0 +1,56 @@
+.sidebar {
+  width: 220px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px 0;
+
+  background: var(--stone);
+
+  border-right: 2px solid var(--gold);
+}
+
+.navGroup {
+  margin-bottom: 8px;
+}
+
+.navLabel {
+  padding: 8px 12px 4px;
+
+  color: var(--gold);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+
+  padding: 8px 12px;
+
+  color: var(--stone-pale);
+
+  font-size: 13px;
+
+  transition: 0.2s;
+}
+
+.navItem:hover {
+  background: var(--stone-mid);
+  color: var(--parchment);
+}
+
+.active {
+  background: var(--gold);
+
+  color: var(--ink);
+
+  font-weight: 600;
+
+  border-left: 3px solid var(--gold-light);
+}

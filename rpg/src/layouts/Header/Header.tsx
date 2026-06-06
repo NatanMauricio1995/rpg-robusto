@@ -1,23 +1,29 @@
-type HeaderProps = {
-  title?: string;
-};
+import styles from "./Header.module.css";
 
-export default function Header({ title }: HeaderProps) {
+export default function Header() {
   return (
-    <header
-      style={{
-        height: "60px",
-        borderBottom: "1px solid #ddd",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 24px",
-      }}
-    >
-      <h2>{title ?? "RPG Robusto"}</h2>
+    <header className={styles.header}>
+      <div className={styles.logo}>
+        <div className={styles.logoIcon}>🛡️</div>
 
-      <div>
-        Pesquisa | Notificações | Perfil
+        <span className={styles.logoText}>
+          RPG Robusto
+        </span>
+      </div>
+
+      <div className={styles.search}>
+        <span>Buscar personagens, campanhas...</span>
+      </div>
+
+      <div className={styles.actions}>
+        <button className={styles.iconButton}>
+          🔔
+          <span className={styles.notificationDot}></span>
+        </button>
+
+        <div className={styles.avatar}>
+          GM
+        </div>
       </div>
     </header>
   );
