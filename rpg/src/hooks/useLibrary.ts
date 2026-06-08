@@ -1,30 +1,52 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
-import { LibraryCategory, BaseEntity } from '@/types/library';
+import { LanguageService } from '@/services/LanguageService';
+import { SpellSchoolService } from '@/services/SpellSchoolService';
+import { BaseEntity, LibraryCategory } from '@/types/library';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export function useLibrary() {
   const [activeCategory, setActiveCategory] = useState<LibraryCategory>('Idiomas');
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<BaseEntity[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
+  const loadData = useCallback(async () => {
     setLoading(true);
-    // Simulação de Fetch baseada na categoria
-    const timer = setTimeout(() => {
-      // Mock dinâmico para demonstração
-      const mockData = Array.from({ length: 5 }).map((_, i) => ({
-        id: `${activeCategory}-${i}`,
-        name: `${activeCategory} Exemplo ${i + 1}`,
-        status: 'Ativo',
-        createdAt: '2026-06-01',
-        updatedAt: '2026-06-05',
-        description: `Descrição de exemplo para ${activeCategory}.`
-      }));
-      setData(mockData);
+    try {
+      if (activeCategory === 'Idiomas') {
+        const languages = await LanguageService.listLanguages();
+        setData(languages);
+      } else if (activeCategory === 'Escolas de Magia') {
+        const schools = await SpellSchoolService.listSchools();
+        setData(schools);
+      } else {
+        // Simulação para outras categorias ainda não implementadas
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const mockData: BaseEntity[] = Array.from({ length: 3 }).map((_, i) => ({
+          id: `${activeCategory}-${i}`,
+          name: `${activeCategory} Exemplo ${i + 1}`,
+          status: 'Ativo',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          description: `Descrição de exemplo para ${activeCategory}.`
+        }));
+        setData(mockData);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar dados da biblioteca:", error);
+      setData([]);
+    } finally {
       setLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
+    }
   }, [activeCategory]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchData = async () => {
+      if (isMounted) await loadData();
+    };
+    fetchData();
+    return () => { isMounted = false; };
+  }, [loadData]);
 
   const filteredData = useMemo(() => {
     return data.filter(item => 
@@ -32,11 +54,20 @@ export function useLibrary() {
     );
   }, [data, searchQuery]);
 
-  const deleteItem = useCallback((id: string) => {
+  const deleteItem = useCallback(async (id: string) => {
     if (confirm('Deseja realmente excluir este registro?')) {
-      setData(prev => prev.filter(item => item.id !== id));
+      try {
+        if (activeCategory === 'Idiomas') {
+          await LanguageService.deleteLanguage(id);
+        } else if (activeCategory === 'Escolas de Magia') {
+          await SpellSchoolService.deleteSchool(id);
+        }
+        setData(prev => prev.filter(item => item.id !== id));
+      } catch (error) {
+        alert("Erro ao excluir registro");
+      }
     }
-  }, []);
+  }, [activeCategory]);
 
   return {
     activeCategory,
@@ -45,6 +76,7 @@ export function useLibrary() {
     loading,
     searchQuery,
     setSearchQuery,
-    deleteItem
+    deleteItem,
+    refresh: loadData
   };
 }

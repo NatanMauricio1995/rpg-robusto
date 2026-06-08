@@ -27,11 +27,11 @@ export default function LibraryPage() {
     'Receitas', 'NPCs', 'Inimigos'
   ];
 
-  const columns: DataGridColumn<any>[] = [
+  const columns: DataGridColumn<BaseEntity>[] = [
     { header: "Nome", accessor: "name" },
     { 
       header: "Status", 
-      accessor: (item) => (
+      accessor: (item: BaseEntity) => (
         <span className={`badge ${item.status === 'Ativo' ? 'badge-success' : 'badge-secondary'}`}>
           {item.status}
         </span>
