@@ -102,7 +102,10 @@ export interface Enemy extends BaseEntity {
 }
 
 export type LibraryCategory = 
-  | 'Idiomas' | 'Escolas de Magia' | 'Raças' | 'Sub-Raças' 
+  | 'Idiomas' | 'Escolas de Magia' | 'Sentidos' | 'Perícias' | 'Raças' | 'Sub-Raças' 
   | 'Classes' | 'Subclasses' | 'Habilidades' | 'Magias' 
+  | 'Armas' | 'Armaduras' | 'Itens' | 'Encantamentos' 
+  | 'Receitas' | 'NPCs' | 'Inimigos';
+ses' | 'Habilidades' | 'Magias' 
   | 'Armas' | 'Armaduras' | 'Itens' | 'Encantamentos' 
   | 'Receitas' | 'NPCs' | 'Inimigos';

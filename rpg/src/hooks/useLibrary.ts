@@ -1,13 +1,24 @@
 import { LanguageService } from '@/services/LanguageService';
 import { SpellSchoolService } from '@/services/SpellSchoolService';
 import { BaseEntity, LibraryCategory } from '@/types/library';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export function useLibrary() {
-  const [activeCategory, setActiveCategory] = useState<LibraryCategory>('Idiomas');
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get('category') as LibraryCategory || 'Idiomas';
+  
+  const [activeCategory, setActiveCategory] = useState<LibraryCategory>(initialCategory);
   const [data, setData] = useState<BaseEntity[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const category = searchParams.get('category') as LibraryCategory;
+    if (category) {
+      setActiveCategory(category);
+    }
+  }, [searchParams]);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -61,6 +72,10 @@ export function useLibrary() {
           await LanguageService.deleteLanguage(id);
         } else if (activeCategory === 'Escolas de Magia') {
           await SpellSchoolService.deleteSchool(id);
+        } else if (activeCategory === 'Sentidos') {
+          await SenseService.deleteSense(id);
+        } else if (activeCategory === 'Perícias') {
+          await SkillService.deleteSkill(id);
         }
         setData(prev => prev.filter(item => item.id !== id));
       } catch (error) {
@@ -68,6 +83,19 @@ export function useLibrary() {
       }
     }
   }, [activeCategory]);
+
+  return {
+    activeCategory,
+    setActiveCategory,
+    data: filteredData,
+    loading,
+    searchQuery,
+    setSearchQuery,
+    deleteItem,
+    refresh: loadData
+  };
+}
+]);
 
   return {
     activeCategory,

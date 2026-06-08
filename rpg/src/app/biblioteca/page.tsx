@@ -41,6 +41,37 @@ export default function LibraryPage() {
     { header: "Atualizado em", accessor: "updatedAt" },
   ];
 
+  const slugify = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ /g, "-");
+  };
+
+  const getSingularLabel = (category: LibraryCategory) => {
+    switch (category) {
+      case 'Escolas de Magia': return 'Escola de Magia';
+      case 'Idiomas': return 'Idioma';
+      case 'Sentidos': return 'Sentido';
+      case 'Perícias': return 'Perícia';
+      case 'Raças': return 'Raça';
+      case 'Sub-Raças': return 'Sub-Raça';
+      case 'Classes': return 'Classe';
+      case 'Subclasses': return 'Subclasse';
+      case 'Habilidades': return 'Habilidade';
+      case 'Magias': return 'Magia';
+      case 'Armas': return 'Arma';
+      case 'Armaduras': return 'Armadura';
+      case 'Itens': return 'Item';
+      case 'Encantamentos': return 'Encantamento';
+      case 'Receitas': return 'Receita';
+      case 'NPCs': return 'NPC';
+      case 'Inimigos': return 'Inimigo';
+      default: return category;
+    }
+  };
+
   return (
     <MainLayout>
       <div className={styles.container}>
@@ -65,8 +96,8 @@ export default function LibraryPage() {
         </nav>
 
         <CrudToolbar 
-          newLabel={`Novo(a) ${activeCategory.slice(0, -1)}`} 
-          onNew={() => router.push(`/biblioteca/${activeCategory.toLowerCase().replace(/ /g, '-')}/novo`)}
+          newLabel={`Novo(a) ${getSingularLabel(activeCategory)}`} 
+          onNew={() => router.push(`/biblioteca/${slugify(activeCategory)}/novo`)}
           onExport={() => alert("Exportando...")}
         />
 
@@ -85,8 +116,8 @@ export default function LibraryPage() {
             data={data} 
             columns={columns} 
             loading={loading}
-            onView={(item) => router.push(`/biblioteca/${activeCategory.toLowerCase()}/${item.id}`)}
-            onEdit={(item) => router.push(`/biblioteca/${activeCategory.toLowerCase()}/${item.id}/editar`)}
+            onView={(item) => router.push(`/biblioteca/${slugify(activeCategory)}/${item.id}`)}
+            onEdit={(item) => router.push(`/biblioteca/${slugify(activeCategory)}/${item.id}/editar`)}
             onDelete={(item) => deleteItem(item.id)}
           />
         </main>

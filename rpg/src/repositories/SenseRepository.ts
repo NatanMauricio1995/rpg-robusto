@@ -1,9 +1,9 @@
-import { SpellSchool } from "@/types/library";
+import { Sense } from "@/types/library";
 
-export class SpellSchoolRepository {
-  private static collection = 'escolasMagia';
+export class SenseRepository {
+  private static collection = 'sentidos';
 
-  static async getAll(): Promise<SpellSchool[]> {
+  static async getAll(): Promise<Sense[]> {
     console.log(`[Repository] Buscando todos em ${this.collection}`);
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(this.collection);
@@ -12,15 +12,15 @@ export class SpellSchoolRepository {
     return [];
   }
 
-  static async getById(id: string): Promise<SpellSchool | null> {
+  static async getById(id: string): Promise<Sense | null> {
     const all = await this.getAll();
     return all.find(i => i.id === id) || null;
   }
 
-  static async create(data: Omit<SpellSchool, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    const id = `ESC${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
+  static async create(data: Omit<Sense, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
+    const id = `SEN${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
     const now = new Date().toISOString();
-    const newSchool: SpellSchool = {
+    const newSense: Sense = {
       ...data,
       id,
       createdAt: now,
@@ -28,12 +28,12 @@ export class SpellSchoolRepository {
     };
 
     const all = await this.getAll();
-    all.push(newSchool);
+    all.push(newSense);
     localStorage.setItem(this.collection, JSON.stringify(all));
     return id;
   }
 
-  static async update(id: string, data: Partial<SpellSchool>): Promise<void> {
+  static async update(id: string, data: Partial<Sense>): Promise<void> {
     const all = await this.getAll();
     const index = all.findIndex(i => i.id === id);
     if (index !== -1) {
