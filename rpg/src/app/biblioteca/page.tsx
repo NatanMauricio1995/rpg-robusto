@@ -22,7 +22,8 @@ export default function LibraryPage() {
   } = useLibrary();
 
   const categories: LibraryCategory[] = [
-    'Idiomas', 'Escolas de Magia', 'Raças', 'Sub-Raças', 'Classes', 'Subclasses', 
+    'Idiomas', 'Escolas de Magia', 'Sentidos', 'Perícias', 'Proficiências', 'Antecedentes',
+    'Raças', 'Sub-Raças', 'Classes', 'Subclasses', 
     'Habilidades', 'Magias', 'Armas', 'Armaduras', 'Itens', 'Encantamentos', 
     'Receitas', 'NPCs', 'Inimigos'
   ];
@@ -55,6 +56,8 @@ export default function LibraryPage() {
       case 'Idiomas': return 'Idioma';
       case 'Sentidos': return 'Sentido';
       case 'Perícias': return 'Perícia';
+      case 'Proficiências': return 'Proficiência';
+      case 'Antecedentes': return 'Antecedente';
       case 'Raças': return 'Raça';
       case 'Sub-Raças': return 'Sub-Raça';
       case 'Classes': return 'Classe';

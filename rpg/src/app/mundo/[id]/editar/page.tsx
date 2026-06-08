@@ -4,115 +4,92 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
-import "@/styles/forms.css";
+import WorldForm, { WorldFormData } from "@/components/World/WorldForm/WorldForm";
+import { WorldService } from "@/services/WorldService";
+import { World } from "@/types/world";
+import styles from "./page.module.css";
 
 export default function EditWorldPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "Aethelgard",
-    system: "dnd5e",
-    status: "Ativo",
-    description: "Um mundo de alta fantasia com foco em exploração de ruínas e política imperial.",
-    imageUrl: ""
-  });
+  const [world, setWorld] = useState<World | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // TODO: Integrar useWorldDetails(id) para preencher formData
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await WorldService.getWorld(id as string);
+        if (data) {
+          setWorld(data);
+        } else {
+          setError("Mundo não encontrado");
+        }
+      } catch (err) {
+        setError("Erro ao carregar mundo");
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [id]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      alert("Mundo atualizado com sucesso!");
+  const handleSubmit = async (data: WorldFormData) => {
+    setSaving(true);
+    setError(null);
+    try {
+      await WorldService.updateWorld(id as string, data);
       router.push(`/mundo/${id}`);
-    }, 800);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Erro ao salvar mundo";
+      setError(errorMessage);
+    } finally {
+      setSaving(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <MainLayout>
+        <div className={styles.loading}>Carregando Mundo...</div>
+      </MainLayout>
+    );
+  }
+
+  if (error || !world) {
+    return (
+      <MainLayout>
+        <div className={styles.errorBanner}>{error || "Mundo não encontrado"}</div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>
-      <div className="container">
+      <div className={styles.container}>
         <Breadcrumb items={[
           { label: "Home", href: "/dashboard" },
           { label: "Mundos", href: "/mundo" },
-          { label: formData.name, href: `/mundo/${id}` },
+          { label: world.name, href: `/mundo/${id}` },
           { label: "Editar" }
         ]} />
 
-        <header style={{ marginBottom: '24px' }}>
-          <h1 style={{ fontFamily: 'var(--font-cinzel)', fontSize: '24px', color: 'var(--stone-900)' }}>Alterar Destino: {formData.name}</h1>
-          <p style={{ fontSize: '13px', color: 'var(--text-light)' }}>Atualize as crônicas e detalhes fundamentais deste cenário.</p>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Alterar Destino: {world.name}</h1>
+          <p className={styles.subtitle}>Atualize as crônicas e detalhes fundamentais deste cenário.</p>
         </header>
 
-        <form className="form-card" onSubmit={handleSubmit}>
-          <div className="form-grid">
-            <section>
-              <h3 className="section-header">Identidade do Cenário</h3>
-              <div className="field">
-                <label>Nome do Mundo</label>
-                <input 
-                  type="text" 
-                  value={formData.name}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
-                  required 
-                />
-              </div>
-              <div className="field">
-                <label>Sistema de Regras</label>
-                <select 
-                  value={formData.system}
-                  onChange={e => setFormData({...formData, system: e.target.value})}
-                  required
-                >
-                  <option value="dnd5e">D&D 5e</option>
-                  <option value="pf2">Pathfinder 2e</option>
-                  <option value="t20">Tormenta20</option>
-                  <option value="custom">Sistema Customizado</option>
-                </select>
-              </div>
-              <div className="field">
-                <label>Status do Projeto</label>
-                <select 
-                  value={formData.status}
-                  onChange={e => setFormData({...formData, status: e.target.value as any})}
-                  required
-                >
-                  <option value="Ativo">Ativo</option>
-                  <option value="Rascunho">Rascunho</option>
-                  <option value="Inativo">Inativo</option>
-                </select>
-              </div>
-            </section>
+        {error && <div className={styles.errorBanner}>{error}</div>}
 
-            <section>
-              <h3 className="section-header">Visual e Lore</h3>
-              <div className="field">
-                <label>URL da Imagem de Capa</label>
-                <input 
-                  type="url" 
-                  value={formData.imageUrl}
-                  onChange={e => setFormData({...formData, imageUrl: e.target.value})}
-                  placeholder="https://link-da-imagem.jpg" 
-                />
-              </div>
-              <div className="field">
-                <label>Descrição / Introdução para Jogadores</label>
-                <textarea 
-                  rows={6} 
-                  value={formData.description}
-                  onChange={e => setFormData({...formData, description: e.target.value})}
-                ></textarea>
-              </div>
-            </section>
-          </div>
-
-          <footer className="form-actions">
-            <button type="button" className="btn btn-secondary" onClick={() => router.back()}>Cancelar</button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? "Reescrevendo..." : "Salvar Alterações"}
-            </button>
-          </footer>
-        </form>
+        <main className={styles.main}>
+          <WorldForm 
+            initialData={world}
+            onSubmit={handleSubmit} 
+            onCancel={() => router.back()} 
+            loading={saving}
+          />
+        </main>
       </div>
     </MainLayout>
   );

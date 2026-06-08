@@ -1,5 +1,9 @@
 import { LanguageService } from '@/services/LanguageService';
 import { SpellSchoolService } from '@/services/SpellSchoolService';
+import { SenseService } from '@/services/SenseService';
+import { SkillService } from '@/services/SkillService';
+import { ProficiencyService } from '@/services/ProficiencyService';
+import { BackgroundService } from '@/services/BackgroundService';
 import { BaseEntity, LibraryCategory } from '@/types/library';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -29,6 +33,18 @@ export function useLibrary() {
       } else if (activeCategory === 'Escolas de Magia') {
         const schools = await SpellSchoolService.listSchools();
         setData(schools);
+      } else if (activeCategory === 'Sentidos') {
+        const senses = await SenseService.listSenses();
+        setData(senses);
+      } else if (activeCategory === 'Perícias') {
+        const skills = await SkillService.listSkills();
+        setData(skills);
+      } else if (activeCategory === 'Proficiências') {
+        const profs = await ProficiencyService.listProficiencies();
+        setData(profs);
+      } else if (activeCategory === 'Antecedentes') {
+        const bgs = await BackgroundService.listBackgrounds();
+        setData(bgs);
       } else {
         // Simulação para outras categorias ainda não implementadas
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -76,6 +92,10 @@ export function useLibrary() {
           await SenseService.deleteSense(id);
         } else if (activeCategory === 'Perícias') {
           await SkillService.deleteSkill(id);
+        } else if (activeCategory === 'Proficiências') {
+          await ProficiencyService.deleteProficiency(id);
+        } else if (activeCategory === 'Antecedentes') {
+          await BackgroundService.deleteBackground(id);
         }
         setData(prev => prev.filter(item => item.id !== id));
       } catch (error) {

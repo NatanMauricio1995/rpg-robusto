@@ -4,23 +4,23 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import Breadcrumb from "@/components/Common/Breadcrumb/Breadcrumb";
-import WorldForm, { WorldFormData } from "@/components/World/WorldForm/WorldForm";
-import { WorldService } from "@/services/WorldService";
-import styles from "./novo.module.css";
+import ProficiencyForm, { ProficiencyFormData } from "@/components/Library/ProficiencyForm/ProficiencyForm";
+import { ProficiencyService } from "@/services/ProficiencyService";
+import styles from "./page.module.css";
 
-export default function NewWorldPage() {
+export default function NewProficiencyPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (data: WorldFormData) => {
+  const handleSubmit = async (data: ProficiencyFormData) => {
     setLoading(true);
     setError(null);
     try {
-      const id = await WorldService.saveWorld(data);
-      router.push(`/mundo/${id}`);
+      await ProficiencyService.saveProficiency(data);
+      router.push("/biblioteca?category=Proficiências");
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "Erro ao salvar mundo";
+      const errorMessage = err instanceof Error ? err.message : "Erro ao salvar proficiência";
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -33,20 +33,21 @@ export default function NewWorldPage() {
         <Breadcrumb 
           items={[
             { label: "Home", href: "/dashboard" }, 
-            { label: "Mundos", href: "/mundo" },
-            { label: "Novo Mundo" }
+            { label: "Biblioteca RPG", href: "/biblioteca" },
+            { label: "Proficiências", href: "/biblioteca?category=Proficiências" },
+            { label: "Nova Proficiência" }
           ]} 
         />
 
         <header className={styles.header}>
-          <h1 className={styles.title}>Novo Mundo</h1>
-          <p className={styles.subtitle}>Inicie a criação de um novo cenário para suas aventuras.</p>
+          <h1 className={styles.title}>Nova Proficiência</h1>
+          <p className={styles.subtitle}>Cadastre uma nova arma, armadura ou ferramenta que os personagens podem dominar.</p>
         </header>
 
         {error && <div className={styles.errorBanner}>{error}</div>}
 
         <main className={styles.main}>
-          <WorldForm 
+          <ProficiencyForm 
             onSubmit={handleSubmit} 
             onCancel={() => router.back()} 
             loading={loading}

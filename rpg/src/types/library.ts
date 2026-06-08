@@ -101,11 +101,27 @@ export interface Enemy extends BaseEntity {
   size: string;
 }
 
+export interface Skill extends BaseEntity {
+  attribute: 'FOR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
+}
+
+export interface Sense extends BaseEntity {}
+
+export interface Proficiency extends BaseEntity {
+  type: 'Arma' | 'Armadura' | 'Ferramenta' | 'Outro';
+}
+
+export interface Background extends BaseEntity {
+  skillProficiencies: string[];
+  languageProficiencies: string[];
+  toolProficiencies: string[];
+  featureName: string;
+  featureDescription: string;
+  equipmentDescription: string;
+}
+
 export type LibraryCategory = 
-  | 'Idiomas' | 'Escolas de Magia' | 'Sentidos' | 'Perícias' | 'Raças' | 'Sub-Raças' 
-  | 'Classes' | 'Subclasses' | 'Habilidades' | 'Magias' 
-  | 'Armas' | 'Armaduras' | 'Itens' | 'Encantamentos' 
-  | 'Receitas' | 'NPCs' | 'Inimigos';
-ses' | 'Habilidades' | 'Magias' 
+  | 'Idiomas' | 'Escolas de Magia' | 'Sentidos' | 'Perícias' | 'Proficiências' | 'Antecedentes'
+  | 'Raças' | 'Sub-Raças' | 'Classes' | 'Subclasses' | 'Habilidades' | 'Magias' 
   | 'Armas' | 'Armaduras' | 'Itens' | 'Encantamentos' 
   | 'Receitas' | 'NPCs' | 'Inimigos';
